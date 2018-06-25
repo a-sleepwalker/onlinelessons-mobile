@@ -5,8 +5,8 @@
     </M-Header>
     <div class="main-container">
       <div class="video-container">
-        <!--<div class="prism-player" id="J_prismPlayer"></div>-->
-        <video id="flv"></video>
+        <div class="prism-player" id="J_prismPlayer"></div>
+        <!--<video id="flv"></video>-->
       </div>
       <mt-navbar v-model="active">
         <mt-tab-item id="chat">公共聊天区</mt-tab-item>
@@ -73,7 +73,7 @@
 
 <script>
   import {VideoLoad} from '@/API';
-  import flv from 'flv.js';
+  // import flv from 'flv.js';
 
   export default {
     name: 'MVideo',
@@ -248,52 +248,52 @@
           }
         }).then(({url}) => {
           console.log(url);
-          if (flv.isSupported()) {
-            let flvPlayer = flv.createPlayer({
-              type: 'flv',
-              url: url
-            });
-            flvPlayer.attachMediaElement(document.querySelector('#flv'));
-            flvPlayer.load();
-            flvPlayer.play();
-          }
-          // let player = new Aliplayer({
-          //   id: 'J_prismPlayer',
-          //   x5_fullscreen: true,
-          //   // x5_video_position: 'center',
-          //   x5_orientation: 'landscape|portrait',
-          //   x5_type: 'h5',
-          //   autoplay: true,
-          //   isLive: false,
-          //   playsinline: true,
-          //   width: '100%',
-          //   controlBarVisibility: 'always',
-          //   useH5Prism: true,
-          //   useFlashPrism: false,
-          //   rePlay: true,
-          //   source: url,
-          //   cover: ''
-          // }, function (player) {
-          //   if (navigator.userAgent.indexOf('Mac OS') > -1) {
-          //     document.querySelector('.page-container').style.setProperty('--playerHeight', player.el().style.height);
-          //     player.el().classList.add('mac-os');
-          //   }
-          // });
-          //
-          // let videoStyle = player.el().querySelector('video').style;
-          // window.onresize = function () {
-          //   if (!~navigator.userAgent.indexOf('Mac') > -1) {
-          //     alert(1);
-          //     videoStyle.height = window.innerHeight + 'px';
-          //     videoStyle.width = window.innerWidth + 'px';
-          //     videoStyle['object-fit'] = 'contain';
-          //   }
-          // };
-          // player.on('x5cancelFullScreen', function () {
-          //   videoStyle.height = '300px';
-          // });
-          // player.on('x5requestFullScreen', function () {
-          // });
+          // if (flv.isSupported()) {
+          //   let flvPlayer = flv.createPlayer({
+          //     type: 'flv',
+          //     url: url
+          //   });
+          //   flvPlayer.attachMediaElement(document.querySelector('#flv'));
+          //   flvPlayer.load();
+          //   flvPlayer.play();
+          // }
+
+          let player = new Aliplayer({
+            id: 'J_prismPlayer',
+            x5_fullscreen: true,
+            x5_video_position: 'center',
+            x5_orientation: 'landscape|portrait',
+            x5_type: 'h5',
+            autoplay: true,
+            isLive: false,
+            playsinline: true,
+            width: '100%',
+            controlBarVisibility: 'always',
+            useH5Prism: true,
+            useFlashPrism: false,
+            rePlay: true,
+            source: url,
+            cover: ''
+          }, function (player) {
+            if (navigator.userAgent.indexOf('Mac OS') > -1) {
+              document.querySelector('.page-container').style.setProperty('--playerHeight', player.el().style.height);
+              player.el().classList.add('mac-os');
+            }
+          });
+
+          let videoStyle = player.el().querySelector('video').style;
+          window.onresize = function () {
+            if (!~navigator.userAgent.indexOf('Mac') > -1) {
+              videoStyle.height = window.innerHeight + 'px';
+              videoStyle.width = window.innerWidth + 'px';
+              videoStyle['object-fit'] = 'contain';
+            }
+          };
+          player.on('x5cancelFullScreen', function () {
+            videoStyle.height = '300px';
+          });
+          player.on('x5requestFullScreen', function () {
+          });
         }).catch(e => e);
       }
     }

@@ -83,7 +83,7 @@
     name: 'M_Calendar',
     data() {
       return {
-        isClosed: false,
+        isClosed: true,
         currentDate: new Date(),
         dateList: []
       };
