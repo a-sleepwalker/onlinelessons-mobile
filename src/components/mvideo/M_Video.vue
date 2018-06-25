@@ -247,7 +247,6 @@
             this.$messagebox('系统提示', `获取数据失败，请联系管理员!<br/>错误信息：${data.message}`);
           }
         }).then(({url}) => {
-          console.log(url);
           // if (flv.isSupported()) {
           //   let flvPlayer = flv.createPlayer({
           //     type: 'flv',
