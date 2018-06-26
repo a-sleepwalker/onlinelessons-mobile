@@ -67,7 +67,7 @@
           level: '9',
           name: '丁祥中',
           signature: '没有梦想的咸鱼',
-          img: '/static/img/电脑桌面2.jpg',
+          img: '/static/mob-img/电脑桌面2.jpg',
           keep: 0,
           following: 2,
           follower: 1
@@ -131,7 +131,7 @@
       position: absolute
       right: 0
       bottom: .25rem
-      background: transparent url("/static/img/user-auth.png") no-repeat
+      background: transparent url("/static/mob-img/user-auth.png") no-repeat
       background-size: 100% 100%
 
   .user-info-text
@@ -151,7 +151,7 @@
         height: 1rem
         line-height: 1rem
         vertical-align: middle
-        background: url("/static/img/gender.png") no-repeat
+        background: url("/static/mob-img/gender.png") no-repeat
         background-size 100% 100%
 
       .user-level

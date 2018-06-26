@@ -175,7 +175,7 @@
     .calendar-header
       height: 3.75rem
       overflow: hidden
-      background: url("/static/img/header3.png") no-repeat
+      background: url("/static/mob-img/header3.png") no-repeat
       background-size 100% 100%
       .calendar-title
         margin: 0 auto
@@ -196,17 +196,17 @@
         width: 1.25rem
         height: 1.25rem
       .expands-calendar
-        background: url("/static/img/expands-calendar.png") no-repeat
+        background: url("/static/mob-img/expands-calendar.png") no-repeat
         background-size: 100% 100%
       .close-calendar
         border: 1px solid #ffffff
         border-radius: 1.25rem
-        background: url("/static/img/close-calendar.png") no-repeat
+        background: url("/static/mob-img/close-calendar.png") no-repeat
         background-size: 100% 100%
       .prev-mon
         width: .5rem
         height: .5rem
-        background: url("/static/img/calendar-prev.png") no-repeat
+        background: url("/static/mob-img/calendar-prev.png") no-repeat
         background-size: 100% 100%
       .calendar-title-text
         width: 8rem
@@ -215,7 +215,7 @@
       .next-mon
         width: .5rem
         height: .5rem
-        background: url("/static/img/calendar-next.png") no-repeat
+        background: url("/static/mob-img/calendar-next.png") no-repeat
         background-size: 100% 100%
       .calendar-inline-title
         padding: 0 10px

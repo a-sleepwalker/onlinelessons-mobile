@@ -190,17 +190,17 @@
 
         ],
         synopsisList: [
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'}
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'}
         ],
         test: {
           cur: 1,
@@ -360,7 +360,7 @@
 
   .synopsis-item {
     padding: .75rem 0;
-    background: url("../../../static/img/course-active.png") no-repeat right;
+    background: url("../../../static/mob-img/course-active.png") no-repeat right;
   }
 
   .synopsis-img {

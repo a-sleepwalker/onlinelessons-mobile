@@ -71,35 +71,35 @@
           height: 2.5rem
 
         .teacher
-          background: url("/static/img/teacher.png") no-repeat
+          background: url("/static/mob-img/teacher.png") no-repeat
           background-size 100% 100%
 
         .course
-          background: url("/static/img/course.png") no-repeat
+          background: url("/static/mob-img/course.png") no-repeat
           background-size 100% 100%
 
         .bank
-          background: url("/static/img/bank.png") no-repeat
+          background: url("/static/mob-img/bank.png") no-repeat
           background-size 100% 100%
 
         .score
-          background: url("/static/img/score.png") no-repeat
+          background: url("/static/mob-img/score.png") no-repeat
           background-size 100% 100%
 
         .latest
-          background: url("/static/img/latest.png") no-repeat
+          background: url("/static/mob-img/latest.png") no-repeat
           background-size 100% 100%
 
         .download
-          background: url("/static/img/download.png") no-repeat
+          background: url("/static/mob-img/download.png") no-repeat
           background-size 100% 100%
 
         .curriculum
-          background: url("/static/img/curriculum.png") no-repeat
+          background: url("/static/mob-img/curriculum.png") no-repeat
           background-size 100% 100%
 
         .newcourse
-          background: url("/static/img/newcourse.png") no-repeat
+          background: url("/static/mob-img/newcourse.png") no-repeat
           background-size 100% 100%
 
         .tool-text

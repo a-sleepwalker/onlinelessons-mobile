@@ -1,6 +1,6 @@
 <template>
   <div>
-    <M-Header pageTitle="课程班" :styleObj="{background:'url(/static/img/header2.png) no-repeat','background-size':'100% 100%'}">
+    <M-Header pageTitle="课程班" :styleObj="{background:'url(/static/mob-img/header2.png) no-repeat','background-size':'100% 100%'}">
       <mt-button size="small" @click="toMyCourse">我的课程</mt-button>
     </M-Header>
     <div class="main-container">
@@ -51,7 +51,7 @@
             attend: '未出勤',
             title: '【公司理财】江苏工商本<精讲1>',
             subTitle: '【江苏工商本科】不过退费班',
-            src: '/static/img/书架.jpg',
+            src: '/static/mob-img/书架.jpg',
             name: '任思远'
           },
           {
@@ -60,7 +60,7 @@
             attend: '未出勤',
             title: '【公司理财】江苏工商本<精讲1>',
             subTitle: '【江苏工商本科】不过退费班',
-            src: '/static/img/书架.jpg',
+            src: '/static/mob-img/书架.jpg',
             name: '任思远'
           }, {
             st: '2018.05.02',
@@ -68,7 +68,7 @@
             attend: '未出勤',
             title: '【公司理财】江苏工商本<精讲1>',
             subTitle: '【江苏工商本科】不过退费班',
-            src: '/static/img/书架.jpg',
+            src: '/static/mob-img/书架.jpg',
             name: '任思远'
           }
         ]
@@ -208,7 +208,7 @@
     margin-right: .1rem;
     width: .75rem;
     height: .8125rem;
-    background: url("/static/img/file.png") no-repeat;
+    background: url("/static/mob-img/file.png") no-repeat;
     background-size: 100% 100%;
   }
 
@@ -227,7 +227,7 @@
     margin-right: .1rem;
     width: .75rem;
     height: .8125rem;
-    background: url("/static/img/homework.png") no-repeat;
+    background: url("/static/mob-img/homework.png") no-repeat;
     background-size: 100% 100%;
   }
 </style>

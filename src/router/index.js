@@ -5,6 +5,7 @@ Vue.use(Router);
 
 export default new Router({
   mode: 'history',
+  base: '/geren/',
   routes: [
     {
       path: '/',
@@ -13,7 +14,7 @@ export default new Router({
     },
     {
       path: '/cal',
-      name: 'Cal',
+      name: 'M_Cal',
       component: resolve => require(['@/components/personal-center/M_Calendar'], resolve)
     },
     {

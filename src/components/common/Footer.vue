@@ -80,7 +80,7 @@
           width: 1.5625rem
           height: 1.5625rem
           vertical-align: middle
-          background: url("/static/img/phone-icon.png") no-repeat
+          background: url("/static/mob-img/phone-icon.png") no-repeat
           background-size: 100% 100%
 
       .online-advisory
@@ -91,6 +91,6 @@
           width: 1.5625rem
           height: 1.5625rem
           vertical-align: middle
-          background: url("/static/img/online-icon.png") no-repeat
+          background: url("/static/mob-img/online-icon.png") no-repeat
           background-size: 100% 100%
 </style>

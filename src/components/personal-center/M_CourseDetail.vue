@@ -16,19 +16,19 @@
     <footer>
       <mt-tabbar v-model="active">
         <mt-tab-item id="mk">
-          <img slot="icon" src="/static/img/mk.png">
+          <img slot="icon" src="/static/mob-img/mk.png">
           模考
         </mt-tab-item>
         <mt-tab-item id="zl">
-          <img slot="icon" src="/static/img/zl.png">
+          <img slot="icon" src="/static/mob-img/zl.png">
           资料
         </mt-tab-item>
         <mt-tab-item id="tk">
-          <img slot="icon" src="/static/img/tk.png">
+          <img slot="icon" src="/static/mob-img/tk.png">
           题库
         </mt-tab-item>
         <mt-tab-item id="jh">
-          <img slot="icon" src="/static/img/jh.png">
+          <img slot="icon" src="/static/mob-img/jh.png">
           考试计划变更
         </mt-tab-item>
       </mt-tabbar>
