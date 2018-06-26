@@ -2,7 +2,7 @@ import {MessageBox} from 'mint-ui';
 import axios from 'axios';
 
 // axios.defaults.timeout = 1000;
-// axios.defaults.baseURL = 'http://127.0.0.1:3000/';
+axios.defaults.baseURL = '/l/';
 
 axios.interceptors.request.use(config => {
   return config;
