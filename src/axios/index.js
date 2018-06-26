@@ -13,6 +13,7 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(res => {
   let resData = {};
+  console.log(res);
   if (res.data && res.data[0].result) {
     if (res.data[0].result === 'success') {
       resData.data = JSON.parse(res.data[0].msg);

@@ -37,8 +37,11 @@ export default new Router({
           name: 'MK',
           component: resolve => require(['@/components/personal-center/MK'], resolve)
         }
-
       ]
+    }, {
+      path: '/M-tanscript',
+      name: 'M-tanscript',
+      component: resolve => require(['@/components/personal-center/M_tanscript'], resolve)
     }
   ]
 });

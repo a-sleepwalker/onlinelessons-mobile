@@ -32,3 +32,31 @@ export const VideoLoad = id => {
   }
   return axios.get('/Api/MobileGerenVideo.ashx?type=selectVideoModel&id=' + id).then(res => res);
 };
+/**
+ * @description 页面载入完成获取准考证号
+ * @param ticket
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getAdmissionTicket = ticket => {
+  let param = {};
+  if (!ticket) {
+    MessageBox('系统提示', '【ticket】参数不能为空');
+  } else {
+    param.ticket = ticket;
+  }
+  return axios.get('/Api/MobilePersonalCenter.ashx?type=selectAdmissionTicket' + ticket).then(res => res);
+};
+/**
+ * @description 根据准考证号获取对应成绩单
+ * @param tanscript
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getScoreList = tanscript => {
+  let param = {};
+  if (!tanscript) {
+    MessageBox('系统提示', '【tanscript】参数不能为空');
+  } else {
+    param.tanscript = tanscript;
+  }
+  return axios.get('/Api/MobilePersonalCenter.ashx?type=selectScore&ExamNo=' + tanscript).then(res => res);
+};
