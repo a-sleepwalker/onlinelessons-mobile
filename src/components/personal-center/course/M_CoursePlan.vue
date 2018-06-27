@@ -48,8 +48,7 @@
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
       'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-Calendar': resolve => require(['@/components/personal-center/M_Calendar'], resolve),
-      'M-CourseList': resolve => require(['@/components/personal-center/unit/CourseList'], resolve),
+      'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve),
       'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
     },
     data() {

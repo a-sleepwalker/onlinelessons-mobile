@@ -76,7 +76,7 @@
   // import flv from 'flv.js';
 
   export default {
-    name: 'MVideo',
+    name: 'M_Video',
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve)
     },
