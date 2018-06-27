@@ -32,7 +32,7 @@ export default new Router({
       name: 'M_CoursePlan',
       component: resolve => require(['@/components/personal-center/M_CoursePlan'], resolve)
     }, {
-      path: '/M-tanscript',
+      path: '/tanscript',
       name: 'M-tanscript',
       component: resolve => require(['@/components/personal-center/M_tanscript'], resolve)
     }
