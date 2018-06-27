@@ -5,8 +5,10 @@
     </M-Header>
     <div class="main-container">
       <div class="content-header">
-        <h1 class="content-title"></h1>
-        <h3 class=""></h3>
+        <h1 class="content-title">{{title}}</h1>
+        <h3 class="semester-text" @click="changeSemester">{{curSemester}}
+          <i class="dropdown-icon in-bl mintui mintui-back"></i>
+        </h3>
       </div>
       <mt-tab-container class="content" v-model="active">
         <mt-tab-container-item id="mk">
@@ -48,7 +50,10 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
-    <footer>
+    <div class="breadcrumbs-container">
+      <M-BreadCrumb></M-BreadCrumb>
+    </div>
+    <footer class="page-footer">
       <mt-tabbar v-model="active">
         <mt-tab-item id="mk">
           <img slot="icon" src="/static/mob-img/mk.png">
@@ -72,7 +77,6 @@
       :actions="semester"
       v-model="sheetVisible">
     </mt-actionsheet>
-    <M-BreadCrumb></M-BreadCrumb>
     <!--<M-Footer></M-Footer>-->
   </div>
 </template>
@@ -89,11 +93,48 @@
     data() {
       return {
         active: 'mk',
+        title: '【江苏工商本科】不过退费班',
+        curSemester: '',
         sheetVisible: false,
-        semester: [],
+        semester: [
+          {name: '第四学期', method: this.semesterHandler}
+        ],
         courseList: [
           {
             id: '1',
+            title: '公司理财',
+            st: '2018.05.14',
+            et: '2018.06.19',
+            courseDone: 0,
+            courseAll: 11,
+            homeworkDone: 0,
+            homeworkAll: 3,
+            examDone: 0,
+            examAll: 2
+          }, {
+            id: '2',
+            title: '公司理财',
+            st: '2018.05.14',
+            et: '2018.06.19',
+            courseDone: 0,
+            courseAll: 11,
+            homeworkDone: 0,
+            homeworkAll: 3,
+            examDone: 0,
+            examAll: 2
+          }, {
+            id: '3',
+            title: '公司理财',
+            st: '2018.05.14',
+            et: '2018.06.19',
+            courseDone: 0,
+            courseAll: 11,
+            homeworkDone: 0,
+            homeworkAll: 3,
+            examDone: 0,
+            examAll: 2
+          }, {
+            id: '4',
             title: '公司理财',
             st: '2018.05.14',
             et: '2018.06.19',
@@ -108,21 +149,41 @@
       };
     },
     created() {
-
+      this.curSemester = this.semester[0].name;
     },
     mounted() {
 
     },
-    methods: {}
+    methods: {
+      changeSemester() {
+        this.sheetVisible = !this.sheetVisible;
+      },
+      semesterHandler(data) {
+        console.log(data);
+        this.curSemester = data.name;
+      }
+    }
   };
 </script>
 
 <style scoped lang="stylus" type="text/stylus">
   .main-container
+    min-height: 30rem
     .content-header
+      padding: 0 .75rem
       height: 7.1875rem
+      color: #ffffff
       background: url("/static/mob-img/course-detail-head2.png") no-repeat
       background-size: 100% 100%
+      .content-title
+        line-height: 3rem
+        font-size: 1.125rem
+      .semester-text
+        line-height: 1.5rem
+        font-size: 1rem
+      .dropdown-icon
+        margin-left: .2rem
+        transform: rotateZ(-90deg)
     .content
       margin-top: -3rem
     .course-list
@@ -168,4 +229,13 @@
         background: url("/static/mob-img/mkjd.png") no-repeat
         background-size: 100% 100%
 
+  .breadcrumbs-container
+    padding-bottom: 55px
+
+  .page-footer
+    width: 100%
+    position: fixed
+    bottom: 0
+    .mint-tabbar
+      position: relative
 </style>
