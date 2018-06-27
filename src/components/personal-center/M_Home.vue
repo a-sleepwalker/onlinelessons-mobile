@@ -58,7 +58,7 @@
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
       'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
       'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve),
-      'M-ToolsPanel': resolve => require(['./unit/ToolsPanel'], resolve)
+      'M-ToolsPanel': resolve => require(['./course/unit/ToolsPanel'], resolve)
     },
     data() {
       return {

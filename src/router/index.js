@@ -1,44 +1,27 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import bankRoutes from './bank';
+import courseRoutes from './course';
+import downloadRoutes from './download';
+import latestRoutes from './latest';
+import scoreRoutes from './score';
+import teacherRoutes from './teacher';
+
+let rootRoutes = [
+  {
+    path: '/',
+    name: 'M_Home',
+    component: resolve => require(['@/components/personal-center/M_Home'], resolve)
+  }, {
+    path: '/video/:videoId',
+    name: 'M_Video',
+    component: resolve => require(['@/components/mvideo/M_video'], resolve)
+  }
+];
 
 Vue.use(Router);
-
 export default new Router({
   mode: 'history',
   base: '/geren/',
-  routes: [
-    {
-      path: '/',
-      name: 'M_Home',
-      component: resolve => require(['@/components/personal-center/M_Home'], resolve)
-    }, {
-      path: '/test',
-      name: 'test',
-      component: resolve => require(['@/components/personal-center/unit/CourseList'], resolve)
-    }, {
-      path: '/course',
-      name: 'M_CourseList',
-      component: resolve => require(['@/components/personal-center/M_CourseList'], resolve)
-    }, {
-      path: '/video/:videoId',
-      name: 'M_Video',
-      component: resolve => require(['@/components/mvideo/M_video'], resolve)
-    }, {
-      path: '/course-detail',
-      name: 'M_CourseDetail',
-      component: resolve => require(['@/components/personal-center/M_CourseDetail'], resolve)
-    }, {
-      path: '/course-plan',
-      name: 'M_CoursePlan',
-      component: resolve => require(['@/components/personal-center/M_CoursePlan'], resolve)
-    }, {
-      path: '/tanscript',
-      name: 'M-tanscript',
-      component: resolve => require(['@/components/personal-center/M_tanscript'], resolve)
-    }, {
-      path: '/mycourse',
-      name: 'M_MyCourse',
-      component: resolve => require(['@/components/personal-center/M_MyCourse'], resolve)
-    }
-  ]
+  routes: [...rootRoutes, bankRoutes, courseRoutes, downloadRoutes, latestRoutes, scoreRoutes, teacherRoutes].reduce((prev, cur) => prev.concat(cur), [])
 });

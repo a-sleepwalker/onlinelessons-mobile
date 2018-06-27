@@ -6,7 +6,7 @@
         <div class="card-bg"></div>
         <div class="card-content clearfix">
           <h1 class="course-title">{{courseTile}}</h1>
-          <router-link to="/course-plan" class="to-course-plan flr">
+          <router-link to="/course/course-plan" class="to-course-plan flr">
             查看课程安排
             <i class="showmore-icon in-bl mintui mintui-back"></i>
           </router-link>

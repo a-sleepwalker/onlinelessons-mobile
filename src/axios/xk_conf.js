@@ -2,7 +2,7 @@
 import {MessageBox} from 'mint-ui';
 import axios from 'axios';
 
-axios.defaults.baseURL = '/l/';
+// axios.defaults.baseURL = '/l/';
 
 axios.interceptors.request.use(config => {
   return config;

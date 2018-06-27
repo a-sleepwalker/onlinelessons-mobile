@@ -3,11 +3,11 @@
     <ul class="course-list">
       <li class="course-item" v-for="(item,idx) in courseList" :key="idx" @click="itemClick(item)">
         <p class="course-time-container clearfix">
-          <span class="course-time">{{item.StartDate|formatDate('.')}} {{item.StartDate|formatTime}}~{{item.EndDate|formatTime}}</span>
-          <span class="attend flr">{{item.Attendance|parseAttendance}}</span>
+          <span class="course-time">{{item.st|formatDate('.')}} {{item.st|formatTime}}~{{item.st|formatTime}}</span>
+          <span class="attend flr">{{item.attend|parseAttendance}}</span>
         </p>
         <div class="course-content">
-          <p class="course-title">{{item.VideoName}}</p>
+          <p class="course-title">{{item.title}}</p>
           <p class="course-sub-title">{{item.subTitle}}</p>
           <p class="img-icon-container">
             <img :src="item.src" alt="">
@@ -25,7 +25,7 @@
 
 <script>
   export default {
-    name: 'CouseList',
+    name: 'CourseList',
     data() {
       return {};
     },
