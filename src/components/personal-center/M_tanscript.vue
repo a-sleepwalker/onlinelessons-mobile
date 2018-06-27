@@ -1,32 +1,25 @@
 <template>
   <div>
+    <M-Header pageTitle="成绩单" :styleObj="{background:'url(/static/mob-img/header4.png) no-repeat','background-size':'100% 100%'}">
+      <mt-button>
+        <img src="/static/mob-img/share.png" height="20" width="20" slot="icon">
+      </mt-button>
+    </M-Header>
     <!--上部准考证信息-->
     <div class="tips">
       <div class="wrapper">
-        <img src="/static/mob-img/avator.png" height="120" width="120"/>
+        <img src="/static/mob-img/avator.png" />
         <div class="p_tanscript">
           <p class="person">
             <span>高盛</span>的准考证
           </p>
           <span class="text">添加准考证</span>
         </div>
-
       </div>
     </div>
     <!--显示当前准考证 -->
-    <div v-if="dropdown" @click="toggle()">
-      <mt-cell class="ticket-number" style=";" :title="'准考证号：'+ticketNumber" is-link>
-        <span>切换准考证</span>
-      </mt-cell>
-    </div>
-    <!--准考证选择框-->
-    <div class='change-number' v-else="">
-      <p>请选择准考证：</p>
-      <ul>
-        <li v-for="(num, index) in ticket" :key="index" @click="toggle(),changeNum()">
-          <mt-cell :title="'准考证号：'+num" is-link></mt-cell>
-        </li>
-      </ul>
+    <div v-if="dropdown" @click="sheetVisible2 = true"  >
+      <mt-cell class="ticket-number" style=";" :title="'准考证号：'+ticketNumber" is-link></mt-cell>
     </div>
     <!--成绩展示-->
     <ul class="content" v-for="(score,index) in scores" :key="index">
@@ -41,7 +34,12 @@
         </div>
       </li>
     </ul>
+    <M-BreadCrumb></M-BreadCrumb>
+    <M-Footer></M-Footer>
+    <!--点击准考证下拉框-->
+    <mt-actionsheet :actions="actions2" v-model="sheetVisible2" cancel-text=""></mt-actionsheet>
   </div>
+
 </template>
 
 <script>
@@ -50,8 +48,27 @@
 
   export default {
     name: 'M_tanscript',
+    components: {
+      'M-Header': resolve => require(['@/components/common/Header'], resolve),
+      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
+      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      // 'M-ToolsPanel': resolve => require(['./unit/ToolsPanel'], resolve)
+    },
     data() {
       return {
+        // action-sheet想数据
+        sheetVisible: false,
+        sheetVisible2: false,
+        actions2: [{
+          name: '准考证号：111'
+         // method发送请求
+        }, {
+          name: '准考证号：222'
+          // method发送请求
+        }, {
+          name: '准考证号：333'
+          // method发送请求
+        }],
         // 当前准考证号
         ticketNumber: '464646',
         dropdown: true,
@@ -80,6 +97,17 @@
       };
     },
     methods: {
+      takePhoto() {
+        console.log('taking photo');
+      },
+
+      openAlbum() {
+        console.log('opening album');
+      },
+
+      goBack() {
+        history.go(-1);
+      },
       toggle: function () {
         this.dropdown = !this.dropdown;
       },
@@ -149,7 +177,8 @@
 <style scoped>
   .tips {
     height: 6.125rem;
-    background: #ff675d;
+    background-image: url("/static/mob-img/ticketbg.png");
+    background-size: cover;
     position: relative;
   }
 
@@ -162,17 +191,17 @@
 
   .wrapper img {
     float: left;
-    width: 2.59375rem;
-    height: 2.59375rem;
+    width: 2.625rem;
+    height: 2.625rem;
     border-radius: 1.3125rem;
 
   }
 
   .wrapper .p_tanscript {
     float: left;
-    margin-left: 0.325rem;
-    width: 7.1875rem;
-    height:2.65625rem;
+    margin-left: 0.625rem;
+    /*width: 7.1875rem;*/
+    /*height:2.65625rem;*/
     color: #fff;
   }
 
@@ -183,7 +212,7 @@
   }
 
   .text {
-    font-size: 1.0625rem;
+    font-size: 0.6875rem;
     border: 1px solid #fff;
     border-radius: 0.15625rem;
     padding:  0.15625rem 0.3125rem;
