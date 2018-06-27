@@ -67,6 +67,7 @@
     },
     methods: {
       toMyCourse() {
+        this.$router.push('/mycourse');
       },
       getMyCourseList() {
         selectTimeVideo(new Date().toLocaleDateString()).then(data => {

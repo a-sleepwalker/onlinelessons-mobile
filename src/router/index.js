@@ -35,6 +35,10 @@ export default new Router({
       path: '/tanscript',
       name: 'M-tanscript',
       component: resolve => require(['@/components/personal-center/M_tanscript'], resolve)
+    }, {
+      path: '/mycourse',
+      name: 'M_MyCourse',
+      component: resolve => require(['@/components/personal-center/M_MyCourse'], resolve)
     }
   ]
 });
