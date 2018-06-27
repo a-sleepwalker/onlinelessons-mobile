@@ -13,18 +13,7 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(res => {
   let resData = {};
-  if (res.data && res.data[0].result) {
-    if (res.data[0].result === 'success') {
-      resData.data = JSON.parse(res.data[0].msg);
-      resData.status = 'success';
-    } else {
-      resData.message = res.data[0].msg;
-      resData.status = 'failed';
-    }
-  } else {
-    resData.message = '访问异常';
-    resData.status = 'failed';
-  }
+
   return resData;
 }, error => {
   if (error.response.status >= 400) {
