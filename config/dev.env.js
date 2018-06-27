@@ -16,10 +16,5 @@ const LOCAL_IP = (function () {
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  /**
-   * @description 获取本机内网IP
-   * @return {string}
-   * @author taowt
-   */
   LOCAL_IP
 });
