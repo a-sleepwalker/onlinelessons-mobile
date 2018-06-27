@@ -11,37 +11,34 @@ export default new Router({
       path: '/',
       name: 'M_Home',
       component: resolve => require(['@/components/personal-center/M_Home'], resolve)
-    },
-    {
-      path: '/cal',
-      name: 'M_Cal',
-      component: resolve => require(['@/components/personal-center/M_Calendar'], resolve)
-    },
-    {
+    }, {
+      path: '/test',
+      name: 'test',
+      component: resolve => require(['@/components/personal-center/unit/CourseList'], resolve)
+    }, {
       path: '/course',
       name: 'M_CourseList',
       component: resolve => require(['@/components/personal-center/M_CourseList'], resolve)
-    },
-    {
+    }, {
       path: '/video/:videoId',
       name: 'M_Video',
       component: resolve => require(['@/components/mvideo/M_video'], resolve)
-    },
-    {
-      path: '/M_CourseDetail',
-      name: 'M_CourseDetail',
-      component: resolve => require(['@/components/personal-center/M_CourseDetail'], resolve),
-      children: [
-        {
-          path: 'mk',
-          name: 'MK',
-          component: resolve => require(['@/components/personal-center/MK'], resolve)
-        }
-      ]
     }, {
-      path: '/M-tanscript',
+      path: '/course-detail',
+      name: 'M_CourseDetail',
+      component: resolve => require(['@/components/personal-center/M_CourseDetail'], resolve)
+    }, {
+      path: '/course-plan',
+      name: 'M_CoursePlan',
+      component: resolve => require(['@/components/personal-center/M_CoursePlan'], resolve)
+    }, {
+      path: '/tanscript',
       name: 'M-tanscript',
       component: resolve => require(['@/components/personal-center/M_tanscript'], resolve)
+    }, {
+      path: '/mycourse',
+      name: 'M_MyCourse',
+      component: resolve => require(['@/components/personal-center/M_MyCourse'], resolve)
     }
   ]
 });

@@ -6,6 +6,7 @@ import {MessageBox} from 'mint-ui';
  * @description 返回当月有课程的日期
  * @param time
  * @returns {Promise<AxiosResponse<any>>}
+ * @author taowt
  */
 export const selectTimeVideo = time => {
   let param = {};
@@ -21,7 +22,7 @@ export const selectTimeVideo = time => {
  * @description 根据课程ID取视频
  * @param id
  * @returns {Promise<AxiosResponse<any>>}
- * @constructor
+ * @author taowt
  */
 export const VideoLoad = id => {
   let param = {};
