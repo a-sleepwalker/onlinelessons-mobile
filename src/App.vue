@@ -1,17 +1,11 @@
 <template>
-  <!--<v-app>-->
-    <!--<v-content>-->
-      <!--<v-container>-->
-        <div id="app-container">
-          <transition>
-            <!--<keep-alive>-->
-              <router-view/>
-            <!--</keep-alive>-->
-          </transition>
-        </div>
-      <!--</v-container>-->
-    <!--</v-content>-->
-  <!--</v-app>-->
+  <div id="app-container">
+    <transition>
+      <!--<keep-alive>-->
+      <router-view/>
+      <!--</keep-alive>-->
+    </transition>
+  </div>
 </template>
 
 <script>
