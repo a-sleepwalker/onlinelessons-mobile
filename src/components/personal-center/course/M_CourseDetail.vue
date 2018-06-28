@@ -6,7 +6,7 @@
     <div class="main-container">
       <div class="content-header">
         <h1 class="content-title">{{title}}</h1>
-        <h3 class="semester-text" @click="changeSemester">{{curSemester}}
+        <h3 class="semester-text in-bl" @click="changeSemester">{{curSemester}}
           <i class="dropdown-icon in-bl mintui mintui-back"></i>
         </h3>
       </div>
@@ -56,19 +56,19 @@
     <footer class="page-footer">
       <mt-tabbar v-model="active">
         <mt-tab-item id="mk">
-          <img slot="icon" src="/static/mob-img/mk.png">
+          <i slot="icon" class="in-bl mk-icon"></i>
           模考
         </mt-tab-item>
         <mt-tab-item id="zl">
-          <img slot="icon" src="/static/mob-img/zl.png">
+          <i slot="icon" class="in-bl zl-icon"></i>
           资料
         </mt-tab-item>
         <mt-tab-item id="tk">
-          <img slot="icon" src="/static/mob-img/tk.png">
+          <i slot="icon" class="in-bl tk-icon"></i>
           题库
         </mt-tab-item>
         <mt-tab-item id="jh">
-          <img slot="icon" src="/static/mob-img/jh.png">
+          <i slot="icon" class="in-bl jh-icon"></i>
           考试计划变更
         </mt-tab-item>
       </mt-tabbar>
@@ -238,4 +238,16 @@
     bottom: 0
     .mint-tabbar
       position: relative
+    .mk-icon
+      background: url("/static/mob-img/mk.png") no-repeat
+      background-size: 100% 100%
+    .zl-icon
+      background: url("/static/mob-img/zl.png") no-repeat
+      background-size: 100% 100%
+    .tk-icon
+      background: url("/static/mob-img/tk.png") no-repeat
+      background-size: 100% 100%
+    .jh-icon
+      background: url("/static/mob-img/jh.png") no-repeat
+      background-size: 100% 100%
 </style>
