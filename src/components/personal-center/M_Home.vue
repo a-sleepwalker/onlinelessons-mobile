@@ -7,7 +7,7 @@
       <div class="user-info-container">
         <div class="user-basic-info clearfix">
           <div class="user-img in-bl">
-            <img :src="user.img" alt="">
+            <img @click="routeHandler('personalInfor')" :src="user.img" alt="">
             <i class="user-auth in-bl"></i>
           </div>
           <div class="user-info-text in-bl">
