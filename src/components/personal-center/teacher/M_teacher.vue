@@ -63,7 +63,7 @@
     line-height: 3.75rem;
   }
   .mint-cell-value.is-link {
-    margin-right: 130px;
+    /*margin-right: 130px;*/
   }
   .mint-badge.is-size-normal {
     width: 1rem;
@@ -71,7 +71,9 @@
     padding: 3px;
     line-height: 1rem;
   }
-
+  .mint-cell-wrapper{
+    border-bottom: 1px solid #f2f2f2;
+  }
 </style>
 <style scoped>
 
