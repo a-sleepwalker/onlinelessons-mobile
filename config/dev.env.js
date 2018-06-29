@@ -6,7 +6,7 @@ const LOCAL_IP = (function () {
   let interFace = os.networkInterfaces();
   for (let dev in interFace) {
     if (interFace.hasOwnProperty(dev)) {
-      if (interFace[dev][1].address.indexOf('192.168') > -1) {
+      if (interFace[dev][1].address.indexOf('172.168') > -1) {
         return interFace[dev][1].address;
       }
     }

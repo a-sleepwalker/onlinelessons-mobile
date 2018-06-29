@@ -4,14 +4,14 @@
       <mt-button>完成</mt-button>
     </M-Header>
     <div classs="container">
-      <mt-field label="旧密码" placeholder="请输入旧密码" type="password" v-model="oldPassword">
-        <img src="/static/mob-img/psd1.jpg" >
+      <mt-field label="旧密码" placeholder="请输入旧密码" :type="isshowO?'password':'text'" v-model="oldPassword">
+        <i :class="isshowO?'iconH':'iconS'" @click="isshowO=!isshowO"></i>
       </mt-field>
-      <mt-field label="新密码" placeholder="请输入密码"  v-model="newPassword">
-        <img src="/static/mob-img/psd2.jpg" >
+      <mt-field label="新密码" placeholder="请输入密码"  :type="isshowN?'password':'text'"  v-model="newPassword">
+        <i :class="isshowN?'iconH':'iconS'" @click="isshowN=!isshowN" ></i>
       </mt-field>
-      <mt-field label="确认密码" placeholder="请再次输入密码" type="password" v-model="rePassword">
-        <img src="/static/mob-img/psd1.jpg" >
+      <mt-field label="确认密码" placeholder="请再次输入密码" :type="isshowR?'password':'text'"  v-model="rePassword">
+        <i :class="isshowR?'iconH':'iconS'" @click="isshowR=!isshowR" ></i>
       </mt-field>
     </div>
     <!--固定到底部-->
@@ -32,7 +32,12 @@
       'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
     },
     data() {
-      return {};
+      return {
+        iconurl: '../../assets/psd2.jpg',
+        isshowO: false,
+        isshowN: false,
+        isshowR: false
+      };
     },
     created() {
 
@@ -43,23 +48,26 @@
     methods: {}
   };
 </script>
-<style>
-  /*.breadcrumbs{*/
-    /*width: 100%;*/
-    /*position: fixed;*/
-    /*bottom:6rem;*/
-  /*}*/
-  /*.page-footer {*/
-    /*width: 100%;*/
-    /*position: fixed;*/
-    /*bottom:0rem;*/
-  /*}*/
+
+<style scoped>
   .bottom{
     position: absolute;
     bottom: 0;
   }
-</style>
-
-<style scoped>
-
+  .iconH{
+    width:1.0625rem;
+    height: 0.6875rem;
+    background-image: url('/static/mob-img/psd1.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+  }
+  .iconS{
+    width:1.0625rem;
+    height: 0.6875rem;
+    background-image: url('/static/mob-img/psd2.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+  }
 </style>
