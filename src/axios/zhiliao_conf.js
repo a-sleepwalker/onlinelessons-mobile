@@ -1,8 +1,8 @@
-// axios.defaults.timeout = 1000;
 import {MessageBox} from 'mint-ui';
 import axios from 'axios';
 
-axios.defaults.baseURL = '/l/';
+// axios.defaults.timeout = 3000;
+// axios.defaults.baseURL = '/';
 
 axios.interceptors.request.use(config => {
   return config;
@@ -13,7 +13,16 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(res => {
   let resData = {};
-
+  let serverResponse = res.data;
+  let responseData = serverResponse[0];
+  if (responseData.result === 'success') {
+    resData.status = 'success';
+    resData.data = responseData.msg;
+    resData.message = '';
+  } else {
+    resData.status = 'failed';
+    resData.message = responseData.msg;
+  }
   return resData;
 }, error => {
   if (error.response.status >= 400) {

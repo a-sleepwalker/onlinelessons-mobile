@@ -1,24 +1,8 @@
-/* eslint-disable camelcase */
-// const xk_conf = require('./xk_conf');
-// const zhiliao_conf = require('./zhiliao_conf');
-//
-// const release = 'xk';
-// let axios;
-// switch (release) {
-//   case 'xk':
-//     axios = xk_conf;
-//     break;
-//   case 'zhiliao':
-//     axios = zhiliao_conf;
-//     break;
-// }
-// export default axios;
-
-// axios.defaults.timeout = 1000;
 import {MessageBox} from 'mint-ui';
 import axios from 'axios';
 
-// axios.defaults.baseURL = '/l/';
+// axios.defaults.timeout = 3000;
+// axios.defaults.baseURL = '/';
 
 axios.interceptors.request.use(config => {
   return config;
@@ -29,17 +13,15 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(res => {
   let resData = {};
-  if (res.data && res.data[0].result) {
-    if (res.data[0].result === 'success') {
-      resData.data = JSON.parse(res.data[0].msg);
-      resData.status = 'success';
-    } else {
-      resData.message = res.data[0].msg;
-      resData.status = 'failed';
-    }
+  let serverResponse = res.data;
+  let responseData = serverResponse[0];
+  if (responseData.result === 'success') {
+    resData.status = 'success';
+    resData.data = responseData.msg;
+    resData.message = '';
   } else {
-    resData.message = '访问异常';
     resData.status = 'failed';
+    resData.message = responseData.msg;
   }
   return resData;
 }, error => {

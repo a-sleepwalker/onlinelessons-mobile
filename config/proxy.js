@@ -10,10 +10,12 @@
  *       pathRewrite：匹配地址
  *      }
  */
-const proxyPath = 'http://localhost:49751/';
+
+// const xkPort = '49751';
+const zhiliaoPort = '52443';
 const proxyTable = {
   '/Api/**': {
-    target: proxyPath,
+    target: `http://localhost:${zhiliaoPort}`,
     changeOrigin: true
   }
 };
