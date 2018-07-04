@@ -12,18 +12,7 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(res => {
-  let resData = {};
-  let serverResponse = res.data;
-  let responseData = serverResponse[0];
-  if (responseData.result === 'success') {
-    resData.status = 'success';
-    resData.data = responseData.msg;
-    resData.message = '';
-  } else {
-    resData.status = 'failed';
-    resData.message = responseData.msg;
-  }
-  return resData;
+  return res.data;
 }, error => {
   if (error.response.status >= 400) {
     MessageBox('系统提示', '访问异常');
