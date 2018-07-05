@@ -13,10 +13,6 @@ let rootRoutes = [
     path: '/',
     name: 'M_Home',
     component: resolve => require(['@/components/personal-center/M_Home'], resolve)
-  }, {
-    path: '/video/:videoId',
-    name: 'M_Video',
-    component: resolve => require(['@/components/mvideo/M_video'], resolve)
   }
 ];
 

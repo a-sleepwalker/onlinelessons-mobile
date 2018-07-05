@@ -1,6 +1,7 @@
 <template>
   <div>
-    <M-Header pageTitle="成绩单" :styleObj="{background:'url(/static/mob-img/header4.png) no-repeat','background-size':'100% 100%'}">
+    <M-Header pageTitle="成绩单"
+              :styleObj="{background:'url(/static/mob-img/header4.png) no-repeat','background-size':'100% 100%'}">
       <mt-button>
         <img src="/static/mob-img/share.png" height="20" width="20" slot="icon">
       </mt-button>
@@ -8,7 +9,7 @@
     <!--上部准考证信息-->
     <div class="tips">
       <div class="wrapper">
-        <img src="/static/mob-img/avator.png" />
+        <img src="/static/mob-img/avator.png"/>
         <div class="p_tanscript">
           <p class="person">
             <span>高盛</span>的准考证
@@ -18,18 +19,18 @@
       </div>
     </div>
     <!--显示当前准考证 -->
-    <div v-if="dropdown" @click="sheetVisible2 = true"  >
-      <mt-cell class="ticket-number" style=";" :title="'准考证号：'+ticketNumber" is-link></mt-cell>
+    <div v-if="dropdown" @click="sheetVisible2 = true">
+      <mt-cell class="ticket-number" style=";" :title="'准考证号: '+ticketNumber" is-link></mt-cell>
     </div>
     <!--成绩展示-->
     <ul class="content" v-for="(score,index) in scores" :key="index">
       <li>
-        <mt-cell :title="score.state">
+        <mt-cell :title="score.State">
           <img slot="icon" src="/static/mob-img/cell-icon.png" width="8" height="32">
         </mt-cell>
         <div class="course">
-          <mt-cell v-for="(course,index) in score.course" :key="index" :title="course.coursename">
-            <span style="color:#ff675d;">{{course.score}}</span>
+          <mt-cell v-for="(course,index) in score.Course" :key="index" :title="course.Coursename.slice(0,20)+'...'">
+            <span style="color:#ff675d;">{{course.Score}}</span>
           </mt-cell>
         </div>
       </li>
@@ -52,44 +53,32 @@
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
       'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
       'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
-      // 'M-ToolsPanel': resolve => require(['./unit/ToolsPanel'], resolve)
     },
     data() {
       return {
         // action-sheet想数据
         sheetVisible: false,
         sheetVisible2: false,
-        actions2: [{
-          name: '准考证号：111'
-         // method发送请求
-        }, {
-          name: '准考证号：222'
-          // method发送请求
-        }, {
-          name: '准考证号：333'
-          // method发送请求
-        }],
+        // 控制acition-sheet中的展示内容和触发的事件
+        actions2: [],
         // 当前准考证号
         ticketNumber: '464646',
         dropdown: true,
-        // 所有的准考证号
-        ticket: [
-          111, 222, 333
-        ],
+        // 所有的成绩
         scores: [
           {
-            state: '本学期成绩单',
-            course: [{
-              coursename: '人力资源管理（一）',
-              score: '75.00'
+            State: '本学期成绩单',
+            Course: [{
+              Coursename: '人力资源管理（一）',
+              Score: '75.00'
             },
               {
-                coursename: '金融理论与实务',
-                score: '61.00'
+                Coursename: '金融理论与实务',
+                Score: '61.00'
               },
               {
-                coursename: '宏观经济与分析\n',
-                score: '81.00'
+                Coursename: '宏观经济与分析\n',
+                Score: '81.00'
               }
             ]
           }
@@ -97,47 +86,38 @@
       };
     },
     methods: {
-      takePhoto() {
-        console.log('taking photo');
-      },
-
-      openAlbum() {
-        console.log('opening album');
-      },
-
-      goBack() {
-        history.go(-1);
-      },
       toggle: function () {
         this.dropdown = !this.dropdown;
-      },
-      // 选择对于准考证 请求不同成绩单
-      changeNum: function (event) {
-        console.log(event);
-        getScoreList('050115258975').then(data => {
-          if (data.status === 'success') {
-            // 打印获取到的数据
-            console.log(data.data);
-          } else {
-            this.$messagebox('系统提示', `获取数据失败，请联系管理员!<br/>错误信息：${data.message}`);
-          }
-        });
       }
     },
-  created() {
+    created() {
+      getAdmissionTicket().then(data => {
+        // 显示第一条 作为选择的准考证
+        this.ticketNumber = JSON.parse(data[0].msg)[0].ExamNo;
+          getScoreList(this.ticketNumber).then(data => {
+            this.scores = JSON.parse(data[0].msg);
+          });
+        // 获取到数据
+        let examNums = JSON.parse(data[0].msg);
+        // 给action-sheet添加数据与方法
+        this.actions2 = examNums.map(item => {
+          return {
+            name: '准考证号：' + item.ExamNo,
+            method: () => {
+              this.ticketNumber = item.ExamNo;
+              console.log(item.ExamNo);
+              getScoreList(this.ticketNumber).then(data => {
+                this.scores = JSON.parse(data[0].msg);
+              });
+            }
+          };
+        });
+      });
+    },
+    mounted() {
+      // 挂载完成获取到 当前用户 准考证号
 
-  },
-  mounted() {
-    // 挂载完成获取到 当前用户 准考证号
-    getAdmissionTicket('').then(data => {
-      if (data.status === 'success') {
-        // 打印获取到的数据
-        console.log(data.data);
-      } else {
-        this.$messagebox('系统提示', `获取数据失败，请联系管理员!<br/>错误信息：${data.message}`);
-      }
-    });
-  }
+    }
   }
   ;
 </script>
@@ -169,7 +149,7 @@
 
   /*控制切换准考证窗口的样式*/
   .change-number .mint-cell-wrapper {
-    border-bottom: 1px solid #999999;
+    border-bottom: 1px solid #ededed;
     text-indent: 0.9375rem;
   }
 
@@ -215,16 +195,16 @@
     font-size: 0.6875rem;
     border: 1px solid #fff;
     border-radius: 0.15625rem;
-    padding:  0.15625rem 0.3125rem;
+    padding: 0.15625rem 0.3125rem;
   }
 
   .content {
     margin: 0 0.9375rem;
-    border-bottom: 1px solid gray
+    border-bottom: 1px solid #ededed;
   }
 
   .ticket-number {
-    border-bottom: 1px solid #999999;
+    border-bottom: 1px solid  #ededed;
     text-indent: 0.9375rem;
     margin-bottom: 1.375rem;
   }
