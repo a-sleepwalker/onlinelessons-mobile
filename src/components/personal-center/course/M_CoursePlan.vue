@@ -56,6 +56,7 @@
         title: '宏观经济分析',
         courseList: [
           {
+            id: 'c1',
             st: '2018.05.02',
             et: '19:00~21:30',
             attend: '未出勤',
@@ -65,6 +66,7 @@
             name: '任思远'
           },
           {
+            id: 'c2',
             st: '2018.05.02',
             et: '19:00~21:30',
             attend: '未出勤',
@@ -73,6 +75,7 @@
             src: '/static/mob-img/书架.jpg',
             name: '任思远'
           }, {
+            id: 'c3',
             st: '2018.05.02',
             et: '19:00~21:30',
             attend: '未出勤',
@@ -92,7 +95,7 @@
     },
     methods: {
       clickHandler(item) {
-
+        this.$router.push('/course/course-detail/' + item.id);
       }
     }
   };

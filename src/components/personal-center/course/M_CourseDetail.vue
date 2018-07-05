@@ -50,9 +50,6 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
-    <div class="breadcrumbs-container">
-      <M-BreadCrumb></M-BreadCrumb>
-    </div>
     <footer class="page-footer">
       <mt-tabbar v-model="active">
         <mt-tab-item id="mk">
@@ -77,7 +74,6 @@
       :actions="semester"
       v-model="sheetVisible">
     </mt-actionsheet>
-    <!--<M-Footer></M-Footer>-->
   </div>
 </template>
 
@@ -87,8 +83,7 @@
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
       'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve)
     },
     data() {
       return {
@@ -228,9 +223,6 @@
       .exam-icon
         background: url("/static/mob-img/mkjd.png") no-repeat
         background-size: 100% 100%
-
-  .breadcrumbs-container
-    padding-bottom: 55px
 
   .page-footer
     width: 100%

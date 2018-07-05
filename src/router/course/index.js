@@ -5,7 +5,7 @@ let route = [
     name: 'M_CourseList',
     component: resolve => require([`@/components/personal-center${base}/M_CourseList`], resolve)
   }, {
-    path: `${base}/course-detail`,
+    path: `${base}/course-detail/:courseId`,
     name: 'M_CourseDetail',
     component: resolve => require([`@/components/personal-center${base}/M_CourseDetail`], resolve)
   }, {
