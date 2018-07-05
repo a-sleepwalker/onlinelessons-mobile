@@ -69,3 +69,22 @@ export const getOrderForm = () => axios.get('/API/WrongQuestionHandler.ashx?type
  *  @author yuanzx
  */
 export const getMistakes = () => axios.get('/API/WrongQuestionHandler.ashx?type=getWrongQuestion').then(res => res);
+/**
+ * @description 根据当前日期获取课程表
+ * @author taowt <2018-7-5>
+ * @param date
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const selectTimeVideoList = date => {
+  let param = {};
+  if (!date) {
+    MessageBox('系统提示', `【date】参数不能为空`);
+  } else {
+    param.time = date;
+  }
+  return axios.post('/Api/MobileGerenVideo.ashx?type=selectTimeVideoList', param).then(res => res);
+};
+
+export const selectMajor = () => {
+  return axios.get('/Api/MobileGerenVideo.ashx?type=selectMajor').then(res => res);
+};

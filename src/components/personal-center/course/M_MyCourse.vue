@@ -2,46 +2,74 @@
   <div>
     <M-Header pageTitle="我的课程"></M-Header>
     <div class="main-container">
-      <div class="course-card">
-        <div class="card-bg"></div>
-        <div class="card-content clearfix">
-          <h1 class="course-title">{{courseTile}}</h1>
-          <router-link to="/course/course-plan" class="to-course-plan flr">
-            查看课程安排
-            <i class="showmore-icon in-bl mintui mintui-back"></i>
-          </router-link>
-        </div>
-      </div>
-      <div class="course-content">
-        <h2 class="content-title">关于本课程</h2>
-        <p class="content-text">{{contentText}}</p>
-      </div>
+      <ul class="course-list">
+        <li class="course-item" v-for="item in courseList" :key="item.id">
+          <div class="course-card">
+            <div class="card-bg"></div>
+            <div class="card-content clearfix">
+              <h1 class="course-title">{{item.courseTile}}</h1>
+              <router-link :to="`/course/course-detail/${item.id}`" class="to-course-plan flr">
+                查看课程安排
+                <i class="showmore-icon in-bl mintui mintui-back"></i>
+              </router-link>
+            </div>
+          </div>
+          <div class="course-content">
+            <h2 class="content-title">关于本课程</h2>
+            <p class="content-text">{{item.contentText}}</p>
+          </div>
+        </li>
+      </ul>
     </div>
-    <M-BreadCrumb></M-BreadCrumb>
   </div>
 </template>
 
 <script>
+  import {selectMajor} from '@/API';
+
   export default {
     name: 'M_MyCourse',
     components: {
-      'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'M-Header': resolve => require(['@/components/common/Header'], resolve)
     },
     data() {
       return {
-        courseTile: '【江苏工商本科】不过退费班',
-        contentText: '您需要4个学期来完成本班型的全部学习内容，并\n' +
-        '在学期末参加相应科目的考试并通过后才能获得\n' +
-        '学分。您当前所在学期为：第4学期。在本学期\n' +
-        '中，您将学习4个科目，出勤37节课程，需参加3\n' +
-        '个科目的考试。\n' +
-        '\n' +
-        '若您对课程任何疑问，请咨询班主任。'
+        courseList: [
+          {
+            id: 'c1',
+            courseTile: '【江苏工商本科】不过退费班',
+            contentText: '您需要4个学期来完成本班型的全部学习内容，并\n' +
+            '在学期末参加相应科目的考试并通过后才能获得\n' +
+            '学分。您当前所在学期为：第4学期。在本学期\n' +
+            '中，您将学习4个科目，出勤37节课程，需参加3\n' +
+            '个科目的考试。\n' +
+            '\n' +
+            '若您对课程任何疑问，请咨询班主任。'
+          },
+          {
+            id: 'c2',
+            courseTile: '【江苏工商本科】不过退费班',
+            contentText: '您需要4个学期来完成本班型的全部学习内容，并\n' +
+            '在学期末参加相应科目的考试并通过后才能获得\n' +
+            '学分。您当前所在学期为：第4学期。在本学期\n' +
+            '中，您将学习4个科目，出勤37节课程，需参加3\n' +
+            '个科目的考试。\n' +
+            '\n' +
+            '若您对课程任何疑问，请咨询班主任。'
+          }
+        ]
       };
     },
     created() {
-
+      const _this = this;
+      selectMajor().then(data => {
+        if (data[0].result === 'success') {
+          if (data[0].msg && data[0].msg.length > 0) {
+            let resList = JSON.parse(data[0].msg);
+            // console.log(resList);
+          }
+        }
+      });
     },
     mounted() {
 
@@ -54,6 +82,16 @@
   .main-container
     margin: 0 auto
     width: 19.375rem
+    max-height: calc(100vh - 40px)
+    overflow: hidden
+    .course-list
+      height: calc(100vh - 40px)
+      display: -webkit-box
+      overflow-x: auto
+      .course-item
+        margin-right: 2rem
+        width: 19.375rem
+        height: 100%
     .course-card
       margin-top: 1rem
       width: 100%

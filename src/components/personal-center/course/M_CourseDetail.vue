@@ -13,7 +13,7 @@
       <mt-tab-container class="content" v-model="active">
         <mt-tab-container-item id="mk">
           <ul class="course-list">
-            <li class="course-item" v-for="item in courseList" :key="item.id">
+            <li class="course-item" v-for="item in courseList" :key="item.id" @click="jump(item)">
               <h2 class="course-title">{{item.title}}</h2>
               <p class="course-time">上课时间：{{item.st}}~{{item.et}}</p>
               <div class="course-statistics">
@@ -50,9 +50,6 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
-    <div class="breadcrumbs-container">
-      <M-BreadCrumb></M-BreadCrumb>
-    </div>
     <footer class="page-footer">
       <mt-tabbar v-model="active">
         <mt-tab-item id="mk">
@@ -77,7 +74,6 @@
       :actions="semester"
       v-model="sheetVisible">
     </mt-actionsheet>
-    <!--<M-Footer></M-Footer>-->
   </div>
 </template>
 
@@ -87,8 +83,7 @@
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
       'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve)
     },
     data() {
       return {
@@ -161,6 +156,9 @@
       semesterHandler(data) {
         console.log(data);
         this.curSemester = data.name;
+      },
+      jump(item) {
+        this.$router.push('/course/course-plan/' + item.id);
       }
     }
   };
@@ -228,9 +226,6 @@
       .exam-icon
         background: url("/static/mob-img/mkjd.png") no-repeat
         background-size: 100% 100%
-
-  .breadcrumbs-container
-    padding-bottom: 55px
 
   .page-footer
     width: 100%
