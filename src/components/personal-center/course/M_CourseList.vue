@@ -6,7 +6,7 @@
     </M-Header>
     <div class="main-container">
       <M-Calendar></M-Calendar>
-      <M-CourseList :courseList="courseList" @item-click="clickHandler(item)"></M-CourseList>
+      <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
     <M-BreadCrumb></M-BreadCrumb>
     <M-Footer></M-Footer>
@@ -29,6 +29,7 @@
       return {
         courseList: [
           {
+            id: '1',
             st: '2018.05.02',
             et: '19:00~21:30',
             attend: '未出勤',
@@ -38,6 +39,7 @@
             name: '任思远'
           },
           {
+            id: '2',
             st: '2018.05.02',
             et: '19:00~21:30',
             attend: '未出勤',
@@ -46,6 +48,7 @@
             src: '/static/mob-img/书架.jpg',
             name: '任思远'
           }, {
+            id: '3',
             st: '2018.05.02',
             et: '19:00~21:30',
             attend: '未出勤',
@@ -74,7 +77,7 @@
           if (data.status === 'success') {
             this.courseList = data.data;
           } else {
-            this.$messagebox('系统提示', `获取数据失败，请联系管理员!<br/>错误信息：${data.message}`);
+            this.$messagebox('系统提示', `获取数据失败，请联系管理员!`);
           }
         });
       },

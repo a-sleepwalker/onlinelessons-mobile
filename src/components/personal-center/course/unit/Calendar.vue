@@ -5,7 +5,7 @@
         <div v-if="isClosed">
           <a href="javascript:" class="expands-calendar in-bl flr" @click="isClosed = !isClosed"></a>
           <div class="calendar-inline">
-            <p class="calendar-inline-title">{{currentDate.getMonth()}}/{{currentDate.getFullYear()}}</p>
+            <p class="calendar-inline-title">{{currentDate.getMonth()+1}}/{{currentDate.getFullYear()}}</p>
             <ul class="week-list">
               <li class="day in-bl" v-for="dateItem in weekList" :key="dateItem.dateStr">
                 <div class="date-text" :class="dateItem.className" :date-str="dateItem.dateStr">

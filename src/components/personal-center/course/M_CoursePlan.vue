@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-      <M-CourseList :courseList="courseList" @item-click="clickHandler(item)"></M-CourseList>
+      <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
     <M-BreadCrumb></M-BreadCrumb>
     <M-Footer></M-Footer>
