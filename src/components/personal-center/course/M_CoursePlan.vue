@@ -95,7 +95,7 @@
     },
     methods: {
       clickHandler(item) {
-        this.$router.push('/course/course-detail/' + item.id);
+        this.$router.push('/video/' + item.id);
       }
     }
   };

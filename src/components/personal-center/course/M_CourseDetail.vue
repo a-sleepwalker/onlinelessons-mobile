@@ -13,7 +13,7 @@
       <mt-tab-container class="content" v-model="active">
         <mt-tab-container-item id="mk">
           <ul class="course-list">
-            <li class="course-item" v-for="item in courseList" :key="item.id">
+            <li class="course-item" v-for="item in courseList" :key="item.id" @click="jump(item)">
               <h2 class="course-title">{{item.title}}</h2>
               <p class="course-time">上课时间：{{item.st}}~{{item.et}}</p>
               <div class="course-statistics">
@@ -156,6 +156,9 @@
       semesterHandler(data) {
         console.log(data);
         this.curSemester = data.name;
+      },
+      jump(item) {
+        this.$router.push('/course/course-plan/' + item.id);
       }
     }
   };

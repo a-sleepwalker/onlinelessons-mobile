@@ -5,7 +5,7 @@
       <mt-button size="small" @click="toMyCourse">我的课程</mt-button>
     </M-Header>
     <div class="main-container">
-      <M-Calendar></M-Calendar>
+      <M-Calendar @updateDate="getCurrentDate"></M-Calendar>
       <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
     <M-BreadCrumb></M-BreadCrumb>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import {selectTimeVideo} from '@/API';
+  import {selectTimeVideoList} from '@/API';
 
   export default {
     name: 'M_CourseList',
@@ -27,6 +27,7 @@
     },
     data() {
       return {
+        currentDate: '',
         courseList: [
           {
             id: '1',
@@ -63,7 +64,7 @@
     computed: {},
     props: {},
     created() {
-      this.getMyCourseList();
+      this.getCourseList(new Date().toLocaleDateString());
     },
     mounted() {
 
@@ -72,17 +73,26 @@
       toMyCourse() {
         this.$router.push('/course/mycourse');
       },
-      getMyCourseList() {
-        selectTimeVideo(new Date().toLocaleDateString()).then(data => {
-          if (data.status === 'success') {
-            this.courseList = data.data;
-          } else {
-            this.$messagebox('系统提示', `获取数据失败，请联系管理员!`);
-          }
-        });
-      },
       clickHandler(item) {
         this.$router.push('/video/' + item.id);
+      },
+      getCurrentDate(date) {
+        this.currentDate = date.replace(/-/g, '/');
+      },
+      getCourseList(date) {
+        const _this = this;
+        selectTimeVideoList(date).then(res => {
+          if (res[0].result === 'success') {
+            if (res[0].msg && res[0].msg.length > 0) {
+              _this.courseList = res[0].msg;
+            }
+          }
+        });
+      }
+    },
+    watch: {
+      currentDate(newVal) {
+        this.getCourseList(newVal);
       }
     }
   };

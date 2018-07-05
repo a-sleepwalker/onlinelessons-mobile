@@ -7,7 +7,7 @@
           <div class="calendar-inline">
             <p class="calendar-inline-title">{{currentDate.getMonth()+1}}/{{currentDate.getFullYear()}}</p>
             <ul class="week-list">
-              <li class="day in-bl" v-for="dateItem in weekList" :key="dateItem.dateStr">
+              <li class="day in-bl" v-for="dateItem in weekList" :key="dateItem.dateStr" @click="setCurrentDate(dateItem.dateStr)">
                 <div class="date-text" :class="dateItem.className" :date-str="dateItem.dateStr">
                   {{dateItem.text}}
                   <i class="has-course in-bl"></i>
@@ -58,7 +58,7 @@
           </thead>
           <tbody>
           <tr v-for="(week,index) in dateList" :key="index">
-            <td v-for="dateItem in week" :key="dateItem.dateStr">
+            <td v-for="dateItem in week" :key="dateItem.dateStr" @click="setCurrentDate(dateItem.dateStr)">
               <div class="date-text" :class="dateItem.className" :date-str="dateItem.dateStr">
                 {{dateItem.text}}
                 <i class="has-course in-bl"></i>
@@ -160,6 +160,9 @@
         dateStr += dateArr[1].length === 1 ? '-0' + dateArr[1] : '-' + dateArr[1];
         dateStr += dateArr[2].length === 1 ? '-0' + dateArr[2] : '-' + dateArr[2];
         return dateStr;
+      },
+      setCurrentDate(date) {
+        this.$emit('updateDate', date);
       }
     },
     filters: {}

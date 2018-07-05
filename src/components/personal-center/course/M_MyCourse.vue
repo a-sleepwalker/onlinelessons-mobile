@@ -8,7 +8,7 @@
             <div class="card-bg"></div>
             <div class="card-content clearfix">
               <h1 class="course-title">{{item.courseTile}}</h1>
-              <router-link :to="`/course/course-plan/${item.id}`" class="to-course-plan flr">
+              <router-link :to="`/course/course-detail/${item.id}`" class="to-course-plan flr">
                 查看课程安排
                 <i class="showmore-icon in-bl mintui mintui-back"></i>
               </router-link>
@@ -25,6 +25,8 @@
 </template>
 
 <script>
+  import {selectMajor} from '@/API';
+
   export default {
     name: 'M_MyCourse',
     components: {
@@ -59,7 +61,15 @@
       };
     },
     created() {
-
+      const _this = this;
+      selectMajor().then(data => {
+        if (data[0].result === 'success') {
+          if (data[0].msg && data[0].msg.length > 0) {
+            let resList = JSON.parse(data[0].msg);
+            // console.log(resList);
+          }
+        }
+      });
     },
     mounted() {
 
