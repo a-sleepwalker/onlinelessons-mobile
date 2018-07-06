@@ -16,10 +16,11 @@ let route = [
     path: `${base}/mycourse`,
     name: 'M_MyCourse',
     component: resolve => require([`@/components/personal-center${base}/M_MyCourse`], resolve)
-  }, {
-    path: `${base}/tandc`,
-    name: 'M_TopicAndCollection',
-    component: resolve => require([`@/components/personal-center${base}/M_TopicAndCollection`], resolve)
+  },
+  {
+    path: `${base}/video`,
+    name: 'M_Video',
+    component: resolve => require(['@/components/mvideo/M_video'], resolve)
   }
 ];
 export default route;

@@ -5,7 +5,7 @@
       <mt-button size="small" @click="toMyCourse">我的课程</mt-button>
     </M-Header>
     <div class="main-container">
-      <M-Calendar @updateDate="getCurrentDate"></M-Calendar>
+      <M-Calendar @updateDate="getCurrentDate" :hasCourseDateList="hasCourseDateList"></M-Calendar>
       <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
     <M-BreadCrumb></M-BreadCrumb>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-  import {selectTimeVideoList} from '@/API';
+  import {selectTimeVideoList, selectTimeVideo} from '@/API';
 
   export default {
     name: 'M_CourseList',
@@ -27,7 +27,7 @@
     },
     data() {
       return {
-        currentDate: '',
+        currentDate: new Date().toLocaleDateString().replace(/\//g, '-'),
         courseList: [
           {
             id: '1',
@@ -58,13 +58,19 @@
             src: '/static/mob-img/书架.jpg',
             name: '任思远'
           }
-        ]
+        ],
+        hasCourseDateList: []
       };
     },
-    computed: {},
+    computed: {
+      currentMonth() {
+        return this.currentDate.replace(/\d+$/, '01');
+      }
+    },
     props: {},
     created() {
-      this.getCourseList(new Date().toLocaleDateString());
+      this.getCourseList(this.currentDate);
+      this.setCalendarProp();
     },
     mounted() {
 
@@ -83,8 +89,44 @@
         const _this = this;
         selectTimeVideoList(date).then(res => {
           if (res[0].result === 'success') {
-            if (res[0].msg && res[0].msg.length > 0) {
-              _this.courseList = res[0].msg;
+            if (res[0].msg) {
+              let resList = JSON.parse(res[0].msg);
+              if (resList.length > 0) {
+                let tempList = [];
+                resList.forEach(v => {
+                  // console.log(v);
+                  let obj = {};
+                  obj.title = v.VideoName;
+                  obj.subTitle = '';
+                  obj.st = v.StartTime;
+                  obj.et = v.EndTime;
+                  obj.courseType = v.CourseType;
+                  obj.name = v.TeacherName;
+                  obj.slotField = v.VideoType;
+                  obj.id = v.Id;
+                  obj.videoId = v.VideoId;
+                  obj.date = v.CourseDate;
+                  obj.attend = v.IsChuQing;
+                  obj.src = '/static/mob-img/avator.png';
+                  tempList.push(obj);
+                });
+                _this.courseList = tempList;
+              } else {
+                this.$toast('暂无课程');
+              }
+            }
+          }
+        });
+      },
+      setCalendarProp() {
+        const _this = this;
+        selectTimeVideo(_this.currentMonth).then(res => {
+          if (res[0].result === 'success') {
+            if (res[0].msg) {
+              let resList = JSON.parse(res[0].msg);
+              if (resList.length > 0) {
+                _this.hasCourseDateList = resList;
+              }
             }
           }
         });
@@ -93,6 +135,9 @@
     watch: {
       currentDate(newVal) {
         this.getCourseList(newVal);
+      },
+      currentMonth(newVal) {
+        // console.log(newVal);
       }
     }
   };

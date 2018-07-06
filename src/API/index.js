@@ -15,7 +15,7 @@ export const selectTimeVideo = time => {
   } else {
     param.time = time;
   }
-  return axios.get('/Api/MobileGerenVideo.ashx?type=selectTimeVideoList&time=' + '2018/3/10').then(res => res);
+  return axios.post('/Api/MobileGerenVideo.ashx?type=selectTimeVideo', qs.stringify(param)).then(res => res);
 };
 
 /**
@@ -91,9 +91,63 @@ export const selectTimeVideoList = date => {
   } else {
     param.time = date;
   }
-  return axios.post('/Api/MobileGerenVideo.ashx?type=selectTimeVideoList', param).then(res => res);
+  return axios.post('/Api/MobileGerenVideo.ashx?type=selectTimeVideoList', qs.stringify(param)).then(res => res);
 };
+/**
+ * @description 获取我的课程
+ * @author taowt <2018-7-6>
+ * @returns {Promise<AxiosResponse<any>>}
+ */
 
 export const selectMajor = () => {
   return axios.get('/Api/MobileGerenVideo.ashx?type=selectMajor').then(res => res);
+};
+/**
+ * @description 获取订单下的课程班
+ * @author taowt <2018-7-6>
+ * @param id
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const selectKeChengList = id => {
+  let param = {};
+  if (!id) {
+    MessageBox('系统提示', `【id】参数不能为空`);
+  } else {
+    param.id = id;
+  }
+  return axios.post('/Api/MobileGerenVideo.ashx?type=selectKeChengList', qs.stringify(param)).then(res => res);
+};
+/**
+ * @description 根据课程班id获取下面的视频列表
+ * @author taowt <2018-7-6>
+ * @param id
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const selectVideoList = id => {
+  let param = {};
+  if (!id) {
+    MessageBox('系统提示', `【id】参数不能为空`);
+    // return Promise.reject(new Error('【id】参数不能为空'));
+  } else {
+    param.id = id;
+  }
+  return axios.post('/Api/MobileGerenVideo.ashx?type=selectVideoList', qs.stringify(param)).then(res => res);
+};
+/**
+ * @description 获取视频实体
+ * @author taowt <2018-7-6>
+ * @param id
+ * @param courseType
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const selectVideoModel = (id, courseType) => {
+  let param = {};
+  if (!id || !courseType) {
+    MessageBox('系统提示', `【id】参数不能为空`);
+    // return Promise.reject(new Error('【id】参数不能为空'));
+  } else {
+    param.id = id;
+    param.CourseType = courseType;
+  }
+  return axios.post('/Api/MobileGerenVideo.ashx?type=selectVideoModel', qs.stringify(param)).then(res => res);
 };

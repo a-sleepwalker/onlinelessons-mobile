@@ -7,11 +7,12 @@
           <div class="calendar-inline">
             <p class="calendar-inline-title">{{currentDate.getMonth()+1}}/{{currentDate.getFullYear()}}</p>
             <ul class="week-list">
-              <li class="day in-bl" v-for="dateItem in weekList" :key="dateItem.dateStr" @click="setCurrentDate(dateItem.dateStr)">
+              <li class="day in-bl" v-for="dateItem in weekList" :key="dateItem.dateStr"
+                  @click="setCurrentDate(dateItem.dateStr)">
                 <div class="date-text" :class="dateItem.className" :date-str="dateItem.dateStr">
                   {{dateItem.text}}
-                  <i class="has-course in-bl"></i>
-                  <i class="has-exam in-bl"></i>
+                  <i class="in-bl" :class="{'has-course':dateItem.hasCourse}"></i>
+                  <i class=" in-bl" :class="{'has-exam':dateItem.hasExam}"></i>
                 </div>
               </li>
             </ul>
@@ -104,6 +105,9 @@
       animation: {
         type: Boolean,
         default: false
+      },
+      hasCourseDateList: {
+        type: Array
       }
     },
     created() {
@@ -140,6 +144,11 @@
           prop.className = 'current-month';
         } else {
           prop.className = 'other-month';
+        }
+        if (_this.hasCourseDateList.length > 0) {
+          _this.hasCourseDateList.forEach(v => {
+            prop.hasCourse = new Date(v).toLocaleDateString() === date.toLocaleDateString();
+          });
         }
         return prop;
       },

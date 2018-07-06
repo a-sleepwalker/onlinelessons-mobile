@@ -3,12 +3,12 @@
     <M-Header pageTitle="我的课程"></M-Header>
     <div class="main-container">
       <ul class="course-list">
-        <li class="course-item" v-for="item in courseList" :key="item.id">
+        <li class="course-item" v-for="item in courseList" :key="item.OrderNo">
           <div class="course-card">
             <div class="card-bg"></div>
             <div class="card-content clearfix">
-              <h1 class="course-title">{{item.courseTile}}</h1>
-              <router-link :to="`/course/course-detail/${item.id}`" class="to-course-plan flr">
+              <h1 class="course-title">{{item.MajorName}}</h1>
+              <router-link :to="`/course/course-detail/${item.OrderNo}`" class="to-course-plan flr">
                 查看课程安排
                 <i class="showmore-icon in-bl mintui mintui-back"></i>
               </router-link>
@@ -36,8 +36,8 @@
       return {
         courseList: [
           {
-            id: 'c1',
-            courseTile: '【江苏工商本科】不过退费班',
+            OrderNo: 'c1',
+            MajorName: '【江苏工商本科】不过退费班',
             contentText: '您需要4个学期来完成本班型的全部学习内容，并\n' +
             '在学期末参加相应科目的考试并通过后才能获得\n' +
             '学分。您当前所在学期为：第4学期。在本学期\n' +
@@ -47,8 +47,8 @@
             '若您对课程任何疑问，请咨询班主任。'
           },
           {
-            id: 'c2',
-            courseTile: '【江苏工商本科】不过退费班',
+            OrderNo: 'c2',
+            MajorName: '【江苏工商本科】不过退费班',
             contentText: '您需要4个学期来完成本班型的全部学习内容，并\n' +
             '在学期末参加相应科目的考试并通过后才能获得\n' +
             '学分。您当前所在学期为：第4学期。在本学期\n' +
@@ -61,20 +61,28 @@
       };
     },
     created() {
-      const _this = this;
-      selectMajor().then(data => {
-        if (data[0].result === 'success') {
-          if (data[0].msg && data[0].msg.length > 0) {
-            let resList = JSON.parse(data[0].msg);
-            // console.log(resList);
-          }
-        }
-      });
+      this.getMajorList();
     },
     mounted() {
 
     },
-    methods: {}
+    methods: {
+      getMajorList() {
+        const _this = this;
+        selectMajor().then(res => {
+          if (res[0].result === 'success') {
+            if (res[0].msg) {
+              let resList = JSON.parse(res[0].msg);
+              if (resList.length > 0) {
+                _this.courseList = resList;
+              } else {
+                this.$toast('暂无专业');
+              }
+            }
+          }
+        });
+      }
+    }
   };
 </script>
 

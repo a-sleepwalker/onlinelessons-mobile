@@ -10,37 +10,40 @@
           <i class="dropdown-icon in-bl mintui mintui-back"></i>
         </h3>
       </div>
+      <ul class="course-list">
+        <li class="course-item" v-for="item in courseList" :key="item.CourseClassId" @click="jump(item)">
+          <h2 class="course-title">{{item.KechengName}}</h2>
+          <p class="course-time">
+            上课时间：{{item.ClassStartTime|dateFormatter}}
+            {{item.ClassStartTime|dateFormatter('time')}}~{{item.ClassEndTime|dateFormatter('time')}}
+          </p>
+          <div class="course-statistics">
+            <div class="course-process">
+              <p>
+                <i class="course-icon in-bl"></i>
+                <span class="statistics-title">课程进度</span>
+              </p>
+              <p class="statistics-text">{{item.NumKeCheng}}/{{item.SumKeCheng}}</p>
+            </div>
+            <div class="homework-process">
+              <p>
+                <i class="homework-icon in-bl"></i>
+                <span class="statistics-title">作业进度</span>
+              </p>
+              <p class="statistics-text">{{item.homeworkDone}}/{{item.homeworkAll}}</p>
+            </div>
+            <div class="exam-process">
+              <p>
+                <i class="exam-icon in-bl"></i>
+                <span class="statistics-title">模考进度</span>
+              </p>
+              <p class="statistics-text">{{item.examDone}}/{{item.examAll}}</p>
+            </div>
+          </div>
+        </li>
+      </ul>
       <mt-tab-container class="content" v-model="active">
         <mt-tab-container-item id="mk">
-          <ul class="course-list">
-            <li class="course-item" v-for="item in courseList" :key="item.id" @click="jump(item)">
-              <h2 class="course-title">{{item.title}}</h2>
-              <p class="course-time">上课时间：{{item.st}}~{{item.et}}</p>
-              <div class="course-statistics">
-                <div class="course-process">
-                  <p>
-                    <i class="course-icon in-bl"></i>
-                    <span class="statistics-title">课程进度</span>
-                  </p>
-                  <p class="statistics-text">{{item.courseDone}}/{{item.courseAll}}</p>
-                </div>
-                <div class="homework-process">
-                  <p>
-                    <i class="homework-icon in-bl"></i>
-                    <span class="statistics-title">作业进度</span>
-                  </p>
-                  <p class="statistics-text">{{item.homeworkDone}}/{{item.homeworkAll}}</p>
-                </div>
-                <div class="exam-process">
-                  <p>
-                    <i class="exam-icon in-bl"></i>
-                    <span class="statistics-title">模考进度</span>
-                  </p>
-                  <p class="statistics-text">{{item.examDone}}/{{item.examAll}}</p>
-                </div>
-              </div>
-            </li>
-          </ul>
         </mt-tab-container-item>
         <mt-tab-container-item id="zl">
         </mt-tab-container-item>
@@ -78,16 +81,17 @@
 </template>
 
 <script>
+  import {selectKeChengList} from '@/API';
+
   export default {
     name: 'M_CourseDetail',
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
       'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve)
     },
     data() {
       return {
-        active: 'mk',
+        active: '',
         title: '【江苏工商本科】不过退费班',
         curSemester: '',
         sheetVisible: false,
@@ -96,45 +100,14 @@
         ],
         courseList: [
           {
-            id: '1',
-            title: '公司理财',
-            st: '2018.05.14',
-            et: '2018.06.19',
-            courseDone: 0,
-            courseAll: 11,
-            homeworkDone: 0,
-            homeworkAll: 3,
-            examDone: 0,
-            examAll: 2
-          }, {
-            id: '2',
-            title: '公司理财',
-            st: '2018.05.14',
-            et: '2018.06.19',
-            courseDone: 0,
-            courseAll: 11,
-            homeworkDone: 0,
-            homeworkAll: 3,
-            examDone: 0,
-            examAll: 2
-          }, {
-            id: '3',
-            title: '公司理财',
-            st: '2018.05.14',
-            et: '2018.06.19',
-            courseDone: 0,
-            courseAll: 11,
-            homeworkDone: 0,
-            homeworkAll: 3,
-            examDone: 0,
-            examAll: 2
-          }, {
-            id: '4',
-            title: '公司理财',
-            st: '2018.05.14',
-            et: '2018.06.19',
-            courseDone: 0,
-            courseAll: 11,
+            CourseClassId: '1',
+            KechengName: '公司理财',
+            ClassStartTime: '2018.05.14',
+            ClassEndTime: '2018.06.19',
+            NumKeCheng: 0,
+            SumKeCheng: 11,
+            StudentId: '1962486077',
+            OrderNo: 'D_2018070602071700737158',
             homeworkDone: 0,
             homeworkAll: 3,
             examDone: 0,
@@ -143,8 +116,15 @@
         ]
       };
     },
+    computed: {
+      courseId() {
+        return this.$route.params.courseId;
+      }
+    },
+    props: {},
     created() {
       this.curSemester = this.semester[0].name;
+      this.getCourseList();
     },
     mounted() {
 
@@ -158,7 +138,43 @@
         this.curSemester = data.name;
       },
       jump(item) {
-        this.$router.push('/course/course-plan/' + item.id);
+        this.$router.push('/course/course-plan/' + item.CourseClassId);
+      },
+      getCourseList() {
+        const _this = this;
+        selectKeChengList(_this.courseId).then(res => {
+          if (res[0].result === 'success') {
+            if (res[0].msg) {
+              let resList = JSON.parse(res[0].msg);
+              if (resList.length > 0) {
+                resList.forEach(v => Object.assign(v, {
+                  homeworkDone: 0,
+                  homeworkAll: 3,
+                  examDone: 0,
+                  examAll: 2
+                }));
+                _this.courseList = resList;
+              } else {
+                this.$toast('暂无专业');
+              }
+            }
+          }
+        });
+      }
+    },
+    filters: {
+      dateFormatter(dateStr, type = 'date') {
+        let date = new Date(dateStr);
+        let rtn = '';
+        switch (type) {
+          case 'date':
+            rtn = date.toLocaleDateString();
+            break;
+          case 'time':
+            rtn = date.toLocaleTimeString();
+            break;
+        }
+        return rtn;
       }
     }
   };

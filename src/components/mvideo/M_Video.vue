@@ -6,7 +6,6 @@
     <div class="main-container">
       <div class="video-container">
         <div class="prism-player" id="J_prismPlayer"></div>
-        <!--<video id="flv"></video>-->
       </div>
       <mt-navbar v-model="active">
         <mt-tab-item id="chat">公共聊天区</mt-tab-item>
@@ -72,7 +71,7 @@
 </template>
 
 <script>
-  import {VideoLoad} from '@/API';
+  import {selectVideoModel} from '@/API';
   // import flv from 'flv.js';
 
   export default {
@@ -190,17 +189,17 @@
 
         ],
         synopsisList: [
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
-          {id: '1', src: '/static/mob-img/mob-img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'}
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'},
+          {id: '1', src: '/static/mob-img/img-src.png', text: '', title: '第二页·第2章', detail: '开学典礼人力资源管理0427'}
         ],
         test: {
           cur: 1,
@@ -217,9 +216,15 @@
         }
       };
     },
-    props: {
-      courseId: ''
+    computed: {
+      videoId() {
+        return this.$route.query.videoId;
+      },
+      courseType() {
+        return this.$route.query.courseType;
+      }
     },
+    props: {},
     created() {
       this.initData();
     },
@@ -238,25 +243,22 @@
         }, 2500);
       },
       initData() {
-        VideoLoad(this.$route.params.videoId).then(data => {
-          if (data.status === 'success') {
-            let parseData = data.data.DataList;
-            this.videoURL = parseData.VideoSavePath;
-            return Promise.resolve({url: this.videoURL});
+        const _this = this;
+        selectVideoModel(_this.videoId, _this.courseType).then(res => {
+          if (res[0].result === 'success') {
+            if (res[0].msg) {
+              let resData = JSON.parse(res[0].msg);
+              let result = resData.DataList[0];
+              // console.log(result);
+              _this.videoURL = result.VideoSavePath;
+              return Promise.resolve({url: this.videoURL});
+            } else {
+              _this.$toast('暂无视频');
+            }
           } else {
-            this.$messagebox('系统提示', `获取数据失败，请联系管理员!<br/>错误信息：${data.message}`);
+            _this.$messagebox('系统提示', `获取数据失败，请联系管理员!`);
           }
         }).then(({url}) => {
-          // if (flv.isSupported()) {
-          //   let flvPlayer = flv.createPlayer({
-          //     type: 'flv',
-          //     url: url
-          //   });
-          //   flvPlayer.attachMediaElement(document.querySelector('#flv'));
-          //   flvPlayer.load();
-          //   flvPlayer.play();
-          // }
-
           let player = new Aliplayer({
             id: 'J_prismPlayer',
             x5_fullscreen: true,
@@ -264,7 +266,7 @@
             x5_orientation: 'landscape|portrait',
             x5_type: 'h5',
             autoplay: true,
-            isLive: false,
+            isLive: _this.courseType === '1',
             playsinline: true,
             width: '100%',
             controlBarVisibility: 'always',
@@ -279,7 +281,6 @@
               player.el().classList.add('mac-os');
             }
           });
-
           let videoStyle = player.el().querySelector('video').style;
           window.onresize = function () {
             if (!~navigator.userAgent.indexOf('Mac') > -1) {
@@ -293,7 +294,9 @@
           });
           player.on('x5requestFullScreen', function () {
           });
-        }).catch(e => e);
+        }).catch(e => {
+          _this.$messagebox('系统提示', e.message);
+        });
       }
     }
   };

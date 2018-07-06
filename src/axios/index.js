@@ -5,6 +5,15 @@ import axios from 'axios';
 // axios.defaults.baseURL = '/';
 
 axios.interceptors.request.use(config => {
+  const method = config.method;
+  switch (method) {
+    case 'get':
+      config.headers['Content-Type'] = 'application/json;charset=utf-8';
+      break;
+    case 'post':
+      config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+      break;
+  }
   return config;
 }, error => {
   MessageBox('系统提示', '连接超时');

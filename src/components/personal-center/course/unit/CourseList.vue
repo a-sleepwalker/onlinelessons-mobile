@@ -1,14 +1,15 @@
 <template>
   <div>
     <ul class="course-list">
-      <li class="course-item" v-for="(item,idx) in courseList" :key="idx" @click="itemClick(item)">
+      <li class="course-item" v-for="item in courseList" :key="item.id" @click="itemClick(item)">
         <p class="course-time-container clearfix">
-          <span class="course-time">{{item.st|formatDate('.')}} {{item.st|formatTime}}~{{item.st|formatTime}}</span>
+          <span class="course-time">{{item.date|formatDate}} {{item.st|formatTime}}~{{item.et|formatTime}}</span>
           <span class="attend flr">{{item.attend|parseAttendance}}</span>
         </p>
         <div class="course-content">
           <p class="course-title">{{item.title}}</p>
           <p class="course-sub-title">{{item.subTitle}}</p>
+          <p class="course-sub-title">{{item.slotField}}</p>
           <p class="img-icon-container">
             <img :src="item.src" alt="">
             <span>{{item.name}}</span>
@@ -51,24 +52,28 @@
         return new Date(date).toLocaleDateString().replace(/\//g, sep);
       },
       parseAttendance(val) {
-        return val === 0 ? '未签到' : '已签到';
+        return val === 0 ? '未出勤' : '已出勤';
       },
       formatTime(date) {
         let t = new Date(date).toLocaleTimeString();
         let rtn = '';
-        switch (t.substr(0, 2)) {
-          case '上午':
-            rtn = t.slice(2, -3);
-            break;
-          case '下午':
-            let hour = t.slice(2, -3).split(':')[0];
-            let min = t.slice(2, -3).split(':')[1];
-            if (+hour > 12) {
-              rtn = +hour + 12 + ':' + min;
-            } else {
-              rtn = +hour + ':' + min;
-            }
-            break;
+        if (t === 'Invalid Date') {
+          rtn = date;
+        } else {
+          switch (t.substr(0, 2)) {
+            case '上午':
+              rtn = t.slice(2, -3);
+              break;
+            case '下午':
+              let hour = t.slice(2, -3).split(':')[0];
+              let min = t.slice(2, -3).split(':')[1];
+              if (+hour > 12) {
+                rtn = +hour + 12 + ':' + min;
+              } else {
+                rtn = +hour + ':' + min;
+              }
+              break;
+          }
         }
         return rtn;
       }
