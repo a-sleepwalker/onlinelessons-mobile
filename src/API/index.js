@@ -37,14 +37,14 @@ export const VideoLoad = id => {
  * @description 页面载入完成获取准考证号
  * @param none
  * @returns {Promise<AxiosResponse<any>>}
- *  @author yuanzx
+ *  @author yuanzx<2018-7-5>
  */
 export const getAdmissionTicket = () => axios.get('/Api/MobilePersonalCenter.ashx?type=selectAdmissionTicket').then(res => res);
 /**
  * @description 根据准考证号获取对应成绩单
  * @param tanscript
  * @returns {Promise<AxiosResponse<any>>}
- *  @author yuanzx
+ *  @author yuanzx <2018-7-5>
  */
 export const getScoreList = tanscript => {
   let param = {};
@@ -59,16 +59,25 @@ export const getScoreList = tanscript => {
  * @description 页面载入完成获取订单名称
  * @param none
  * @returns {Promise<AxiosResponse<any>>}
- *  @author yuanzx
+ *  @author yuanzx <2018-7-6>
  */
 export const getOrderForm = () => axios.get('/API/WrongQuestionHandler.ashx?type=getMajorbyStudent').then(res => res);
 /**
  * @description 根据订单获取对应的课程及错题
  * @param none
  * @returns {Promise<AxiosResponse<any>>}
- *  @author yuanzx
+ *  @author yuanzx <2018-7-6>
  */
-export const getMistakes = () => axios.get('/API/WrongQuestionHandler.ashx?type=getWrongQuestion').then(res => res);
+export const getMistakes = ordernum => {
+  let param = {};
+  if (!ordernum) {
+    MessageBox('系统提示', '【ordernum】参数不能为空');
+  } else {
+    param.ordernum = ordernum;
+  }
+  return axios.get('/API/WrongQuestionHandler.ashx?type=getWrongQuestion&ordernum=' + ordernum).then(res => res);
+};
+// export const getMistakes = () => axios.get('/API/WrongQuestionHandler.ashx?type=getWrongQuestion' + orderList).then(res => res);
 /**
  * @description 根据当前日期获取课程表
  * @author taowt <2018-7-5>

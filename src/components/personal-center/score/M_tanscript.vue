@@ -44,6 +44,7 @@
 </template>
 
 <script>
+  import {MessageBox} from 'mint-ui';
   import {getAdmissionTicket, getScoreList} from '@/API';
   // import {getScoreList} from '@/API';
 
@@ -62,27 +63,10 @@
         // 控制acition-sheet中的展示内容和触发的事件
         actions2: [],
         // 当前准考证号
-        ticketNumber: '464646',
+        ticketNumber: '',
         dropdown: true,
         // 所有的成绩
-        scores: [
-          {
-            State: '本学期成绩单',
-            Course: [{
-              Coursename: '人力资源管理（一）',
-              Score: '75.00'
-            },
-              {
-                Coursename: '金融理论与实务',
-                Score: '61.00'
-              },
-              {
-                Coursename: '宏观经济与分析\n',
-                Score: '81.00'
-              }
-            ]
-          }
-        ]
+        scores: []
       };
     },
     methods: {
@@ -92,26 +76,38 @@
     },
     created() {
       getAdmissionTicket().then(data => {
-        // 显示第一条 作为选择的准考证
-        this.ticketNumber = JSON.parse(data[0].msg)[0].ExamNo;
-          getScoreList(this.ticketNumber).then(data => {
-            this.scores = JSON.parse(data[0].msg);
-          });
-        // 获取到数据
-        let examNums = JSON.parse(data[0].msg);
-        // 给action-sheet添加数据与方法
-        this.actions2 = examNums.map(item => {
-          return {
-            name: '准考证号：' + item.ExamNo,
-            method: () => {
-              this.ticketNumber = item.ExamNo;
-              console.log(item.ExamNo);
-              getScoreList(this.ticketNumber).then(data => {
-                this.scores = JSON.parse(data[0].msg);
-              });
-            }
-          };
-        });
+        console.log(data);
+        if (data[0].result === 'success') {
+          console.log(7);
+          if (data[0].msg) {
+            console.log(9);
+            // 显示第一条 作为选择的准考证
+            this.ticketNumber = JSON.parse(data[0].msg)[0].ExamNo;
+            getScoreList(this.ticketNumber).then(data => {
+              this.scores = JSON.parse(data[0].msg);
+            });
+            // 获取到数据
+            let examNums = JSON.parse(data[0].msg);
+            // 给action-sheet添加数据与方法
+            this.actions2 = examNums.map(item => {
+              return {
+                name: '准考证号：' + item.ExamNo,
+                method: () => {
+                  this.ticketNumber = item.ExamNo;
+                  console.log(item.ExamNo);
+                  getScoreList(this.ticketNumber).then(data => {
+                    this.scores = JSON.parse(data[0].msg);
+                  });
+                }
+              };
+            });
+          } else {
+            MessageBox('暂无成绩');
+          }
+        } else {
+          console.log(8);
+          MessageBox(data[0].msg);
+        }
       });
     },
     mounted() {

@@ -4,8 +4,8 @@
     </M-Header>
     <div class="container">
       <div class="banner">
-        <ul>
-          <li v-for="(item,index) in questionBank" :key="index" @click="iconChange(index,item)" :class="index%2==0?'blue':'yellow'">
+        <ul :style="{width: ulength}">
+          <li v-for="(item,index) in questionBank" :key="index" @click="iconChange(index,item)" :class="index%2==0?'yellow':'blue'">
             <i :class="isshow==index?'icon':''" ></i>
             <span class="txt">
               {{item.MajorName}}
@@ -39,18 +39,27 @@
       return {
         token: ' ',
         isshow: 0,
-        questionBank: ['【江苏工商本科】不过退费班', '【江苏工商本科】不过退费班', '【江苏工商本科】不过退费班', '【江苏工商本科】不过退费班'],
+        questionBank: [],
         terms: []
       };
     },
     created() {
       getOrderForm().then(data => {
-        console.log(data.data);
-        this.questionBank = data.data;
-      });
-      getMistakes().then(data => {
-        console.log(data.data);
-        this.terms = data.data;
+        if (data.success === 'true') {
+          console.log('成功的请求');
+          if (data.data) {
+            console.log('请求的数据不为空');
+            console.log(data);
+            this.questionBank = data.data;
+            getMistakes(data.data[0].OrderNo).then(data => {
+              this.terms = data.data;
+            });
+          } else {
+            console.log('请求的数据不为空');
+          }
+        } else {
+          console.log('失败的请求');
+        }
       });
     },
     mounted() {
@@ -59,6 +68,14 @@
     methods: {
       iconChange(index, item) {
         this.isshow = index;
+        getMistakes(item.OrderNo).then(data => {
+          this.terms = data.data;
+        });
+      }
+    },
+    computed: {
+      ulength: function () {
+        return this.questionBank.length * 160 + 'px';
       }
     }
   };
@@ -106,6 +123,7 @@
     font-size:1rem;
     color: #fff;
     float:left;
+    margin-left: 0.625rem;
     position: relative;
   }
   .blue{
