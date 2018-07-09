@@ -75,6 +75,11 @@ module.exports = {
           name: utils.assetsPath('mob-fonts/[name].[hash:7].[ext]')
         }
       }
+      ,
+      {
+        test:/\.less$/,
+        loader: "style-loader!css-loader!less-loader",
+      }
     ]
   },
   node: {

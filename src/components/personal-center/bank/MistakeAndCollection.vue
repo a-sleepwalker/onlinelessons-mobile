@@ -75,7 +75,7 @@
     },
     computed: {
       ulength: function () {
-        return this.questionBank.length * 160 + 'px';
+        return this.questionBank.length * 180 + 'px';
       }
     }
   };

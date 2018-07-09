@@ -5,10 +5,10 @@
       <div class="container">
         <ul>
           <li class="question" v-for="(item, index) in questions " :key="index">
-            <p class="questionType">{{item.questionType}}</p>
-            <p class="questionBody">{{item.questionBody}}</p>
-            <div class="record"><span class="answerRecord">本题作答{{item.record}}次，做错{{item.wrong}}次</span><span class="result">{{item.result}}</span></div>
-            <i class="imgIcon"></i><span class="date">{{item.date}}</span>
+            <p class="questionType">{{item.LeiXing|showType}}</p>
+            <p class="questionBody">{{item.Title}}</p>
+            <div class="record"><span class="answerRecord">本题作答0次，做错{{item.WrongCount}}次</span><span class="result">错题</span></div>
+            <i class="imgIcon"></i><span class="date">{{item.CreateDate|showDate}}</span>
             <div style="width: 100%; height: 3.75rem"></div>
           </li>
         </ul>
@@ -19,8 +19,8 @@
 </template>
 
 <script>
+  import {getQuestion} from '@/API';
     export default {
-
         name: 'examination',
       components: {
         'M-Header': resolve => require(['@/components/common/Header'], resolve),
@@ -29,22 +29,37 @@
       },
         data() {
             return {
-              questions: [
-                {questionType: '单选题', questionBody: '民意测验、新闻采访中使用比较多的是（）', record: 1, wrong: 1, result: '错题', date: '2018/04/02'},
-                {questionType: '单选题', questionBody: '民意测验、新闻采访中使用比较多的是（）', record: 1, wrong: 1, result: '错题', date: '2018/04/02'},
-                {questionType: '单选题', questionBody: '民意测验、新闻采访中使用比较多的是（）', record: 1, wrong: 1, result: '错题', date: '2018/04/02'},
-                {questionType: '单选题', questionBody: '民意测验、新闻采访中使用比较多的是（）', record: 1, wrong: 1, result: '错题', date: '2018/04/02'},
-                {questionType: '单选题', questionBody: '民意测验、新闻采访中使用比较多的是（）', record: 1, wrong: 1, result: '错题', date: '2018/04/02'}
-              ]
+              questions: []
             };
         },
         created() {
-
+          getQuestion().then(data => {
+            console.log(data.data);
+            this.questions = data.data;
+          });
         },
         mounted() {
 
         },
-        methods: {}
+        methods: {},
+        filters: {
+           showType(val) {
+             if (val === 0) {
+               return '单选题';
+             } else if (val === 1) {
+               return '多选题';
+             } else if (val === 2) {
+               return '判断题';
+             } else if (val === 3) {
+               return '填空题';
+             } else {
+               return '简答题';
+             }
+           },
+          showDate(val) {
+             return new Date(val).toLocaleDateString();
+          }
+        }
     };
 </script>
 

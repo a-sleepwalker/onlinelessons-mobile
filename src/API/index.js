@@ -151,3 +151,38 @@ export const selectVideoModel = (id, courseType) => {
   }
   return axios.post('/Api/MobileGerenVideo.ashx?type=selectVideoModel', qs.stringify(param)).then(res => res);
 };
+/**
+ * @description 页面载入完成获取题库中的题目
+ * @param none
+ * @returns {Promise<AxiosResponse<any>>}
+ *  @author yuanzx <2018-7-9>
+ */
+export const getQuestion = () => axios.get('/API/WrongQuestionHandler.ashx?type=wrongQuestionDetail').then(res => res);
+/**
+ * @description 页面载入完成获取错题及收藏数量
+ * @param none
+ * @returns {Promise<AxiosResponse<any>>}
+ *  @author yuanzx <2018-7-9>
+ */
+export const getQuestionCount = () => axios.get('/API/WrongQuestionHandler.ashx?type=getwrongQuestionCount').then(res => res);
+/**
+ * @description 页面载入完成获取历史练习记录数量
+ * @param none
+ * @returns {Promise<AxiosResponse<any>>}
+ *  @author yuanzx <2018-7-9>
+ */
+export const getHistoryCount = () => axios.get('/API/WrongQuestionHandler.ashx?type=getwrongQuestionHistoryCount').then(res => res);
+/**
+ * @description 页面载入完成获取练习最后一题
+ * @param none
+ * @returns {Promise<AxiosResponse<any>>}
+ *  @author yuanzx <2018-7-9>
+ */
+export const getLastQuestion = () => axios.get('/API/WrongQuestionHandler.ashx?type=getLastQuestion').then(res => res);
+/**
+ * @description 页面载入完成获取刷题时间
+ * @param none
+ * @returns {Promise<AxiosResponse<any>>}
+ *  @author yuanzx <2018-7-9>
+ */
+export const getBrushingCount = () => axios.get('/API/WrongQuestionHandler.ashx?type=getBrushingCount').then(res => res);
