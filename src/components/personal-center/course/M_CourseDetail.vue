@@ -82,6 +82,7 @@
 
 <script>
   import {selectKeChengList} from '@/API';
+  import {mapMutations} from 'vuex';
 
   export default {
     name: 'M_CourseDetail',
@@ -138,6 +139,9 @@
         this.curSemester = data.name;
       },
       jump(item) {
+        item.courseDone = item.NumKeCheng;
+        item.courseAll = item.SumKeCheng;
+        this.SET_COURSE_PROCESS(item);
         this.$router.push('/course/course-plan/' + item.CourseClassId);
       },
       getCourseList() {
@@ -160,7 +164,8 @@
             }
           }
         });
-      }
+      },
+      ...mapMutations(['SET_COURSE_PROCESS'])
     },
     filters: {
       dateFormatter(dateStr, type = 'date') {
