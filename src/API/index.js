@@ -186,3 +186,10 @@ export const getLastQuestion = () => axios.get('/API/WrongQuestionHandler.ashx?t
  *  @author yuanzx <2018-7-9>
  */
 export const getBrushingCount = () => axios.get('/API/WrongQuestionHandler.ashx?type=getBrushingCount').then(res => res);
+/**
+ * @description 页面载入完成获取最近观看的记录
+ * @param none
+ * @returns {Promise<AxiosResponse<any>>}
+ *  @author yuanzx <2018-7-9>
+ */
+export const getRecentWatch = () => axios.get('/Api/MobileGerenVideo.ashx?type=selectLatelyVideoList').then(res => res);

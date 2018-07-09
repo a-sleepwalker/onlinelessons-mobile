@@ -6,18 +6,18 @@
       <div  v-for="(record,index) in records" :key="index">
         <div class="date" >
           <i class="icon"></i>
-          <span >{{record.date}}</span>
+          <span >{{record.data}}</span>
         </div>
         <ul >
           <li>
-            <div class="course" v-for="(message,index) in (record.messages)" :key="index" >
-              <div class="course-logo" :style="{backgroundImage: 'url(' + message.coursesImg+ ')'}">
+            <div class="course" v-for="(message,index) in (record.dataList)" :key="index" >
+              <div class="course-logo" :style="{backgroundImage: 'url(' + message.VideoImg+ ')'}">
                 <img src="/static/mob-img/play.png" />
               </div>
               <div class="course-intro" >
-                <p class="title" >{{message.title}}</p>
-                <p class="time"><span>{{message.nowtime}}</span>/<span>{{message.totaltime}}</span></p>
-                <mt-progress :value="message.progress" :bar-height="8" ></mt-progress>
+                <p class="title" >{{message.Title}}</p>
+                <p class="time"><span>{{message.NowTimeStr}}</span>/<span>{{message.TotalTimeStr}}</span></p>
+                <mt-progress :value="message.Progress" :bar-height="8" ></mt-progress>
               </div>
             </div>
           </li>
@@ -29,6 +29,7 @@
   </div>
 </template>
 <script>
+  import {getRecentWatch} from '@/API';
   export default {
 
     name: 'M-recentWatch',
@@ -82,7 +83,10 @@
       };
     },
     created() {
-
+      getRecentWatch().then(data => {
+        console.log(JSON.parse(data[0].msg));
+        this.records = JSON.parse(data[0].msg);
+      });
     },
     mounted() {
 

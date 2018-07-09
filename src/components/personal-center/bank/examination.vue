@@ -1,7 +1,8 @@
 <template>
     <div>
       <M-Header pageTitle="">
-        <img src="../../../../static/mob-img/exam02.png" height="32" width="31"/></M-Header>
+        <img src="../../../../static/mob-img/exam02.png" height="32" width="31"/>
+      </M-Header>
       <div class="container">
         <ul>
           <li class="question" v-for="(item, index) in questions " :key="index">

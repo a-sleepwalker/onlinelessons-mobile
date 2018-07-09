@@ -1,12 +1,17 @@
 <template>
   <div>
+    <M-Header pageTitle="题库"
+              :styleObj="{background:'url(/static/mob-img/header5.png) no-repeat','background-size':'100% 100%'}"
+    >
+      <mt-button>老题库</mt-button>
+    </M-Header>
     <div class="container">
       <div class="top">
         <div style="height: 10rem !important;overflow: hidden;position: relative;">
           <ve-gauge
-                    :data="chartData"
-                    background-color="gray"
-                    :settings="chartSettings">
+            :data="chartData"
+            background-color="gray"
+            :settings="chartSettings">
             <span style="position: absolute;left: 40%;top:50%">击败的人数</span>
           </ve-gauge>
         </div>
@@ -28,13 +33,13 @@
         <a href=""><span class="continue">继续上次练习></span></a>
       </div>
       <div class="examination">
-        <div class="record">
+        <div class="record" @click=" routeHandler('/bank/bank')">
           <span class="wrapper" style="overflow:hidden; vertical-align: center">
             <i class="imgIcon"></i>
             <span class="title">错题及收藏</span><br><span class="num">共{{ mistakesAndCollection }}题</span>
           </span>
         </div>
-        <div class="record">
+        <div class="record" @click = "routeHandler('/bank/examination')">
           <div class="wrapper">
             <i class="imgIcon2"></i>
             <span class="title">做题记录</span><br><span class="num">共{{ historyNun}}条记录</span>
@@ -49,17 +54,21 @@
         <ul :style="{width: ulength}">
           <li class="content" v-for="(item,index) in list" :key="index">
             <div class="contentBody">
-              <p class="course" :title="item.KechengName">{{item.KechengName.length>8?item.KechengName.slice(0,8)+'...':item.KechengName}}</p>
+              <p class="course" :title="item.KechengName">
+                {{item.KechengName.length>8?item.KechengName.slice(0,8)+'...':item.KechengName}}</p>
               <span class="knowledge"><span class="number">0</span><br><span class="text"> 知识点</span></span>
-              <span class="progress"><span class="number">160</span><span class="numberS">/944</span><span class="text">做题进度</span></span>
+              <span class="progress"><span class="number">{{item.HistoryNum}}</span><span class="numberS">/{{item.countnum}}</span><br><span
+                class="text">做题进度</span></span>
             </div>
           </li>
         </ul>
       </div>
     </div>
+    <M-BreadCrumb></M-BreadCrumb>
+    <M-Footer></M-Footer>
   </div>
 </template>
-<style scoped lang="less" >
+<style scoped lang="less">
 
   .container {
     margin: 0 0.9375rem;
@@ -70,7 +79,8 @@
     height: 13.90625rem;
     border: 1px solid red;
   }
-  .IntelligentPractice{
+
+  .IntelligentPractice {
     width: 100%;
     height: 7.8125rem;
     margin-bottom: 0.625rem;
@@ -79,19 +89,19 @@
     position: relative;
     box-sizing: border-box;
     background: #f9f9f9;
-    .beat{
+    .beat {
       display: inline-block;
       width: 9.375rem;
-      .wenzi{
+      .wenzi {
         font-size: 1rem;
-        margin-bottom:  0.625rem;
+        margin-bottom: 0.625rem;
       }
-      .level{
+      .level {
         font-size: 0.75rem;
         color: #666;
-        margin-bottom:  0.625rem;
+        margin-bottom: 0.625rem;
       }
-      .btn{
+      .btn {
         text-align: center;
         display: inline-block;
         width: 4.0625rem;
@@ -104,19 +114,19 @@
 
       }
     }
-    .practise{
+    .practise {
       width: 4.53125rem;
       height: 6.875rem;
       display: inline-block;
       position: absolute;
       right: 0;
-      top:-0.3125rem;
+      top: -0.3125rem;
       background-image: url("../../../../static/mob-img/question_01.png");
       background-size: 100% 100%;
       background-repeat: no-repeat;
       border-radius: 0.3125rem;
       /*text-align: center;*/
-      .date{
+      .date {
         font-size: 0.75rem;
         color: #fff;
         position: absolute;
@@ -237,17 +247,19 @@
   }
 
   .detail {
-   padding: 1.25rem 0;
+    padding: 1.25rem 0;
     overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
     height: 7.5rem;
 
   }
-.detail ul{
-  list-style: none;
-  width: 1500px;
-}
+
+  .detail ul {
+    list-style: none;
+    width: 1500px;
+  }
+
   .content {
     width: 9.375rem;
     height: 7.5rem;
@@ -274,38 +286,50 @@
     height: 2.375rem;
     margin-left: 1.09375rem;
   }
-  .content .contentBody .knowledge .number{
+
+  .content .contentBody .knowledge .number {
     font-size: 1.125rem;
     color: #5ea5f3;
   }
-  .content .contentBody .knowledge .text{
+
+  .content .contentBody .knowledge .text {
     font-size: 0.75rem;
     color: #97c7ef;
   }
+
   .content .contentBody .progress {
     display: inline-block;
     width: 3.75rem;
     height: 2.375rem;
     margin-left: 0.9375rem;
   }
-  .content .contentBody .progress .number{
+
+  .content .contentBody .progress .number {
     font-size: 1.125rem;
     color: #5ea5f3;
   }
-  .content .contentBody .progress .numberS{
+
+  .content .contentBody .progress .numberS {
     color: #999999;
     font-size: 0.875rem;
   }
-  .content .contentBody .progress .text{
+
+  .content .contentBody .progress .text {
     font-size: 0.75rem;
     color: #97c7ef;
   }
 </style>
 <script>
-  import { getBrushingCount, getLastQuestion, getHistoryCount, getQuestionCount, getOrderForm, getMistakes } from '@/API';
+  import {getBrushingCount, getLastQuestion, getHistoryCount, getQuestionCount, getOrderForm, getMistakes} from '@/API';
+
   export default {
 
     name: 'bank',
+    components: {
+      'M-Header': resolve => require(['@/components/common/Header'], resolve),
+      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
+      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+    },
     data() {
       this.chartSettings = {
         dataType: {
@@ -397,13 +421,13 @@
         this.last = data.data[0].Title;
       });
       getBrushingCount().then(data => {
-         // console.log(data.data);
+        // console.log(data.data);
       });
       getOrderForm().then(data => {
         console.log(data.data[0]);
         this.course = data.data[0].MajorName;
-         getMistakes(data.data[0].OrderNo).then(data => {
-           console.log(data.data);
+        getMistakes(data.data[0].OrderNo).then(data => {
+          console.log(data.data);
           this.list = data.data;
         });
       });
@@ -416,7 +440,12 @@
         return this.list.length * 11 + 'rem';
       }
     },
-    methods: {}
+    methods: {
+      routeHandler(url) {
+        this.$router.push('/' + url);
+        location.reload();
+      }
+    }
   };
 </script>
 <style>
