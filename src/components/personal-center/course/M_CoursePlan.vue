@@ -11,7 +11,7 @@
           <div class="attend-content">
             <i class="attend-icon in-bl"></i>
             <div class="attend-text-panel in-bl">
-              <p class="attend-pct">123%</p>
+              <p class="attend-pct">{{coursePct}}%</p>
               <p class="attend-text">123</p>
             </div>
           </div>
@@ -20,7 +20,7 @@
           <div class="homework-content">
             <i class="homework-icon in-bl"></i>
             <div class="homework-text-panel in-bl">
-              <p class="homework-pct">123%</p>
+              <p class="homework-pct">{{homeworkPct}}%</p>
               <p class="homework-text">123</p>
             </div>
           </div>
@@ -29,7 +29,7 @@
           <div class="exam-content">
             <i class="exam-icon in-bl"></i>
             <div class="exam-text-panel in-bl">
-              <p class="exam-pct">123%</p>
+              <p class="exam-pct">{{examPct}}%</p>
               <p class="exam-text">123</p>
             </div>
           </div>
@@ -44,6 +44,7 @@
 
 <script>
   import {selectVideoList} from '@/API';
+  import {mapGetters} from 'vuex';
 
   export default {
     name: 'M_CoursePlan',
@@ -62,7 +63,10 @@
     computed: {
       courseId() {
         return this.$route.params.courseId;
-      }
+      },
+      ...mapGetters([
+        'coursePct', 'homeworkPct', 'examPct'
+      ])
     },
     created() {
       this.getCourseList();

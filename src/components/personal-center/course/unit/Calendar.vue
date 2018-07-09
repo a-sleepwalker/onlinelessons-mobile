@@ -11,8 +11,8 @@
                   @click="setCurrentDate(dateItem.dateStr)">
                 <div class="date-text" :class="dateItem.className" :date-str="dateItem.dateStr">
                   {{dateItem.text}}
-                  <i class="in-bl" :class="{'has-course':dateItem.hasCourse}"></i>
-                  <i class=" in-bl" :class="{'has-exam':dateItem.hasExam}"></i>
+                  <i :class="dateItem.hasCourse?['has-course','in-bl']:''"></i>
+                  <i :class="dateItem.hasExam?['has-exam','in-bl']:''"></i>
                 </div>
               </li>
             </ul>
@@ -62,8 +62,8 @@
             <td v-for="dateItem in week" :key="dateItem.dateStr" @click="setCurrentDate(dateItem.dateStr)">
               <div class="date-text" :class="dateItem.className" :date-str="dateItem.dateStr">
                 {{dateItem.text}}
-                <i class="has-course in-bl"></i>
-                <i class="has-exam in-bl"></i>
+                <i :class="dateItem.hasCourse?['has-course','in-bl']:''"></i>
+                <i :class="dateItem.hasExam?['has-exam','in-bl']:''"></i>
               </div>
             </td>
           </tr>
@@ -146,9 +146,7 @@
           prop.className = 'other-month';
         }
         if (_this.hasCourseDateList.length > 0) {
-          _this.hasCourseDateList.forEach(v => {
-            prop.hasCourse = new Date(v).toLocaleDateString() === date.toLocaleDateString();
-          });
+          prop.hasCourse = _this.hasCourseDateList.indexOf(date.toLocaleDateString()) > -1;
         }
         return prop;
       },

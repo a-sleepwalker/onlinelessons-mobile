@@ -110,6 +110,7 @@
                   obj.src = '/static/mob-img/avator.png';
                   tempList.push(obj);
                 });
+                console.log(tempList);
                 _this.courseList = tempList;
               } else {
                 this.$toast('暂无课程');
@@ -125,7 +126,7 @@
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
               if (resList.length > 0) {
-                _this.hasCourseDateList = resList;
+                _this.hasCourseDateList = resList.map(v => new Date(v.CourseDate).toLocaleDateString());
               }
             }
           }
