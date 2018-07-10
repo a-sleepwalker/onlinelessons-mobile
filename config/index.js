@@ -5,6 +5,7 @@
 const path = require('path');
 const proxyTable = require('./proxy');
 const devEnv = require('./dev.env');
+const prodEnv = require('./prod.env');
 
 module.exports = {
   dev: {
@@ -52,7 +53,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: 'http://testm.xkpx.com/',
+    assetsPublicPath: prodEnv.SERVER_PATH,
 
     /**
      * Source Maps
