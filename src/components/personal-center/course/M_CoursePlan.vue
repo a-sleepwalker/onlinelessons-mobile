@@ -87,7 +87,7 @@
               if (resList.length > 0) {
                 let tempList = [];
                 resList.forEach(v => {
-                  console.log(v);
+                  // console.log(v);
                   let obj = {};
                   obj.title = v.VideoName;
                   obj.subTitle = '';

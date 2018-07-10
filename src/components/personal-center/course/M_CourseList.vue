@@ -5,7 +5,8 @@
       <mt-button size="small" @click="toMyCourse">我的课程</mt-button>
     </M-Header>
     <div class="main-container">
-      <M-Calendar @updateDate="getCurrentDate" :hasCourseDateList="hasCourseDateList"></M-Calendar>
+      <M-Calendar v-if="hasCourseDateList.length>0" @updateDate="getCurrentDate"
+                  :hasCourseDateList="hasCourseDateList"></M-Calendar>
       <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
     <M-BreadCrumb></M-BreadCrumb>
@@ -29,35 +30,16 @@
       return {
         currentDate: new Date().toLocaleDateString().replace(/\//g, '-'),
         courseList: [
-          {
-            id: '1',
-            st: '2018.05.02',
-            et: '19:00~21:30',
-            attend: '未出勤',
-            title: '【公司理财】江苏工商本<精讲1>',
-            subTitle: '【江苏工商本科】不过退费班',
-            src: '/static/mob-img/书架.jpg',
-            name: '任思远'
-          },
-          {
-            id: '2',
-            st: '2018.05.02',
-            et: '19:00~21:30',
-            attend: '未出勤',
-            title: '【公司理财】江苏工商本<精讲1>',
-            subTitle: '【江苏工商本科】不过退费班',
-            src: '/static/mob-img/书架.jpg',
-            name: '任思远'
-          }, {
-            id: '3',
-            st: '2018.05.02',
-            et: '19:00~21:30',
-            attend: '未出勤',
-            title: '【公司理财】江苏工商本<精讲1>',
-            subTitle: '【江苏工商本科】不过退费班',
-            src: '/static/mob-img/书架.jpg',
-            name: '任思远'
-          }
+          // {
+          //   id: '1',
+          //   st: '2018.05.02',
+          //   et: '19:00~21:30',
+          //   attend: '未出勤',
+          //   title: '【公司理财】江苏工商本<精讲1>',
+          //   subTitle: '【江苏工商本科】不过退费班',
+          //   src: '/static/mob-img/书架.jpg',
+          //   name: '任思远'
+          // }
         ],
         hasCourseDateList: []
       };
@@ -69,8 +51,8 @@
     },
     props: {},
     created() {
+      this.setCalendarProp(this.currentMonth);
       this.getCourseList(this.currentDate);
-      this.setCalendarProp();
     },
     mounted() {
 
@@ -80,7 +62,7 @@
         this.$router.push('/course/mycourse');
       },
       clickHandler(item) {
-        this.$router.push('/video/' + item.id);
+        this.$router.push({name: 'M_Video', query: {videoId: item.videoId, courseType: item.courseType}});
       },
       getCurrentDate(date) {
         this.currentDate = date.replace(/-/g, '/');
@@ -110,7 +92,6 @@
                   obj.src = '/static/mob-img/avator.png';
                   tempList.push(obj);
                 });
-                console.log(tempList);
                 _this.courseList = tempList;
               } else {
                 this.$toast('暂无课程');
@@ -119,9 +100,9 @@
           }
         });
       },
-      setCalendarProp() {
+      setCalendarProp(month) {
         const _this = this;
-        selectTimeVideo(_this.currentMonth).then(res => {
+        selectTimeVideo(month).then(res => {
           if (res[0].result === 'success') {
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
@@ -138,7 +119,7 @@
         this.getCourseList(newVal);
       },
       currentMonth(newVal) {
-        // console.log(newVal);
+        this.setCalendarProp(newVal);
       }
     }
   };

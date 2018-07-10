@@ -18,7 +18,7 @@ const proxyTable = {
     target: `http://localhost:${zhiliaoPort}`,
     changeOrigin: true
   },
-  '/API/**':{
+  '/API/**': {
     target: `http://localhost:62295`,
     changeOrigin: true
   }

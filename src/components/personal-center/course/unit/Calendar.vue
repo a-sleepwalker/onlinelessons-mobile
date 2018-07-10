@@ -114,7 +114,6 @@
       this.initDateList();
     },
     mounted() {
-
     },
     methods: {
       initDateList() {

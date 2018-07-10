@@ -1,21 +1,20 @@
 <template>
   <div>
     <M-Header pageTitle="题库"
-              :styleObj="{background:'url(/static/mob-img/header5.png) no-repeat','background-size':'100% 100%'}"
+              :styleObj="{'background':'url(/static/mob-img/bank/head2.png) no-repeat','background-size':'100% 100%'}"
     >
-      <mt-button>老题库</mt-button>
+      <mt-button size="small">老题库</mt-button>
     </M-Header>
-    <div class="container">
-      <div class="top">
-        <div style="height: 10rem !important;overflow: hidden;position: relative;">
-          <ve-gauge
-            :data="chartData"
-            background-color="gray"
-            :settings="chartSettings">
-            <span style="position: absolute;left: 40%;top:50%">击败的人数</span>
-          </ve-gauge>
-        </div>
+    <div class="top">
+      <chart class="gauge-chart" :auto-resize="true"
+             :options="settings"></chart>
+      <span class="defeat">打败人数</span>
+      <div class="text-container">
+        <p class="text">刷题时间：<span class="text-strong">{{totalTime}}</span>分钟</p>
+        <p class="text">刷题数量：<span class="text-strong">{{totalCount}}</span>道</p>
       </div>
+    </div>
+    <div class="container">
       <div class="IntelligentPractice">
         <div class="beat">
           <p class="wenzi">连续练习0天</p>
@@ -33,13 +32,13 @@
         <a href=""><span class="continue">继续上次练习></span></a>
       </div>
       <div class="examination">
-        <div class="record" @click=" routeHandler('/bank/bank')">
+        <div class="record">
           <span class="wrapper" style="overflow:hidden; vertical-align: center">
             <i class="imgIcon"></i>
             <span class="title">错题及收藏</span><br><span class="num">共{{ mistakesAndCollection }}题</span>
           </span>
         </div>
-        <div class="record" @click = "routeHandler('/bank/examination')">
+        <div class="record">
           <div class="wrapper">
             <i class="imgIcon2"></i>
             <span class="title">做题记录</span><br><span class="num">共{{ historyNun}}条记录</span>
@@ -64,20 +63,50 @@
         </ul>
       </div>
     </div>
-    <M-BreadCrumb></M-BreadCrumb>
-    <M-Footer></M-Footer>
+    <!--<M-BreadCrumb></M-BreadCrumb>-->
+    <!--<M-Footer></M-Footer>-->
   </div>
 </template>
 <style scoped lang="less">
 
   .container {
-    margin: 0 0.9375rem;
+    margin: -5rem 0.9375rem 0;
   }
 
   .top {
     width: 100%;
-    height: 13.90625rem;
-    border: 1px solid red;
+    height: 14.16125rem;
+    background: url(/static/mob-img/bank/head3-2.png) no-repeat;
+    background-size: 100% 100%;
+    .gauge-chart {
+      width: 12rem;
+      height: 12rem;
+      /*width: 8rem;*/
+      /*height: 8rem;*/
+      position: relative;
+      display: inline-block;
+    }
+    .defeat {
+      position: absolute;
+      top: 9rem;
+      left: 4.5rem;
+      color: #ffffff;
+      font-size: 1rem;
+    }
+    .text-container {
+      display: inline-block;
+      vertical-align: top;
+      margin-top: 3rem;
+      margin-left: -1.5rem;
+    }
+    .text {
+      line-height: 2rem;
+      font-size: .75rem;
+      color: #ffffff;
+    }
+    .text-strong {
+      font-size: 1.5rem;
+    }
   }
 
   .IntelligentPractice {
@@ -119,8 +148,8 @@
       height: 6.875rem;
       display: inline-block;
       position: absolute;
-      right: 0;
-      top: -0.3125rem;
+      right: 1rem;
+      top: -0.5rem;
       background-image: url("../../../../static/mob-img/question_01.png");
       background-size: 100% 100%;
       background-repeat: no-repeat;
@@ -318,31 +347,38 @@
     font-size: 0.75rem;
     color: #97c7ef;
   }
+
 </style>
 <script>
   import {getBrushingCount, getLastQuestion, getHistoryCount, getQuestionCount, getOrderForm, getMistakes} from '@/API';
 
-  export default {
+  // import ECharts modules manually to reduce bundle size
+  import 'echarts/lib/chart/gauge';
+  import 'echarts/lib/component/tooltip';
 
+  export default {
     name: 'bank',
     components: {
-      'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'chart': resolve => require(['vue-echarts/components/ECharts'], resolve),
+      'M-Header': resolve => require(['@/components/common/Header'], resolve)
     },
     data() {
-      this.chartSettings = {
-        dataType: {
-          '打败的人数': 'percent'
-        },
-        seriesMap: {
-          '打败的人数': {
-            center: ['50%', '50%'],
-            min: 0,
-            max: 1,
-            endAngle: 45,
-            splitNumber: 10,
+      return {
+        mistakesAndCollection: 0,
+        historyNun: 0,
+        last: '这一原则属于工作分析原则中的( )',
+        course: '【江苏工商本科】 不过退费班',
+        list: [],
+        totalTime: '104',
+        totalCount: '525',
+        settings: {
+          series: [{
+            type: 'gauge',
             radius: '50%',
+            endAngle: 45,
+            min: 0,
+            max: 100,
+            data: [{value: 60}],
             axisLine: {
               lineStyle: {
                 color: [[1, '#f2c4ce']],
@@ -353,14 +389,12 @@
               textStyle: {
                 fontWeight: 'bolder',
                 color: 'transparent'
-
               }
             },
             axisTick: {
               length: 0,
               lineStyle: {
                 color: 'auto'
-
               }
             },
             splitLine: {
@@ -382,29 +416,89 @@
               shadowBlur: 5
             },
             detail: {
-              offsetCenter: [0, '-20'],
+              formatter: '{value}%',
+              offsetCenter: ['5', '-15'],
               textStyle: {
                 fontWeight: 'bolder',
-                color: '#fff'
-                // fontSize:'40'
+                color: '#fff',
+                fontSize: '28'
+              }
+            },
+            tooltip: {
+              position: [10, 10],
+              textStyle: {
+                color: '#fff',
+                fontSize: '14'
+              }
+            }
+          }]
+        },
+        charts: {
+          columns: ['type', 'value'],
+          rows: [
+            {type: '打败的人数', value: 0.6}
+          ],
+          dataType: {
+            '打败的人数': 'percent'
+          },
+          seriesMap: {
+            '打败的人数': {
+              center: ['50%', '50%'],
+              min: 0,
+              max: 1,
+              endAngle: 45,
+              splitNumber: 10,
+              radius: '50%',
+              axisLine: {
+                lineStyle: {
+                  color: [[1, '#f2c4ce']],
+                  width: 5
+                }
+              },
+              axisLabel: {
+                textStyle: {
+                  fontWeight: 'bolder',
+                  color: 'transparent'
+
+                }
+              },
+              axisTick: {
+                length: 0,
+                lineStyle: {
+                  color: 'auto'
+
+                }
+              },
+              splitLine: {
+                length: 5,
+                lineStyle: {
+                  width: 5,
+                  color: '#e995a6',
+                  shadowColor: '#fff',
+                  shadowBlur: 10
+                }
+              },
+              pointer: {
+                // 指针的颜色与最外层环的颜色相同 单独设置颜色不会生效
+                // color:'red',
+                // length:0,//无法让指针消失
+                // 让指针不显示 设置width:0
+                width: 0,
+                shadowColor: '#fff',
+                shadowBlur: 5
+              },
+              detail: {
+                offsetCenter: [0, '-20'],
+                textStyle: {
+                  fontWeight: 'bolder',
+                  color: '#fff'
+                  // fontSize:'40'
+                }
               }
             }
           }
 
         }
-      };
-      return {
-        chartData: {
-          columns: ['type', 'value'],
-          rows: [
-            {type: '打败的人数', value: 0.6}
-          ]
-        },
-        mistakesAndCollection: 0,
-        historyNun: 0,
-        last: '这一原则属于工作分析原则中的( )',
-        course: '【江苏工商本科】 不过退费班',
-        list: []
       };
     },
     created() {
