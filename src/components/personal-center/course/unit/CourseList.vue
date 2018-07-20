@@ -31,6 +31,8 @@
 </template>
 
 <script>
+  import {selectFileList, downloadFile} from '@/API';
+
   export default {
     name: 'CourseList',
     data() {
@@ -56,15 +58,22 @@
         this.$emit('item-click', item);
       },
       loadDownloadFile(item) {
-        this.fileList.push(
-          {
-            name: '课件', url: '', method: this.downloadFile
+        const _this = this;
+        selectFileList(item.videoId, item.courseType).then(res => {
+          if (res[0].result === 'success') {
+            let result = res[0].msg;
+            if (result && result.length > 0) {
+              let data = JSON.parse(result);
+              _this.fileList = data.map(v => Object.assign({}, v, {name: v.fileName, method: _this.downloadFile}));
+              _this.sheetVisible = true;
+            }
           }
-        );
-        this.sheetVisible = true;
+        });
       },
       downloadFile(file) {
-        console.log(file);
+        downloadFile(file.Id).then(res => {
+          console.log(res);
+        });
       }
     },
     filters: {

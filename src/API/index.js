@@ -190,6 +190,38 @@ export const getBrushingCount = () => axios.get('/API/WrongQuestionHandler.ashx?
  * @description 页面载入完成获取最近观看的记录
  * @param none
  * @returns {Promise<AxiosResponse<any>>}
- *  @author yuanzx <2018-7-9>
+ * @author yuanzx <2018-7-9>
  */
 export const getRecentWatch = () => axios.get('/Api/MobileGerenVideo.ashx?type=selectLatelyVideoList').then(res => res);
+/**
+ * @description 下载课件列表
+ * @param id 课程id
+ * @param CourseType 0:录播，1:直播
+ * @returns {Promise<AxiosResponse<any>>}
+ * @author taowt <2018-7-20>
+ */
+export const selectFileList = (id, CourseType) => {
+  let param = {};
+  if (!id || !CourseType) {
+    MessageBox('系统提示', `【id】参数不能为空,【CourseType】参数不能为空`);
+  } else {
+    param.id = id;
+    param.CourseType = CourseType;
+  }
+  return axios.post('/Api/MobileGerenVideo.ashx?type=selectFileList', qs.stringify(param)).then(res => res);
+};
+/**
+ * @description 下载文件
+ * @param id 文件id
+ * @returns {Promise<AxiosResponse<any>>}
+ * @author taowt <2018-7-20>
+ */
+export const downloadFile = id => {
+  let param = {};
+  if (!id) {
+    MessageBox('系统提示', `【id】参数不能为空`);
+  } else {
+    param.id = id;
+  }
+  return axios.post('/Api/MobileGerenVideo.ashx?type=downloadFile', qs.stringify(param)).then(res => res);
+};
