@@ -15,12 +15,18 @@
             <span>{{item.name}}</span>
           </p>
           <div class="btn-container">
-            <a href="javascript:" class="file-btn in-bl" @click.stop><i class="file-icon in-bl"></i>资料</a>
+            <a href="javascript:" class="file-btn in-bl" @click.stop="loadDownloadFile(item)"><i
+              class="file-icon in-bl"></i>资料</a>
             <a href="javascript:" class="homework-btn in-bl" @click.stop><i class="homework-icon in-bl"></i>作业</a>
           </div>
         </div>
       </li>
     </ul>
+    <mt-actionsheet
+      :actions="fileList"
+      v-model="sheetVisible"
+    >
+    </mt-actionsheet>
   </div>
 </template>
 
@@ -28,7 +34,10 @@
   export default {
     name: 'CourseList',
     data() {
-      return {};
+      return {
+        sheetVisible: false,
+        fileList: []
+      };
     },
     props: {
       courseList: {
@@ -45,6 +54,17 @@
     methods: {
       itemClick(item) {
         this.$emit('item-click', item);
+      },
+      loadDownloadFile(item) {
+        this.fileList.push(
+          {
+            name: '课件', url: '', method: this.downloadFile
+          }
+        );
+        this.sheetVisible = true;
+      },
+      downloadFile(file) {
+        console.log(file);
       }
     },
     filters: {

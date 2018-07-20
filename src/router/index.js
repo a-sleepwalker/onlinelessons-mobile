@@ -19,6 +19,6 @@ let rootRoutes = [
 Vue.use(Router);
 export default new Router({
   mode: 'history',
-  base: '/geren/',
+  base: '/',
   routes: [rootRoutes, bankRoutes, courseRoutes, downloadRoutes, latestRoutes, personalInforRoutes, scoreRoutes, teacherRoutes].reduce((prev, cur) => prev.concat(cur), [])
 });
