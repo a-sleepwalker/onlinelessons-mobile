@@ -2,7 +2,9 @@ import {MessageBox} from 'mint-ui';
 import axios from 'axios';
 
 // axios.defaults.timeout = 3000;
-// axios.defaults.baseURL = '/';
+if (process.env.NODE_ENV === 'production') {
+  axios.defaults.baseURL = 'http://mzy.dazhiliao.com';
+}
 
 axios.interceptors.request.use(config => {
   const method = config.method;
