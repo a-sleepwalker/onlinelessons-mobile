@@ -5,7 +5,7 @@
     </M-Header>
     <div class="main-container">
       <div class="content-header">
-        <h1 class="content-title">{{courseTitle}}</h1>
+        <h1 class="content-title">{{majorName}}</h1>
         <h3 class="semester-text in-bl" @click="changeSemester">{{curSemester}}
           <i class="dropdown-icon in-bl mintui mintui-back"></i>
         </h3>
@@ -122,7 +122,7 @@
         return this.$route.params.courseId;
       },
       ...mapState({
-        courseTitle: state => state.courseStore.courseTitle
+        majorName: state => state.courseStore.majorName
       })
     },
     props: {},
@@ -145,6 +145,7 @@
         item.courseDone = item.NumKeCheng;
         item.courseAll = item.SumKeCheng;
         this.SET_COURSE_PROCESS(item);
+        this.SET_COURSE_NAME({courseName: item.KechengName});
         this.$router.push('/course/course-plan/' + item.CourseClassId);
       },
       getCourseList() {
@@ -168,7 +169,10 @@
           }
         });
       },
-      ...mapMutations(['SET_COURSE_PROCESS'])
+      ...mapMutations([
+        'SET_COURSE_PROCESS',
+        'SET_COURSE_NAME'
+      ])
     },
     filters: {
       dateFormatter(dateStr, type = 'date') {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <M-Header :pageTitle="title">
+    <M-Header :pageTitle="courseName">
       <mt-button size="small">
         <img src="/static/mob-img/download-icon.png" width="20" height="20" alt="下载" slot="icon">
       </mt-button>
@@ -42,7 +42,7 @@
 
 <script>
   import {selectVideoList} from '@/API';
-  import {mapGetters} from 'vuex';
+  import {mapGetters, mapState} from 'vuex';
 
   export default {
     name: 'M_CoursePlan',
@@ -62,7 +62,10 @@
       },
       ...mapGetters([
         'coursePct', 'homeworkPct', 'examPct'
-      ])
+      ]),
+      ...mapState({
+        courseName: state => state.courseStore.courseName
+      })
     },
     created() {
       this.getCourseList();

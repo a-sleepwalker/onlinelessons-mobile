@@ -11,7 +11,7 @@
               <router-link :to="`/course/course-detail/${item.OrderNo}`"
                            class="to-course-plan flr">
                 查看课程安排
-                <i class="showmore-icon in-bl mintui mintui-back" @click="setCourseTitle(item.MajorName)"></i>
+                <i class="showmore-icon in-bl mintui mintui-back" @click="setMajorName(item.MajorName)"></i>
               </router-link>
             </div>
           </div>
@@ -70,7 +70,7 @@
     },
     methods: {
       ...mapMutations([
-        'SET_COURSE_TITLE'
+        'SET_MAJOR_NAME'
       ]),
       getMajorList() {
         const _this = this;
@@ -87,8 +87,8 @@
           }
         });
       },
-      setCourseTitle(title) {
-        this.SET_COURSE_TITLE({courseTitle: title});
+      setMajorName(majorName) {
+        this.SET_MAJOR_NAME({majorName: majorName});
       }
     }
   };
