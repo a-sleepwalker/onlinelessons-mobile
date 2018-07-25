@@ -46,8 +46,6 @@
       </M-ToolsPanel>
       <M-ToolsPanel panelTitle="课程安排" :panelToolList="courseToolList" @jumpTo="routeHandler"></M-ToolsPanel>
     </div>
-    <M-BreadCrumb></M-BreadCrumb>
-    <M-Footer></M-Footer>
   </div>
 </template>
 
@@ -56,8 +54,6 @@
     name: 'M_Home',
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve),
       'M-ToolsPanel': resolve => require(['./course/unit/ToolsPanel'], resolve)
     },
     data() {

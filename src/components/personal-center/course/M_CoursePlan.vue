@@ -37,8 +37,6 @@
       </div>
       <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
-    <M-BreadCrumb></M-BreadCrumb>
-    <M-Footer></M-Footer>
   </div>
 </template>
 
@@ -50,9 +48,7 @@
     name: 'M_CoursePlan',
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'M-CourseList': resolve => require(['@/components/personal-center/course/unit/CourseList'], resolve)
     },
     data() {
       return {

@@ -63,8 +63,6 @@
         </ul>
       </div>
     </div>
-    <!--<M-BreadCrumb></M-BreadCrumb>-->
-    <!--<M-Footer></M-Footer>-->
   </div>
 </template>
 <style scoped lang="less">
@@ -503,25 +501,19 @@
     },
     created() {
       getQuestionCount().then(data => {
-        // console.log(data.data);
         this.mistakesAndCollection = data.data[0].count;
       });
       getHistoryCount().then(data => {
-        // console.log(data.data);
         this.historyNun = data.data[0].count;
       });
       getLastQuestion().then(data => {
-        // console.log(data.data);
         this.last = data.data[0].Title;
       });
       getBrushingCount().then(data => {
-        // console.log(data.data);
       });
       getOrderForm().then(data => {
-        console.log(data.data[0]);
         this.course = data.data[0].MajorName;
         getMistakes(data.data[0].OrderNo).then(data => {
-          console.log(data.data);
           this.list = data.data;
         });
       });

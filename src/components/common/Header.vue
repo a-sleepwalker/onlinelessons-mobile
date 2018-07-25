@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mt-header :title="pageTitle" :style="styleObj">
+    <mt-header :title="pageTitle" :style="styleObj" class="app-header">
       <a @click="goBack" slot="left">
         <mt-button icon="back"></mt-button>
       </a>
@@ -40,6 +40,10 @@
   };
 </script>
 
-<style scoped lang="stylus" type="text/stylus">
-
+<style lang="stylus" type="text/stylus">
+  .app-header
+    height: 2.8125rem
+    font-size: 1.125rem
+    .is-right
+      font-size: .875rem
 </style>

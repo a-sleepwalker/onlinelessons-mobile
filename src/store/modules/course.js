@@ -1,4 +1,4 @@
-import {SET_COURSE_PROCESS} from '../mutation-types';
+import {SET_COURSE_PROCESS, SET_COURSE_TITLE} from '../mutation-types';
 
 export default {
   state: {
@@ -7,7 +7,8 @@ export default {
     homeworkDone: '',
     homeworkAll: '',
     examDone: '',
-    examAll: ''
+    examAll: '',
+    courseTitle: ''
   },
   getters: {
     coursePct: state => state.courseDone ? Math.round(state.courseDone * 100 / state.courseAll) : 0,
@@ -22,6 +23,9 @@ export default {
       state.homeworkAll = param.homeworkAll;
       state.examDone = param.examDone;
       state.examAll = param.examAll;
+    },
+    [SET_COURSE_TITLE](state, param) {
+      state.courseTitle = param.courseTitle;
     }
   }
 }

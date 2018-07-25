@@ -5,7 +5,7 @@
     </M-Header>
     <div class="main-container">
       <div class="content-header">
-        <h1 class="content-title">{{title}}</h1>
+        <h1 class="content-title">{{courseTitle}}</h1>
         <h3 class="semester-text in-bl" @click="changeSemester">{{curSemester}}
           <i class="dropdown-icon in-bl mintui mintui-back"></i>
         </h3>
@@ -82,7 +82,7 @@
 
 <script>
   import {selectKeChengList} from '@/API';
-  import {mapMutations} from 'vuex';
+  import {mapMutations, mapState} from 'vuex';
 
   export default {
     name: 'M_CourseDetail',
@@ -120,7 +120,10 @@
     computed: {
       courseId() {
         return this.$route.params.courseId;
-      }
+      },
+      ...mapState({
+        courseTitle: state => state.courseStore.courseTitle
+      })
     },
     props: {},
     created() {

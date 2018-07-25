@@ -7,17 +7,15 @@
       <mt-field label="旧密码" placeholder="请输入旧密码" :type="isshowO?'password':'text'" v-model="oldPassword">
         <i :class="isshowO?'iconH':'iconS'" @click="isshowO=!isshowO"></i>
       </mt-field>
-      <mt-field label="新密码" placeholder="请输入密码"  :type="isshowN?'password':'text'"  v-model="newPassword">
-        <i :class="isshowN?'iconH':'iconS'" @click="isshowN=!isshowN" ></i>
+      <mt-field label="新密码" placeholder="请输入密码" :type="isshowN?'password':'text'" v-model="newPassword">
+        <i :class="isshowN?'iconH':'iconS'" @click="isshowN=!isshowN"></i>
       </mt-field>
-      <mt-field label="确认密码" placeholder="请再次输入密码" :type="isshowR?'password':'text'"  v-model="rePassword">
-        <i :class="isshowR?'iconH':'iconS'" @click="isshowR=!isshowR" ></i>
+      <mt-field label="确认密码" placeholder="请再次输入密码" :type="isshowR?'password':'text'" v-model="rePassword">
+        <i :class="isshowR?'iconH':'iconS'" @click="isshowR=!isshowR"></i>
       </mt-field>
     </div>
     <!--固定到底部-->
     <div class="bottom">
-      <M-BreadCrumb></M-BreadCrumb>
-      <M-Footer></M-Footer>
     </div>
   </div>
 </template>
@@ -27,9 +25,7 @@
 
     name: 'changePsd',
     components: {
-      'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'M-Header': resolve => require(['@/components/common/Header'], resolve)
     },
     data() {
       return {
@@ -50,20 +46,22 @@
 </script>
 
 <style scoped>
-  .bottom{
+  .bottom {
     position: absolute;
     bottom: 0;
   }
-  .iconH{
-    width:1.0625rem;
+
+  .iconH {
+    width: 1.0625rem;
     height: 0.6875rem;
     background-image: url('/static/mob-img/psd1.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     display: inline-block;
   }
-  .iconS{
-    width:1.0625rem;
+
+  .iconS {
+    width: 1.0625rem;
     height: 0.6875rem;
     background-image: url('/static/mob-img/psd2.jpg');
     background-repeat: no-repeat;

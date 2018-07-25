@@ -8,9 +8,10 @@
             <div class="card-bg"></div>
             <div class="card-content clearfix">
               <h1 class="course-title">{{item.MajorName}}</h1>
-              <router-link :to="`/course/course-detail/${item.OrderNo}`" class="to-course-plan flr">
+              <router-link :to="`/course/course-detail/${item.OrderNo}`"
+                           class="to-course-plan flr">
                 查看课程安排
-                <i class="showmore-icon in-bl mintui mintui-back"></i>
+                <i class="showmore-icon in-bl mintui mintui-back" @click="setCourseTitle(item.MajorName)"></i>
               </router-link>
             </div>
           </div>
@@ -26,6 +27,7 @@
 
 <script>
   import {selectMajor} from '@/API';
+  import {mapMutations} from 'vuex';
 
   export default {
     name: 'M_MyCourse',
@@ -67,6 +69,9 @@
 
     },
     methods: {
+      ...mapMutations([
+        'SET_COURSE_TITLE'
+      ]),
       getMajorList() {
         const _this = this;
         selectMajor().then(res => {
@@ -81,6 +86,9 @@
             }
           }
         });
+      },
+      setCourseTitle(title) {
+        this.SET_COURSE_TITLE({courseTitle: title});
       }
     }
   };

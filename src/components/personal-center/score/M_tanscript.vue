@@ -35,8 +35,6 @@
         </div>
       </li>
     </ul>
-    <M-BreadCrumb></M-BreadCrumb>
-    <M-Footer></M-Footer>
     <!--点击准考证下拉框-->
     <mt-actionsheet :actions="actions2" v-model="sheetVisible2" cancel-text=""></mt-actionsheet>
   </div>
@@ -51,9 +49,7 @@
   export default {
     name: 'M_tanscript',
     components: {
-      'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'M-Header': resolve => require(['@/components/common/Header'], resolve)
     },
     data() {
       return {
@@ -200,7 +196,7 @@
   }
 
   .ticket-number {
-    border-bottom: 1px solid  #ededed;
+    border-bottom: 1px solid #ededed;
     text-indent: 0.9375rem;
     margin-bottom: 1.375rem;
   }

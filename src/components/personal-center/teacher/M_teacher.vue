@@ -16,14 +16,12 @@
         <li v-for="(course,index) in courses" :key="index">
           <mt-cell :title="course.courseName" is-link>
             <!--<img slot="icon" src="/static/mob-img/myteacher01.png" >-->
-            <i slot="icon"  class="cellSlot"
+            <i slot="icon" class="cellSlot"
                style=" "></i>
           </mt-cell>
         </li>
       </ul>
     </div>
-    <M-BreadCrumb></M-BreadCrumb>
-    <M-Footer></M-Footer>
   </div>
 </template>
 
@@ -32,9 +30,7 @@
 
     name: 'myteacher',
     components: {
-      'M-Header': resolve => require(['@/components/common/Header'], resolve),
-      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
-      'M-BreadCrumb': resolve => require(['@/components/common/BreadCrumb'], resolve)
+      'M-Header': resolve => require(['@/components/common/Header'], resolve)
     },
     data: function () {
       return {
@@ -82,11 +78,11 @@
   }
 </style>
 <style scoped>
-.cellSlot{
-  width: 0.8125rem;
-  height: 1.0625rem;
-  background: url('/static/mob-img/myteacher01.png') no-repeat;
-  background-size: 100% 100%;
-  display: inline-block;
-}
+  .cellSlot {
+    width: 0.8125rem;
+    height: 1.0625rem;
+    background: url('/static/mob-img/myteacher01.png') no-repeat;
+    background-size: 100% 100%;
+    display: inline-block;
+  }
 </style>
