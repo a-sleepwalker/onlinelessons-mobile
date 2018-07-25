@@ -3,9 +3,8 @@ import axios from 'axios';
 
 // axios.defaults.timeout = 3000;
 if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'http://mzy.dazhiliao.com';
+  // axios.defaults.baseURL = '/';
 }
-
 axios.interceptors.request.use(config => {
   const method = config.method;
   switch (method) {
