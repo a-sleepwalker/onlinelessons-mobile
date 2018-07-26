@@ -88,7 +88,7 @@
         });
       },
       setMajorName(majorName) {
-        this.SET_MAJOR_NAME({majorName: majorName});
+        this.SET_MAJOR_NAME({majorName});
       }
     }
   };

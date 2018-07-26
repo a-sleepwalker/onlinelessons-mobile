@@ -154,11 +154,12 @@
       border-radius: 0.3125rem;
       /*text-align: center;*/
       .date {
+        width: 100%;
+        text-align: center;
         font-size: 0.75rem;
         color: #fff;
         position: absolute;
         bottom: 0.625rem;
-        left: 0.3125rem;
       }
     }
   }
@@ -196,7 +197,7 @@
   }
 
   .record {
-    width: 10.3125rem;
+    width: 10.65rem;
     height: 3.90625rem;
     background: #f9f9f9;
     position: relative;
@@ -262,6 +263,7 @@
   }
 
   .subject .total {
+    padding-right: .5rem ;
     font-size: 0.75rem;
     vertical-align: middle;
     color: #919399;

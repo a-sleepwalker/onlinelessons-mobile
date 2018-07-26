@@ -66,6 +66,8 @@
               let data = JSON.parse(result);
               _this.fileList = data.map(v => Object.assign({}, v, {name: v.fileName, method: _this.downloadFile}));
               _this.sheetVisible = true;
+            } else {
+              this.$toast('暂无课件');
             }
           }
         });

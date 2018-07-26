@@ -1,6 +1,6 @@
 <template>
   <div class="page-container">
-    <M-Header pageTitle="录播视频">
+    <M-Header pageTitle="视频播放">
       <mt-button icon="more"></mt-button>
     </M-Header>
     <div class="main-container">
@@ -305,6 +305,7 @@
 <style scoped>
   .page-container {
     --playerHeight: 300px;
+    overflow: hidden;
   }
 
   .mac-os {
