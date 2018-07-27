@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-      <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
+      <M-CourseList @loadMore="loadMore" :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
   </div>
 </template>
@@ -68,7 +68,11 @@
       })
     },
     created() {
-      this.getCourseList();
+      this.getCourseList().then(res => {
+        if (res && res.length > 0) {
+          this.courseList = res;
+        }
+      });
     },
     mounted() {
 
@@ -77,9 +81,10 @@
       clickHandler(item) {
         this.$router.push({name: 'M_Video', query: {videoId: item.videoId, courseType: item.courseType}});
       },
-      getCourseList() {
+      async getCourseList() {
         const _this = this;
-        selectVideoList(_this.courseId).then(res => {
+        // eslint-disable-next-line no-return-await
+        return await selectVideoList(_this.courseId).then(res => {
           if (res[0].result === 'success') {
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
@@ -102,7 +107,7 @@
                   obj.src = '/static/mob-img/avator.png';
                   tempList.push(obj);
                 });
-                _this.courseList = tempList;
+                return Promise.resolve(tempList.slice(0, 3));
               } else {
                 this.$toast('暂无专业');
               }
@@ -111,6 +116,17 @@
         }).catch(reason => {
           _this.$toast(reason.message);
         });
+      },
+      async loadMore(domain) {
+        const _this = this;
+        domain.loading = true;
+        let prevCourseList = _this.courseList;
+        let res = await _this.getCourseList();
+        if (res && res.length > 0) {
+          _this.courseList = prevCourseList.concat(res);
+          domain.loading = false;
+          domain.curPage++;
+        }
       }
     }
   };

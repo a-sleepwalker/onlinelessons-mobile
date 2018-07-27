@@ -13,6 +13,10 @@ let rootRoutes = [
     path: '/',
     name: 'M_Home',
     component: resolve => require(['@/components/personal-center/M_Home'], resolve)
+  },
+  {
+    path: '*', redirect: {name: 'M_Home'}
+
   }
 ];
 
