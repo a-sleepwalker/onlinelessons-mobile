@@ -7,7 +7,7 @@
     <div class="main-container">
       <M-Calendar v-if="hasCourseDateList.length>0" @updateDate="getCurrentDate"
                   :hasCourseDateList="hasCourseDateList"></M-Calendar>
-      <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
+      <M-CourseList @loadMore="loadMore" :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
   </div>
 </template>
@@ -108,6 +108,8 @@
             }
           }
         });
+      },
+      loadMore() {
       }
     },
     watch: {

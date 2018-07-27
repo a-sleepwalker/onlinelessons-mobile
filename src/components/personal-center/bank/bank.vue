@@ -23,7 +23,7 @@
           <span class="btn">开启练习</span>
         </div>
         <div class="practise">
-          <span class="date">2015.05.18</span>
+          <span class="date">{{curDateStr}}</span>
         </div>
       </div>
       <div class="last">
@@ -197,7 +197,7 @@
   }
 
   .record {
-    width: 10.65rem;
+    width: 10.6rem;
     height: 3.90625rem;
     background: #f9f9f9;
     position: relative;
@@ -263,7 +263,7 @@
   }
 
   .subject .total {
-    padding-right: .5rem ;
+    padding-right: .5rem;
     font-size: 0.75rem;
     vertical-align: middle;
     color: #919399;
@@ -526,6 +526,9 @@
     computed: {
       ulength: function () {
         return this.list.length * 11 + 'rem';
+      },
+      curDateStr() {
+        return new Date().toLocaleDateString().replace(/\//g, '.');
       }
     },
     methods: {

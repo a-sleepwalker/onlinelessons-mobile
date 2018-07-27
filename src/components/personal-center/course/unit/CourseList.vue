@@ -1,6 +1,7 @@
 <template>
   <div>
-    <ul class="course-list">
+    <ul class="course-list" infinite-scroll-distance="10" v-infinite-scroll="loadMore"
+        :infinite-scroll-disabled="loading" infinite-scroll-immediate-check="false">
       <li class="course-item" v-for="item in courseList" :key="item.id" @click="itemClick(item)">
         <p class="course-time-container clearfix">
           <span class="course-time">{{item.date|formatDate}} {{item.st|formatTime}}~{{item.et|formatTime}}</span>
@@ -38,7 +39,9 @@
     data() {
       return {
         sheetVisible: false,
-        fileList: []
+        fileList: [],
+        loading: true,
+        curPage: 1
       };
     },
     props: {
@@ -76,6 +79,10 @@
         downloadFile(file.Id).then(res => {
           console.log(res);
         });
+      },
+      // todo 这里需要优化，传递组件实例这种方法不是很好 （子组件滚动加载数据，调用父组件方法）
+      loadMore() {
+        this.$emit('loadMore', this);
       }
     },
     filters: {
