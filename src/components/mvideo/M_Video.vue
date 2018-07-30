@@ -15,7 +15,7 @@
       </mt-navbar>
       <mt-tab-container v-model="active">
         <mt-tab-container-item id="chat">
-          <ul class="chat-list" v-infinite-scroll="loadMore" infinite-scroll-disabled="loading"
+          <ul class="chat-list" v-infinite-scroll="loadMore" :infinite-scroll-disabled="loading"
               infinite-scroll-distance="10">
             <li class="chat-item" v-for="item in chatList" :key="item.id">
               <p class="chat-title">{{item.name}}-{{item.major}}:({{item.classNum}})</p>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-  import {selectVideoModel} from '@/API';
+  import {selectVideoModel, updateWatchRecord} from '@/API';
   // import flv from 'flv.js';
 
   export default {
@@ -85,7 +85,7 @@
         countdown: '',
         videoURL: '',
         pageTitle: '宏观经济分析',
-        // loading: false,
+        loading: true,
         chatList: [
           {id: '1', name: '徐小宝', major: '人力资源本科', classNum: '36', text: '有苏州的同学吗？'},
           {id: '1', name: '徐小宝', major: '人力资源本科', classNum: '36', text: '有苏州的同学吗？'},
@@ -232,15 +232,8 @@
 
     },
     methods: {
-      loadMore: function () {
-        this.loading = true;
-        setTimeout(() => {
-          let last = this.chatList[this.chatList.length - 1];
-          for (let i = 1; i <= 10; i++) {
-            this.chatList.push(last);
-          }
-          this.loading = false;
-        }, 2500);
+      loadMore() {
+
       },
       initData() {
         const _this = this;
@@ -249,7 +242,6 @@
             if (res[0].msg) {
               let resData = JSON.parse(res[0].msg);
               let result = resData.DataList[0];
-              // console.log(result);
               _this.videoURL = result.VideoSavePath;
               return Promise.resolve({url: this.videoURL});
             } else {
@@ -282,6 +274,17 @@
             }
           });
           let videoStyle = player.el().querySelector('video').style;
+          let timer = null;
+          let getTime = function () {
+            let currentTime = player.getCurrentTime();
+            updateWatchRecord({
+              id: this.videoId,
+              endPosition: currentTime,
+              CourseType: this.courseType,
+              CourseClassId: ''
+            });
+            timer = setTimeout(getTime, 1500);
+          };
           window.onresize = function () {
             if (!~navigator.userAgent.indexOf('Mac') > -1) {
               videoStyle.height = window.innerHeight + 'px';
@@ -293,6 +296,25 @@
             videoStyle.height = '300px';
           });
           player.on('x5requestFullScreen', function () {
+          });
+          player.on('onM3u8Retry', function (e) {
+            player.pause();
+            _this.$messagebox('系统提示', '网络环境差或直播未开始');
+            if (timer) clearTimeout(timer);
+          });
+          // let timer;
+          // player.on('waiting', function (e) {
+          //   timer = setTimeout(function () {
+          //     player.pause();
+          //     _this.$messagebox('系统提示', '直播未开始');
+          //   }, 6000);
+          // });
+          // player.on('', function () {
+          //   clearTimeout(timer);
+          // });
+          player.on('error', function (e) {
+            _this.$messagebox('系统提示', '进入中断');
+            if (timer) clearTimeout(timer);
           });
         }).catch(e => {
           _this.$messagebox('系统提示', e.message);

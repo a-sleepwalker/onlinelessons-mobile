@@ -40,8 +40,8 @@
       <M-ToolsPanel panelTitle="我的学习" :panelToolList="studyToolList" @jumpTo="routeHandler">
         <p class="in-bl flr">
           出勤：<span class="number">{{study.attend}}</span>
-          节课 学习：<span class="number">{{study.hours}}</span>
-          小时 <span class="number"> {{study.minutes}}</span>分
+          <!--节课 学习：<span class="number">{{study.hours}}</span>-->
+          <!--小时 <span class="number"> {{study.minutes}}</span>分-->
         </p>
       </M-ToolsPanel>
       <M-ToolsPanel panelTitle="课程安排" :panelToolList="courseToolList" @jumpTo="routeHandler"></M-ToolsPanel>
@@ -50,6 +50,8 @@
 </template>
 
 <script>
+  import {selectUserInfo} from '@/API';
+
   export default {
     name: 'M_Home',
     components: {
@@ -88,7 +90,7 @@
       };
     },
     created() {
-
+      this.getUserInfo();
     },
     mounted() {
 
@@ -96,6 +98,20 @@
     methods: {
       routeHandler(url) {
         this.$router.push('/' + url);
+      },
+      getUserInfo() {
+        const _this = this;
+        selectUserInfo().then(res => {
+          if (res && res[0].result === 'success') {
+            let result = JSON.parse(res[0].msg)[0];
+            if (result) {
+              _this.user.img = result.HeadImg;
+              _this.user.signature = result.NickName;
+              _this.user.name = result.Name;
+              _this.user.gender = result.Sex === 0 ? 'male' : 'female';
+            }
+          }
+        });
       }
     }
   }

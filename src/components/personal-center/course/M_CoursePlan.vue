@@ -12,7 +12,7 @@
             <i class="attend-icon in-bl"></i>
             <div class="attend-text-panel in-bl">
               <p class="attend-pct">{{coursePct}}%</p>
-              <p class="attend-text">123</p>
+              <p class="attend-text">课程出勤率</p>
             </div>
           </div>
         </div>
@@ -21,7 +21,7 @@
             <i class="homework-icon in-bl"></i>
             <div class="homework-text-panel in-bl">
               <p class="homework-pct">{{homeworkPct}}%</p>
-              <p class="homework-text">123</p>
+              <p class="homework-text">作业完成率</p>
             </div>
           </div>
         </div>
@@ -30,7 +30,7 @@
             <i class="exam-icon in-bl"></i>
             <div class="exam-text-panel in-bl">
               <p class="exam-pct">{{examPct}}%</p>
-              <p class="exam-text">123</p>
+              <p class="exam-text">模考完成率</p>
             </div>
           </div>
         </div>
@@ -154,11 +154,11 @@
         background: linear-gradient(to bottom right, rgb(120, 224, 255), rgb(34, 160, 245))
       .exam
         background: linear-gradient(to bottom right, rgb(248, 183, 141), rgb(250, 118, 105))
-      .attend-content
-      .homework-content
-      .exam-content
-        width: 5.16rem
-        height: 1.875rem
+      /*.attend-content*/
+      /*.homework-content*/
+      /*.exam-content*/
+        /*width: 5.16rem*/
+        /*height: 1.875rem*/
       .attend-icon
       .homework-icon
       .exam-icon

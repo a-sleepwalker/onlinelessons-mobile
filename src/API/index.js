@@ -225,3 +225,23 @@ export const downloadFile = id => {
   }
   return axios.post('/Api/MobileGerenVideo.ashx?type=downloadFile', qs.stringify(param)).then(res => res);
 };
+/**
+ * @description 获取用户名昵称出勤
+ * @returns {Promise<AxiosResponse<any>>}
+ * @author taowt <2018-7-30>
+ */
+export const selectUserInfo = () => axios.get('/Api/MobilePersonalCenter.ashx?type=selectUserInfo').then(res => res);
+/**
+ * @description 录播设置最近观看时间
+ * @param param todo 参数
+ * @returns {Promise<AxiosResponse<any>>}
+ * @author taowt <2018-7-30>
+ */
+export const updateWatchRecord = param => {
+  if (param.id && param.endPosition && param.CourseType && param.CourseClassId) {
+
+  } else {
+    MessageBox('系统提示', `参数不能为空`);
+  }
+  return axios.post('/API/GerenVideo.ashx?type=updateWatchRecord', qs.stringify(param)).then(res => res);
+};
