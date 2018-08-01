@@ -53,6 +53,7 @@
     data() {
       return {
         title: '宏观经济分析',
+        curPage: 1,
         courseList: []
       };
     },
@@ -71,6 +72,7 @@
       this.getCourseList().then(res => {
         if (res && res.length > 0) {
           this.courseList = res;
+          this.title = res[0].MajorName;
         }
       });
     },
@@ -84,14 +86,13 @@
       async getCourseList() {
         const _this = this;
         // eslint-disable-next-line no-return-await
-        return await selectVideoList(_this.courseId).then(res => {
+        return await selectVideoList(_this.courseId, _this.curPage, 5).then(res => {
           if (res[0].result === 'success') {
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
               if (resList.length > 0) {
                 let tempList = [];
                 resList.forEach(v => {
-                  // console.log(v);
                   let obj = {};
                   obj.title = v.VideoName;
                   obj.subTitle = '';
@@ -107,7 +108,7 @@
                   obj.src = '/static/mob-img/avator.png';
                   tempList.push(obj);
                 });
-                return Promise.resolve(tempList.slice(0, 3));
+                return Promise.resolve(tempList);
               } else {
                 this.$toast('暂无专业');
               }
@@ -119,13 +120,17 @@
       },
       async loadMore(domain) {
         const _this = this;
-        domain.loading = true;
-        let prevCourseList = _this.courseList;
-        let res = await _this.getCourseList();
-        if (res && res.length > 0) {
-          _this.courseList = prevCourseList.concat(res);
-          domain.loading = false;
-          domain.curPage++;
+        if (domain.loading) {
+          _this.$toast('已加载全部数据');
+        } else {
+          _this.curPage++;
+          domain.loading = true;
+          let prevCourseList = _this.courseList;
+          let res = await _this.getCourseList();
+          if (res && res.length > 0) {
+            _this.courseList = prevCourseList.concat(res);
+            domain.loading = false;
+          }
         }
       }
     }
@@ -157,8 +162,8 @@
       /*.attend-content*/
       /*.homework-content*/
       /*.exam-content*/
-        /*width: 5.16rem*/
-        /*height: 1.875rem*/
+      /*width: 5.16rem*/
+      /*height: 1.875rem*/
       .attend-icon
       .homework-icon
       .exam-icon

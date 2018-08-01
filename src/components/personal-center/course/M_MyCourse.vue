@@ -132,6 +132,8 @@
         color: #ffffff
       .to-course-plan
         margin: 4.5rem 1rem 0 0
+        position: absolute
+        right: 0
         color: #ffffff
         font-size: .875rem
       .showmore-icon

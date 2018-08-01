@@ -26,6 +26,7 @@
     <mt-actionsheet
       :actions="fileList"
       v-model="sheetVisible"
+      cancelText=""
     >
     </mt-actionsheet>
   </div>
@@ -40,8 +41,7 @@
       return {
         sheetVisible: false,
         fileList: [],
-        loading: true,
-        curPage: 1
+        loading: false
       };
     },
     props: {

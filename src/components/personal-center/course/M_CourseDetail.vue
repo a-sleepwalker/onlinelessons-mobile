@@ -47,37 +47,37 @@
           {{item.KechengName}}
         </li>
       </ul>
-      <mt-tab-container class="content" v-model="active">
-        <mt-tab-container-item id="mk">
-        </mt-tab-container-item>
-        <mt-tab-container-item id="zl">
-        </mt-tab-container-item>
-        <mt-tab-container-item id="tk">
-        </mt-tab-container-item>
-        <mt-tab-container-item id="jh">
-        </mt-tab-container-item>
-      </mt-tab-container>
+      <!--<mt-tab-container class="content" v-model="active">-->
+      <!--<mt-tab-container-item id="mk">-->
+      <!--</mt-tab-container-item>-->
+      <!--<mt-tab-container-item id="zl">-->
+      <!--</mt-tab-container-item>-->
+      <!--<mt-tab-container-item id="tk">-->
+      <!--</mt-tab-container-item>-->
+      <!--<mt-tab-container-item id="jh">-->
+      <!--</mt-tab-container-item>-->
+      <!--</mt-tab-container>-->
     </div>
-    <footer class="page-footer">
-      <mt-tabbar v-model="active">
-        <mt-tab-item id="mk">
-          <i slot="icon" class="in-bl mk-icon"></i>
-          模考
-        </mt-tab-item>
-        <mt-tab-item id="zl">
-          <i slot="icon" class="in-bl zl-icon"></i>
-          资料
-        </mt-tab-item>
-        <mt-tab-item id="tk">
-          <i slot="icon" class="in-bl tk-icon"></i>
-          题库
-        </mt-tab-item>
-        <mt-tab-item id="jh">
-          <i slot="icon" class="in-bl jh-icon"></i>
-          考试计划变更
-        </mt-tab-item>
-      </mt-tabbar>
-    </footer>
+    <!--<footer class="page-footer">-->
+    <!--<mt-tabbar v-model="active">-->
+    <!--<mt-tab-item id="mk">-->
+    <!--<i slot="icon" class="in-bl mk-icon"></i>-->
+    <!--模考-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="zl">-->
+    <!--<i slot="icon" class="in-bl zl-icon"></i>-->
+    <!--资料-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="tk">-->
+    <!--<i slot="icon" class="in-bl tk-icon"></i>-->
+    <!--题库-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="jh">-->
+    <!--<i slot="icon" class="in-bl jh-icon"></i>-->
+    <!--考试计划变更-->
+    <!--</mt-tab-item>-->
+    <!--</mt-tabbar>-->
+    <!--</footer>-->
     <mt-actionsheet
       :actions="semester"
       cancelText=""
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-  import {selectKeChengList} from '@/API';
+  import {selectKeChengList, selectKeChengListAll} from '@/API';
   import {mapMutations, mapState} from 'vuex';
 
   export default {
@@ -161,31 +161,6 @@
         this.SET_COURSE_NAME({courseName: item.KechengName});
         this.$router.push('/course/course-plan/' + item.CourseClassId);
       },
-      getCourseListAll() {
-        const _this = this;
-        _this.courseListAll = [
-          {
-            CourseClassId: '1',
-            KechengName: '公司理财'
-          },
-          {
-            CourseClassId: '1',
-            KechengName: '公司理财'
-          },
-          {
-            CourseClassId: '1',
-            KechengName: '公司理财'
-          },
-          {
-            CourseClassId: '1',
-            KechengName: '公司理财'
-          },
-          {
-            CourseClassId: '1',
-            KechengName: '公司理财'
-          }
-        ];
-      },
       getCourseList() {
         const _this = this;
         selectKeChengList(_this.courseId).then(res => {
@@ -193,7 +168,6 @@
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
               if (resList.length > 0) {
-                console.log(resList);
                 _this.majorName = resList[0].MajorName;
                 // resList.forEach(v => Object.assign(v, {
                 //   homeworkDone: 0,
@@ -204,6 +178,19 @@
                 _this.courseList = resList;
               } else {
                 this.$toast('暂无专业');
+              }
+            }
+          }
+        });
+      },
+      getCourseListAll() {
+        const _this = this;
+        selectKeChengListAll(_this.courseId).then(res => {
+          if (res[0].result === 'success') {
+            if (res[0].msg) {
+              let resList = JSON.parse(res[0].msg);
+              if (resList.length > 0) {
+                _this.courseListAll = resList;
               }
             }
           }
@@ -261,6 +248,9 @@
         color: #444
         background: #ffff
         box-shadow: 2px 2px 10px 2px #eee
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
       .course-item
         margin: .75rem 1rem
         padding: 0 1rem
