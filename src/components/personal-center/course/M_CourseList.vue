@@ -86,7 +86,7 @@
                   obj.et = v.EndTime;
                   obj.courseType = v.CourseType;
                   obj.name = v.TeacherName;
-                  obj.slotField = v.VideoType;
+                  // obj.slotField = v.VideoType;
                   obj.id = v.Id;
                   obj.videoId = v.VideoId;
                   obj.date = v.CourseDate;
