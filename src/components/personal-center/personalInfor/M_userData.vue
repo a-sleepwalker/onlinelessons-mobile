@@ -8,33 +8,38 @@
         <mt-cell title="头像" is-link>
           <img :src="img"/>
         </mt-cell>
-        <mt-cell title="昵称" :value="nickname" is-link></mt-cell>
-        <mt-cell title="真实姓名" :value="name" is-link></mt-cell>
+        <mt-cell title="昵称" :value="userMessage.NickName" is-link></mt-cell>
+        <mt-cell title="真实姓名" :value="userMessage.Name" is-link></mt-cell>
       </div>
       <div>
-        <mt-cell title="性别" :value="sex" is-link></mt-cell>
-        <mt-cell title="年龄" :value="age" is-link></mt-cell>
-        <mt-cell title="地区" is-link></mt-cell>
+        <mt-cell title="性别" :value="userMessage.Sex" is-link></mt-cell>
+        <mt-cell title="年龄" :value="userMessage.Age" is-link></mt-cell>
+        <mt-cell title="地区" :value="userMessage.AreaId" is-link></mt-cell>
       </div>
-      <div>
-        <mt-cell title="新科元" is-link>
-          <span style="color:red">{{score}}</span>
-        </mt-cell>
-        <mt-cell title="等级" is-link>
-          <span class="level">{{level}}</span>
-          <span style="color:#ffa523">{{honor}}</span>
-        </mt-cell>
-      </div>
+      <!--<div>-->
+        <!--<mt-cell title="新科元" is-link>-->
+          <!--<span style="color:red">{{score}}</span>-->
+        <!--</mt-cell>-->
+        <!--<mt-cell title="等级" is-link>-->
+          <!--<span class="level">{{level}}</span>-->
+          <!--<span style="color:#ffa523">{{honor}}</span>-->
+        <!--</mt-cell>-->
+      <!--</div>-->
       <div>
         <mt-cell title="个性签名" is-link>
           <span class="signature">{{signature}}</span>
         </mt-cell>
       </div>
-      <mt-cell title="修改密码" is-link to="/personalInfor/changePsd"></mt-cell>
+      <div @click="setTelephoneNum(userMessage.Tel);">
+        <mt-cell title="修改密码" is-link to="/personalInfor/changePsd" ></mt-cell>
+      </div>
     </div>
   </div>
 </template>
 <script>
+  import {getUserMessage} from '@/API';
+  import {mapMutations} from 'vuex';
+
   export default {
     name: 'Header',
     components: {
@@ -50,16 +55,31 @@
         score: '7974',
         level: 'LV.9',
         honor: '学有所成',
-        signature: '没有梦想的咸鱼'
+        signature: '没有梦想的咸鱼',
+        userMessage: ''
       };
     },
-    created() {
-
+    created: function () {
+      getUserMessage().then(data => {
+        if (data.success === 'true') {
+          console.log(data);
+          this.userMessage = data.data;
+          // sessionStorage.setItem('phoneNum', this.userMessage.Tel);
+        } else {
+          console.log('暂无数据');
+        }
+      });
     },
     mounted() {
 
     },
-    methods: {}
+    methods: {
+      ...mapMutations(['SET_TELEPHONE_NUM']),
+      setTelephoneNum(telephoneNum) {
+        console.log(1);
+        this.SET_TELEPHONE_NUM({telephoneNum});
+      }
+    }
   };
 </script>
 <style scoped>

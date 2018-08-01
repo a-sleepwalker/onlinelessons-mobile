@@ -268,3 +268,13 @@ export const updateWatchRecord = param => {
   }
   return axios.post('/API/GerenVideo.ashx?type=updateWatchRecord', qs.stringify(param)).then(res => res);
 };
+/**
+ * @description 获取当前用户信息
+ * @author yuanzx <2018-7-31>
+ * @param id
+ * @param action
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getUserMessage = () => {
+  return axios.get('/Api/MUserInfoHandler.ashx?action=getuserinfo').then(res => res);
+};

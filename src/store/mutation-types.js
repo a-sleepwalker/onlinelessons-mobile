@@ -4,3 +4,5 @@ export const SET_COURSE_PROCESS = 'SET_COURSE_PROCESS';
 export const SET_MAJOR_NAME = 'SET_MAJOR_NAME';
 // 设置课程名称
 export const SET_COURSE_NAME = 'SET_COURSE_NAME';
+// 设置手机号码
+export const SET_TELEPHONE_NUM = 'SET_TELEPHONE_NUM';

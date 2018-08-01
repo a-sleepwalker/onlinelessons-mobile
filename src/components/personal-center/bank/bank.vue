@@ -8,7 +8,7 @@
     <div class="top">
       <chart class="gauge-chart" :auto-resize="true"
              :options="settings"></chart>
-      <span class="defeat">打败人数</span>
+      <span class="defeat">打败用户</span>
       <div class="text-container">
         <p class="text">刷题时间：<span class="text-strong">{{totalTime}}</span>分钟</p>
         <p class="text">刷题数量：<span class="text-strong">{{totalCount}}</span>道</p>
@@ -375,7 +375,8 @@
           series: [{
             type: 'gauge',
             radius: '50%',
-            endAngle: 45,
+            // 控制弧度
+            endAngle: 10,
             min: 0,
             max: 100,
             data: [{value: 60}],

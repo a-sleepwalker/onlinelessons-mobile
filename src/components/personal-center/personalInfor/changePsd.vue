@@ -4,15 +4,20 @@
       <mt-button>完成</mt-button>
     </M-Header>
     <div classs="container">
-      <mt-field label="旧密码" placeholder="请输入旧密码" :type="isshowO?'password':'text'" v-model="oldPassword">
-        <i :class="isshowO?'iconH':'iconS'" @click="isshowO=!isshowO"></i>
+      <!--<mt-field label="旧密码" placeholder="请输入旧密码" :type="isshowO?'password':'text'" v-model="oldPassword">-->
+        <!--<i :class="isshowO?'iconH':'iconS'" @click="isshowO=!isshowO"></i>-->
+      <!--</mt-field>-->
+      <mt-field label="绑定的手机" :placeholder="telephoneNum" type="tel" ></mt-field>
+      <mt-field  placeholder="请输入验证码" type="text" v-model="aaa">
+        <mt-button type="primary" size="small">获取验证码</mt-button>
       </mt-field>
-      <mt-field label="新密码" placeholder="请输入密码" :type="isshowN?'password':'text'" v-model="newPassword">
-        <i :class="isshowN?'iconH':'iconS'" @click="isshowN=!isshowN"></i>
+      <mt-field label="新密码" placeholder="请输入密码" :type="isshowN?'password':'text'" v-model="aaa">
+        <!--<i :class="isshowN?'iconH':'iconS'" @click="isshowN=!isshowN"></i>-->
+        <mt-button type="primary" size="small">确认修改</mt-button>
       </mt-field>
-      <mt-field label="确认密码" placeholder="请再次输入密码" :type="isshowR?'password':'text'" v-model="rePassword">
-        <i :class="isshowR?'iconH':'iconS'" @click="isshowR=!isshowR"></i>
-      </mt-field>
+      <!--<mt-field label="确认密码" placeholder="请再次输入密码" :type="isshowR?'password':'text'" v-model="rePassword">-->
+        <!--<i :class="isshowR?'iconH':'iconS'" @click="isshowR=!isshowR"></i>-->
+      <!--</mt-field>-->
     </div>
     <!--固定到底部-->
     <div class="bottom">
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+  import {mapMutations, mapState} from 'vuex';
   export default {
 
     name: 'changePsd',
@@ -41,7 +47,12 @@
     mounted() {
 
     },
-    methods: {}
+    methods: {
+      ...mapMutations(['SET_TELEPHONE_NUM'])
+    },
+    computed: {
+      ...mapState({telephoneNum: state => state.telephoneStore.telephoneNum})
+    }
   };
 </script>
 

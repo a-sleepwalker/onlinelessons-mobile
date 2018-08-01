@@ -7,6 +7,7 @@ import latestRoutes from './latest';
 import personalInforRoutes from './personalInfor';
 import scoreRoutes from './score';
 import teacherRoutes from './teacher';
+import tempRouters from './temp';
 
 let rootRoutes = [
   {
@@ -24,5 +25,5 @@ Vue.use(Router);
 export default new Router({
   mode: 'history',
   base: '/geren',
-  routes: [rootRoutes, bankRoutes, courseRoutes, downloadRoutes, latestRoutes, personalInforRoutes, scoreRoutes, teacherRoutes].reduce((prev, cur) => prev.concat(cur), [])
+  routes: [rootRoutes, bankRoutes, courseRoutes, downloadRoutes, latestRoutes, personalInforRoutes, scoreRoutes, teacherRoutes, tempRouters].reduce((prev, cur) => prev.concat(cur), [])
 });
