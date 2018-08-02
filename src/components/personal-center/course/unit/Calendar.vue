@@ -2,34 +2,38 @@
   <div>
     <div class="calendar-container">
       <div class="calendar-header clearfix">
-        <div v-if="isClosed">
-          <a href="javascript:" class="expands-calendar in-bl flr" @click="isClosed = !isClosed"></a>
-          <div class="calendar-inline">
-            <p class="calendar-inline-title">{{currentDate.getMonth()+1}}/{{currentDate.getFullYear()}}</p>
-            <ul class="week-list">
-              <li class="day in-bl" v-for="dateItem in weekList" :key="dateItem.dateStr"
-                  @click="setCurrentDate(dateItem)">
-                <div class="date-text" :class="[dateItem.className,{'active':dateItem.isActive}]"
-                     :date-str="dateItem.dateStr">
-                  {{dateItem.text}}
-                  <i :class="dateItem.hasCourse?['has-course','in-bl']:''"></i>
-                  <i :class="dateItem.hasExam?['has-exam','in-bl']:''"></i>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div v-else>
-          <a href="javascript:" class="focus-today in-bl fll" @click="changeMonth(0)">今天</a>
-          <a href="javascript:" class="close-calendar in-bl flr" @click="isClosed = !isClosed"></a>
-          <div class="calendar-title">
-            <a href="javascript:" class="prev-mon in-bl " @click="changeMonth(-1)"></a>
-            <div class="calendar-title-text in-bl">
-              {{currentDate.getFullYear()}}年{{currentDate.getMonth() + 1}}月
+        <transition name="fade" mode="out-in">
+          <div v-if="isClosed">
+            <a href="javascript:" class="expands-calendar in-bl flr" @click="isClosed = !isClosed"></a>
+            <div class="calendar-inline">
+              <p class="calendar-inline-title">{{currentDate.getMonth()+1}}/{{currentDate.getFullYear()}}</p>
+              <ul class="week-list">
+                <li class="day in-bl" v-for="dateItem in weekList" :key="dateItem.dateStr"
+                    @click="setCurrentDate(dateItem)">
+                  <div class="date-text" :class="[dateItem.className,{'active':dateItem.isActive}]"
+                       :date-str="dateItem.dateStr">
+                    {{dateItem.text}}
+                    <i :class="dateItem.hasCourse?['has-course','in-bl']:''"></i>
+                    <i :class="dateItem.hasExam?['has-exam','in-bl']:''"></i>
+                  </div>
+                </li>
+              </ul>
             </div>
-            <a href="javascript:" class="next-mon in-bl " @click="changeMonth(1)"></a>
           </div>
-        </div>
+        </transition>
+        <transition name="fade" mode="out-in">
+          <div v-if="!isClosed">
+            <a href="javascript:" class="focus-today in-bl fll" @click="changeMonth(0)">今天</a>
+            <a href="javascript:" class="close-calendar in-bl flr" @click="isClosed = !isClosed"></a>
+            <div class="calendar-title">
+              <a href="javascript:" class="prev-mon in-bl " @click="changeMonth(-1)"></a>
+              <div class="calendar-title-text in-bl">
+                {{currentDate.getFullYear()}}年{{currentDate.getMonth() + 1}}月
+              </div>
+              <a href="javascript:" class="next-mon in-bl " @click="changeMonth(1)"></a>
+            </div>
+          </div>
+        </transition>
       </div>
       <div v-if="!isClosed" class="calendar-content">
         <table class="calendar-table">
@@ -92,15 +96,17 @@
       };
     },
     computed: {
+      dayList() {
+        return this.dateList.reduce((prev, cur) => prev.concat(...cur), []);
+      },
       weekList() {
-        let arr = this.dateList.reduce((prev, cur) => prev.concat(cur), []);
         let index = 3;
-        arr.forEach((v, i) => {
+        this.dayList.forEach((v, i) => {
           if (v.className === 'today') {
             index = i;
           }
         });
-        return arr.slice(index - 3, index + 4);
+        return this.dayList.slice(index - 3, index + 4);
       }
     },
     props: {
@@ -171,7 +177,7 @@
         return dateStr;
       },
       setCurrentDate(date) {
-        this.dateList.reduce((prev, cur) => prev.concat(...cur), []).forEach(v => (v.isActive = false));
+        this.dayList.forEach(v => (v.isActive = false));
         date.isActive = true;
         this.$emit('updateDate', date.dateStr);
       }
@@ -257,7 +263,8 @@
       width: 98%
       box-shadow: 0 2px 5px 0 #dedede
       position: absolute
-      transition: .5s
+      top: 3.75rem
+      transition all .5s ease
       background: #ffffff
       z-index: 10
       .calendar-table

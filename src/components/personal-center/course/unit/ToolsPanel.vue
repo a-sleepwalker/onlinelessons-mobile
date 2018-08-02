@@ -102,6 +102,10 @@
           background: url("/static/mob-img/newcourse.png") no-repeat
           background-size 100% 100%
 
+        .keep
+          background: url("/static/mob-img/newcourse.png") no-repeat
+          background-size 100% 100%
+
         .tool-text
           text-align: center
           font-size: .75rem

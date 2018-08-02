@@ -42,4 +42,25 @@
   {
     opacity: 0;
   }
+
+  .slide-enter-active {
+    transition: all .3s ease;
+  }
+
+  .slide-leave-active {
+    transition: all .3s ease-out;
+  }
+
+  .slide-enter, .slide-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
 </style>

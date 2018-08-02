@@ -17,7 +17,6 @@ let rootRoutes = [
   },
   {
     path: '*', redirect: {name: 'M_Home'}
-
   }
 ];
 

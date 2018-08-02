@@ -22,20 +22,20 @@
             <mt-button type="default" size="small">已签到</mt-button>
           </div>
         </div>
-        <div class="user-attach-info clearfix">
-          <div class="user-keep fll">
-            <p class="number">{{user.keep}}</p>
-            <p class="text">收藏</p>
-          </div>
-          <div class="user-following fll">
-            <p class="number">{{user.following}}</p>
-            <p class="text">关注</p>
-          </div>
-          <div class="user-follower fll">
-            <p class="number">{{user.follower}}</p>
-            <p class="text">粉丝</p>
-          </div>
-        </div>
+        <!--<div class="user-attach-info clearfix">-->
+          <!--<div class="user-keep fll">-->
+            <!--<p class="number">{{user.keep}}</p>-->
+            <!--<p class="text">收藏</p>-->
+          <!--</div>-->
+          <!--<div class="user-following fll">-->
+            <!--<p class="number">{{user.following}}</p>-->
+            <!--<p class="text">关注</p>-->
+          <!--</div>-->
+          <!--<div class="user-follower fll">-->
+            <!--<p class="number">{{user.follower}}</p>-->
+            <!--<p class="text">粉丝</p>-->
+          <!--</div>-->
+        <!--</div>-->
       </div>
       <div>
         <M-ToolsPanel panelTitle="我的学习" :panelToolList="studyToolList" @jumpTo="routeHandler">
@@ -46,7 +46,7 @@
           </p>
         </M-ToolsPanel>
       </div>
-      <!--<M-ToolsPanel panelTitle="课程安排" :panelToolList="courseToolList" @jumpTo="routeHandler"></M-ToolsPanel>-->
+      <M-ToolsPanel panelTitle="课程安排" :panelToolList="courseToolList" @jumpTo="routeHandler"></M-ToolsPanel>
     </div>
     <M-Footer></M-Footer>
   </div>
@@ -84,12 +84,13 @@
           {id: '2', text: '课程', className: 'course'},
           {id: '3', text: '题库', className: 'bank'},
           {id: '4', text: '成绩单', className: 'score'},
-          {id: '5', text: '最近观看', className: 'latest'}
+          {id: '5', text: '最近观看', className: 'latest'},
+          {id: '6', text: '我的收藏', className: 'keep'}
           // {id: '6', text: '我的下载', className: 'download'}
         ],
         courseToolList: [
-          {id: '1', text: '我的课程表', className: 'curriculum'},
-          {id: '2', text: '新科元', className: 'newcourse'}
+          {id: '1', text: '我的课程表', className: 'curriculum'}
+          // {id: '2', text: '新科元', className: 'newcourse'}
         ]
       };
     },
