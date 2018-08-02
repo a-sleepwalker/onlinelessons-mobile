@@ -37,23 +37,29 @@
           </div>
         </div>
       </div>
-      <M-ToolsPanel panelTitle="我的学习" :panelToolList="studyToolList" @jumpTo="routeHandler">
-        <p class="in-bl flr">
-          出勤：<span class="number">{{study.attend}}</span>
-          节课 学习：<span class="number">{{study.hours}}</span>
-          小时 <span class="number"> {{study.minutes}}</span>分
-        </p>
-      </M-ToolsPanel>
-      <M-ToolsPanel panelTitle="课程安排" :panelToolList="courseToolList" @jumpTo="routeHandler"></M-ToolsPanel>
+      <div>
+        <M-ToolsPanel panelTitle="我的学习" :panelToolList="studyToolList" @jumpTo="routeHandler">
+          <p class="in-bl flr">
+            出勤：<span class="number">{{study.attend}}</span>
+            <!--节课 学习：<span class="number">{{study.hours}}</span>-->
+            <!--小时 <span class="number"> {{study.minutes}}</span>分-->
+          </p>
+        </M-ToolsPanel>
+      </div>
+      <!--<M-ToolsPanel panelTitle="课程安排" :panelToolList="courseToolList" @jumpTo="routeHandler"></M-ToolsPanel>-->
     </div>
+    <M-Footer></M-Footer>
   </div>
 </template>
 
 <script>
+  import {selectUserInfo} from '@/API';
+
   export default {
     name: 'M_Home',
     components: {
       'M-Header': resolve => require(['@/components/common/Header'], resolve),
+      'M-Footer': resolve => require(['@/components/common/Footer'], resolve),
       'M-ToolsPanel': resolve => require(['./course/unit/ToolsPanel'], resolve)
     },
     data() {
@@ -78,8 +84,8 @@
           {id: '2', text: '课程', className: 'course'},
           {id: '3', text: '题库', className: 'bank'},
           {id: '4', text: '成绩单', className: 'score'},
-          {id: '5', text: '最近观看', className: 'latest'},
-          {id: '6', text: '我的下载', className: 'download'}
+          {id: '5', text: '最近观看', className: 'latest'}
+          // {id: '6', text: '我的下载', className: 'download'}
         ],
         courseToolList: [
           {id: '1', text: '我的课程表', className: 'curriculum'},
@@ -88,7 +94,7 @@
       };
     },
     created() {
-
+      this.getUserInfo();
     },
     mounted() {
 
@@ -96,6 +102,20 @@
     methods: {
       routeHandler(url) {
         this.$router.push('/' + url);
+      },
+      getUserInfo() {
+        const _this = this;
+        selectUserInfo().then(res => {
+          if (res && res[0].result === 'success') {
+            let result = JSON.parse(res[0].msg)[0];
+            if (result) {
+              _this.user.img = result.HeadImg;
+              _this.user.signature = result.NickName;
+              _this.user.name = result.Name;
+              _this.user.gender = result.Sex === 0 ? 'male' : 'female';
+            }
+          }
+        });
       }
     }
   }

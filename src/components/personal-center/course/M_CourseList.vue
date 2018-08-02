@@ -7,7 +7,7 @@
     <div class="main-container">
       <M-Calendar v-if="hasCourseDateList.length>0" @updateDate="getCurrentDate"
                   :hasCourseDateList="hasCourseDateList"></M-Calendar>
-      <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
+      <M-CourseList @loadMore="loadMore" :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@
     data() {
       return {
         currentDate: new Date().toLocaleDateString().replace(/\//g, '-'),
+        curPage: 1,
         courseList: [
           // {
           //   id: '1',
@@ -48,7 +49,11 @@
     props: {},
     created() {
       this.setCalendarProp(this.currentMonth);
-      this.getCourseList(this.currentDate);
+      this.getCourseList(this.currentDate).then(res => {
+        if (res && res.length > 0) {
+          this.courseList = res;
+        }
+      });
     },
     mounted() {
 
@@ -63,9 +68,10 @@
       getCurrentDate(date) {
         this.currentDate = date.replace(/-/g, '/');
       },
-      getCourseList(date) {
+      async getCourseList(date) {
         const _this = this;
-        selectTimeVideoList(date).then(res => {
+        // eslint-disable-next-line no-return-await
+        return await selectTimeVideoList(date, _this.curPage, 5).then(res => {
           if (res[0].result === 'success') {
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
@@ -80,7 +86,7 @@
                   obj.et = v.EndTime;
                   obj.courseType = v.CourseType;
                   obj.name = v.TeacherName;
-                  obj.slotField = v.VideoType;
+                  // obj.slotField = v.VideoType;
                   obj.id = v.Id;
                   obj.videoId = v.VideoId;
                   obj.date = v.CourseDate;
@@ -88,7 +94,7 @@
                   obj.src = '/static/mob-img/avator.png';
                   tempList.push(obj);
                 });
-                _this.courseList = tempList;
+                return Promise.resolve(tempList);
               } else {
                 this.$toast('暂无课程');
               }
@@ -108,6 +114,21 @@
             }
           }
         });
+      },
+      async loadMore(domain) {
+        const _this = this;
+        if (domain.loading) {
+          _this.$toast('已加载全部数据');
+        } else {
+          _this.curPage++;
+          domain.loading = true;
+          let prevCourseList = _this.courseList;
+          let res = await _this.getCourseList(_this.currentDate);
+          if (res && res.length > 0) {
+            _this.courseList = prevCourseList.concat(res);
+            domain.loading = false;
+          }
+        }
       }
     },
     watch: {

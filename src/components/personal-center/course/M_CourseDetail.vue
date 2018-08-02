@@ -10,7 +10,7 @@
           <i class="dropdown-icon in-bl mintui mintui-back"></i>
         </h3>
       </div>
-      <ul class="course-list">
+      <ul class="course-list" v-if="curSemester==='已分配'">
         <li class="course-item" v-for="item in courseList" :key="item.CourseClassId" @click="jump(item)">
           <h2 class="course-title">{{item.KechengName}}</h2>
           <p class="course-time">
@@ -42,46 +42,52 @@
           </div>
         </li>
       </ul>
-      <mt-tab-container class="content" v-model="active">
-        <mt-tab-container-item id="mk">
-        </mt-tab-container-item>
-        <mt-tab-container-item id="zl">
-        </mt-tab-container-item>
-        <mt-tab-container-item id="tk">
-        </mt-tab-container-item>
-        <mt-tab-container-item id="jh">
-        </mt-tab-container-item>
-      </mt-tab-container>
+      <ul class="course-list" v-else>
+        <li class="course-item-all" v-for="(item,index) in courseListAll" :key="index">
+          {{item.KechengName}}
+        </li>
+      </ul>
+      <!--<mt-tab-container class="content" v-model="active">-->
+      <!--<mt-tab-container-item id="mk">-->
+      <!--</mt-tab-container-item>-->
+      <!--<mt-tab-container-item id="zl">-->
+      <!--</mt-tab-container-item>-->
+      <!--<mt-tab-container-item id="tk">-->
+      <!--</mt-tab-container-item>-->
+      <!--<mt-tab-container-item id="jh">-->
+      <!--</mt-tab-container-item>-->
+      <!--</mt-tab-container>-->
     </div>
-    <footer class="page-footer">
-      <mt-tabbar v-model="active">
-        <mt-tab-item id="mk">
-          <i slot="icon" class="in-bl mk-icon"></i>
-          模考
-        </mt-tab-item>
-        <mt-tab-item id="zl">
-          <i slot="icon" class="in-bl zl-icon"></i>
-          资料
-        </mt-tab-item>
-        <mt-tab-item id="tk">
-          <i slot="icon" class="in-bl tk-icon"></i>
-          题库
-        </mt-tab-item>
-        <mt-tab-item id="jh">
-          <i slot="icon" class="in-bl jh-icon"></i>
-          考试计划变更
-        </mt-tab-item>
-      </mt-tabbar>
-    </footer>
+    <!--<footer class="page-footer">-->
+    <!--<mt-tabbar v-model="active">-->
+    <!--<mt-tab-item id="mk">-->
+    <!--<i slot="icon" class="in-bl mk-icon"></i>-->
+    <!--模考-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="zl">-->
+    <!--<i slot="icon" class="in-bl zl-icon"></i>-->
+    <!--资料-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="tk">-->
+    <!--<i slot="icon" class="in-bl tk-icon"></i>-->
+    <!--题库-->
+    <!--</mt-tab-item>-->
+    <!--<mt-tab-item id="jh">-->
+    <!--<i slot="icon" class="in-bl jh-icon"></i>-->
+    <!--考试计划变更-->
+    <!--</mt-tab-item>-->
+    <!--</mt-tabbar>-->
+    <!--</footer>-->
     <mt-actionsheet
       :actions="semester"
+      cancelText=""
       v-model="sheetVisible">
     </mt-actionsheet>
   </div>
 </template>
 
 <script>
-  import {selectKeChengList} from '@/API';
+  import {selectKeChengList, selectKeChengListAll} from '@/API';
   import {mapMutations, mapState} from 'vuex';
 
   export default {
@@ -93,11 +99,12 @@
     data() {
       return {
         active: '',
-        title: '【江苏工商本科】不过退费班',
+        majorName: '【江苏工商本科】不过退费班',
         curSemester: '',
         sheetVisible: false,
         semester: [
-          {name: '第四学期', method: this.semesterHandler}
+          {name: '已分配', method: this.semesterHandler},
+          {name: '全部', method: this.semesterHandler}
         ],
         courseList: [
           {
@@ -114,16 +121,17 @@
             examDone: 0,
             examAll: 2
           }
-        ]
+        ],
+        courseListAll: []
       };
     },
     computed: {
       courseId() {
         return this.$route.params.courseId;
-      },
-      ...mapState({
-        majorName: state => state.courseStore.majorName
-      })
+      }
+      // ...mapState({
+      //   majorName: state => state.courseStore.majorName
+      // })
     },
     props: {},
     created() {
@@ -140,6 +148,11 @@
       semesterHandler(data) {
         console.log(data);
         this.curSemester = data.name;
+        if (data.name === '全部') {
+          this.getCourseListAll();
+        } else {
+          this.getCourseList();
+        }
       },
       jump(item) {
         item.courseDone = item.NumKeCheng;
@@ -155,15 +168,29 @@
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
               if (resList.length > 0) {
-                resList.forEach(v => Object.assign(v, {
-                  homeworkDone: 0,
-                  homeworkAll: 3,
-                  examDone: 0,
-                  examAll: 2
-                }));
+                _this.majorName = resList[0].MajorName;
+                // resList.forEach(v => Object.assign(v, {
+                //   homeworkDone: 0,
+                //   homeworkAll: 3,
+                //   examDone: 0,
+                //   examAll: 2
+                // }));
                 _this.courseList = resList;
               } else {
                 this.$toast('暂无专业');
+              }
+            }
+          }
+        });
+      },
+      getCourseListAll() {
+        const _this = this;
+        selectKeChengListAll(_this.courseId).then(res => {
+          if (res[0].result === 'success') {
+            if (res[0].msg) {
+              let resList = JSON.parse(res[0].msg);
+              if (resList.length > 0) {
+                _this.courseListAll = resList;
               }
             }
           }
@@ -213,6 +240,17 @@
     .content
       margin-top: -3rem
     .course-list
+      margin-bottom: 4rem
+      .course-item-all
+        padding: 0 1rem
+        height: 3rem
+        line-height: 3rem
+        color: #444
+        background: #ffff
+        box-shadow: 2px 2px 10px 2px #eee
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
       .course-item
         margin: .75rem 1rem
         padding: 0 1rem

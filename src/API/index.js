@@ -82,15 +82,19 @@ export const getMistakes = ordernum => {
  * @description 根据当前日期获取课程表
  * @author taowt <2018-7-5>
  * @param date
+ * @param page
+ * @param size
  * @returns {Promise<AxiosResponse<any>>}
  */
-export const selectTimeVideoList = date => {
+export const selectTimeVideoList = (date, page, size) => {
   let param = {};
   if (!date) {
     MessageBox('系统提示', `【date】参数不能为空`);
   } else {
     param.time = date;
   }
+  param.page = page;
+  param.size = size;
   return axios.post('/Api/MobileGerenVideo.ashx?type=selectTimeVideoList', qs.stringify(param)).then(res => res);
 };
 /**
@@ -118,12 +122,29 @@ export const selectKeChengList = id => {
   return axios.post('/Api/MobileGerenVideo.ashx?type=selectKeChengList', qs.stringify(param)).then(res => res);
 };
 /**
- * @description 根据课程班id获取下面的视频列表
- * @author taowt <2018-7-6>
+ * @description 获取订单下的课程
+ * @author taowt <2018-8-1>
  * @param id
  * @returns {Promise<AxiosResponse<any>>}
  */
-export const selectVideoList = id => {
+export const selectKeChengListAll = id => {
+  let param = {};
+  if (!id) {
+    MessageBox('系统提示', `【id】参数不能为空`);
+  } else {
+    param.id = id;
+  }
+  return axios.get('/Api/MobilePersonalCenter.ashx?type=selectKeChengList&id=' + id).then(res => res);
+};
+/**
+ * @description 根据课程班id获取下面的视频列表
+ * @author taowt <2018-7-6>
+ * @param id
+ * @param page
+ * @param size
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const selectVideoList = (id, page, size) => {
   let param = {};
   if (!id) {
     MessageBox('系统提示', `【id】参数不能为空`);
@@ -131,6 +152,8 @@ export const selectVideoList = id => {
   } else {
     param.id = id;
   }
+  param.page = page;
+  param.size = size;
   return axios.post('/Api/MobileGerenVideo.ashx?type=selectVideoList', qs.stringify(param)).then(res => res);
 };
 /**
@@ -224,4 +247,34 @@ export const downloadFile = id => {
     param.id = id;
   }
   return axios.post('/Api/MobileGerenVideo.ashx?type=downloadFile', qs.stringify(param)).then(res => res);
+};
+/**
+ * @description 获取用户名昵称出勤
+ * @returns {Promise<AxiosResponse<any>>}
+ * @author taowt <2018-7-30>
+ */
+export const selectUserInfo = () => axios.get('/Api/MobilePersonalCenter.ashx?type=selectUserInfo').then(res => res);
+/**
+ * @description 录播设置最近观看时间
+ * @param param todo 参数
+ * @returns {Promise<AxiosResponse<any>>}
+ * @author taowt <2018-7-30>
+ */
+export const updateWatchRecord = param => {
+  if (param.id && param.endPosition && param.CourseType && param.CourseClassId) {
+
+  } else {
+    MessageBox('系统提示', `参数不能为空`);
+  }
+  return axios.post('/API/GerenVideo.ashx?type=updateWatchRecord', qs.stringify(param)).then(res => res);
+};
+/**
+ * @description 获取当前用户信息
+ * @author yuanzx <2018-7-31>
+ * @param id
+ * @param action
+ * @returns {Promise<AxiosResponse<any>>}
+ */
+export const getUserMessage = () => {
+  return axios.get('/Api/MUserInfoHandler.ashx?action=getuserinfo').then(res => res);
 };

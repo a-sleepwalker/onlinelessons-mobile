@@ -12,7 +12,7 @@
             <i class="attend-icon in-bl"></i>
             <div class="attend-text-panel in-bl">
               <p class="attend-pct">{{coursePct}}%</p>
-              <p class="attend-text">123</p>
+              <p class="attend-text">课程出勤率</p>
             </div>
           </div>
         </div>
@@ -21,7 +21,7 @@
             <i class="homework-icon in-bl"></i>
             <div class="homework-text-panel in-bl">
               <p class="homework-pct">{{homeworkPct}}%</p>
-              <p class="homework-text">123</p>
+              <p class="homework-text">作业完成率</p>
             </div>
           </div>
         </div>
@@ -30,12 +30,12 @@
             <i class="exam-icon in-bl"></i>
             <div class="exam-text-panel in-bl">
               <p class="exam-pct">{{examPct}}%</p>
-              <p class="exam-text">123</p>
+              <p class="exam-text">模考完成率</p>
             </div>
           </div>
         </div>
       </div>
-      <M-CourseList :courseList="courseList" @item-click="clickHandler"></M-CourseList>
+      <M-CourseList @loadMore="loadMore" :courseList="courseList" @item-click="clickHandler"></M-CourseList>
     </div>
   </div>
 </template>
@@ -53,6 +53,7 @@
     data() {
       return {
         title: '宏观经济分析',
+        curPage: 1,
         courseList: []
       };
     },
@@ -68,7 +69,12 @@
       })
     },
     created() {
-      this.getCourseList();
+      this.getCourseList().then(res => {
+        if (res && res.length > 0) {
+          this.courseList = res;
+          this.title = res[0].MajorName;
+        }
+      });
     },
     mounted() {
 
@@ -77,16 +83,16 @@
       clickHandler(item) {
         this.$router.push({name: 'M_Video', query: {videoId: item.videoId, courseType: item.courseType}});
       },
-      getCourseList() {
+      async getCourseList() {
         const _this = this;
-        selectVideoList(_this.courseId).then(res => {
+        // eslint-disable-next-line no-return-await
+        return await selectVideoList(_this.courseId, _this.curPage, 5).then(res => {
           if (res[0].result === 'success') {
             if (res[0].msg) {
               let resList = JSON.parse(res[0].msg);
               if (resList.length > 0) {
                 let tempList = [];
                 resList.forEach(v => {
-                  // console.log(v);
                   let obj = {};
                   obj.title = v.VideoName;
                   obj.subTitle = '';
@@ -102,7 +108,7 @@
                   obj.src = '/static/mob-img/avator.png';
                   tempList.push(obj);
                 });
-                _this.courseList = tempList;
+                return Promise.resolve(tempList);
               } else {
                 this.$toast('暂无专业');
               }
@@ -111,6 +117,21 @@
         }).catch(reason => {
           _this.$toast(reason.message);
         });
+      },
+      async loadMore(domain) {
+        const _this = this;
+        if (domain.loading) {
+          _this.$toast('已加载全部数据');
+        } else {
+          _this.curPage++;
+          domain.loading = true;
+          let prevCourseList = _this.courseList;
+          let res = await _this.getCourseList();
+          if (res && res.length > 0) {
+            _this.courseList = prevCourseList.concat(res);
+            domain.loading = false;
+          }
+        }
       }
     }
   };
@@ -138,11 +159,11 @@
         background: linear-gradient(to bottom right, rgb(120, 224, 255), rgb(34, 160, 245))
       .exam
         background: linear-gradient(to bottom right, rgb(248, 183, 141), rgb(250, 118, 105))
-      .attend-content
-      .homework-content
-      .exam-content
-        width: 5.16rem
-        height: 1.875rem
+      /*.attend-content*/
+      /*.homework-content*/
+      /*.exam-content*/
+      /*width: 5.16rem*/
+      /*height: 1.875rem*/
       .attend-icon
       .homework-icon
       .exam-icon

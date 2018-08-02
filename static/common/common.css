@@ -1,65 +1,69 @@
 .fll {
-    float: left;
+  float: left;
 }
 
 .flr {
-    float: right;
+  float: right;
 }
 
 .clearfix::after {
-    content: '';
-    display: block;
-    clear: both;
+  content: '';
+  display: block;
+  clear: both;
 }
 
 .in-bl {
-    display: inline-block;
+  display: inline-block;
 }
 
 body {
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    margin: 0;
-    padding: 0;
-    font-weight: normal;
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
 }
 
 p, ul {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-family: 'SourceHanSansCN', 'Microsoft YaHei', serif;
 }
 
 /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
 .minify-scrollbar ::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
-    background-color: #F5F5F5;
+  width: 7px;
+  height: 7px;
+  background-color: #F5F5F5;
 }
 
 /*定义滚动条轨道 内阴影+圆角*/
 .minify-scrollbar ::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    border-radius: 7px;
-    background-color: #F5F5F5;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 7px;
+  background-color: #F5F5F5;
 }
 
 /*定义滑块 内阴影+圆角*/
 .minify-scrollbar ::-webkit-scrollbar-thumb {
-    border-radius: 7px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-    background-color: #555;
+  border-radius: 7px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #555;
 }
 
-[v-cloak]{
-    display: none !important;
+[v-cloak] {
+  display: none !important;
 }

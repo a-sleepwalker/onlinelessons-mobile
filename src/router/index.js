@@ -7,18 +7,23 @@ import latestRoutes from './latest';
 import personalInforRoutes from './personalInfor';
 import scoreRoutes from './score';
 import teacherRoutes from './teacher';
+import tempRouters from './temp';
 
 let rootRoutes = [
   {
     path: '/',
     name: 'M_Home',
     component: resolve => require(['@/components/personal-center/M_Home'], resolve)
+  },
+  {
+    path: '*', redirect: {name: 'M_Home'}
+
   }
 ];
 
 Vue.use(Router);
 export default new Router({
   mode: 'history',
-  base: '/',
-  routes: [rootRoutes, bankRoutes, courseRoutes, downloadRoutes, latestRoutes, personalInforRoutes, scoreRoutes, teacherRoutes].reduce((prev, cur) => prev.concat(cur), [])
+  base: '/geren',
+  routes: [rootRoutes, bankRoutes, courseRoutes, downloadRoutes, latestRoutes, personalInforRoutes, scoreRoutes, teacherRoutes, tempRouters].reduce((prev, cur) => prev.concat(cur), [])
 });

@@ -1,6 +1,7 @@
 <template>
   <div>
-    <ul class="course-list">
+    <ul class="course-list" infinite-scroll-distance="10" v-infinite-scroll="loadMore"
+        :infinite-scroll-disabled="loading" infinite-scroll-immediate-check="false">
       <li class="course-item" v-for="item in courseList" :key="item.id" @click="itemClick(item)">
         <p class="course-time-container clearfix">
           <span class="course-time">{{item.date|formatDate}} {{item.st|formatTime}}~{{item.et|formatTime}}</span>
@@ -9,7 +10,7 @@
         <div class="course-content">
           <p class="course-title">{{item.title}}</p>
           <p class="course-sub-title">{{item.subTitle}}</p>
-          <p class="course-sub-title">{{item.slotField}}</p>
+          <p class="slot" v-if="item.slotField">{{item.slotField}}</p>
           <p class="img-icon-container">
             <img :src="item.src" alt="">
             <span>{{item.name}}</span>
@@ -25,6 +26,7 @@
     <mt-actionsheet
       :actions="fileList"
       v-model="sheetVisible"
+      cancelText=""
     >
     </mt-actionsheet>
   </div>
@@ -38,7 +40,8 @@
     data() {
       return {
         sheetVisible: false,
-        fileList: []
+        fileList: [],
+        loading: false
       };
     },
     props: {
@@ -76,6 +79,10 @@
         downloadFile(file.Id).then(res => {
           console.log(res);
         });
+      },
+      // todo 这里需要优化，传递组件实例这种方法不是很好 （子组件滚动加载数据，调用父组件方法）
+      loadMore() {
+        this.$emit('loadMore', this);
       }
     },
     filters: {
@@ -119,7 +126,7 @@
     .course-item
       margin: .75rem 1rem
       padding: 0 1rem
-      height: 12rem
+      /*height: 12rem*/
       background: #ffff
       border-radius: 15px
       box-shadow: 2px 2px 10px 2px #eee
@@ -138,6 +145,21 @@
       color: #ee4b19
       font-size: .75rem
 
+    .course-content
+      padding-bottom: 1.5rem
+      position: relative
+
+    .slot
+      width: 3.375rem
+      height: 1rem
+      line-height: 1rem
+      position: absolute
+      right: 0
+      font-size: .75rem
+      color: #ffd44f
+      border: 1px solid #ffd44f
+      text-align: center
+      border-radius: 1rem
     .course-title
       margin-top: .625rem
       font-size: .9375rem

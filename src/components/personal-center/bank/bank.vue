@@ -8,7 +8,7 @@
     <div class="top">
       <chart class="gauge-chart" :auto-resize="true"
              :options="settings"></chart>
-      <span class="defeat">打败人数</span>
+      <span class="defeat">打败用户</span>
       <div class="text-container">
         <p class="text">刷题时间：<span class="text-strong">{{totalTime}}</span>分钟</p>
         <p class="text">刷题数量：<span class="text-strong">{{totalCount}}</span>道</p>
@@ -23,7 +23,7 @@
           <span class="btn">开启练习</span>
         </div>
         <div class="practise">
-          <span class="date">2015.05.18</span>
+          <span class="date">{{curDateStr}}</span>
         </div>
       </div>
       <div class="last">
@@ -197,7 +197,7 @@
   }
 
   .record {
-    width: 10.65rem;
+    width: 10.6rem;
     height: 3.90625rem;
     background: #f9f9f9;
     position: relative;
@@ -263,7 +263,7 @@
   }
 
   .subject .total {
-    padding-right: .5rem ;
+    padding-right: .5rem;
     font-size: 0.75rem;
     vertical-align: middle;
     color: #919399;
@@ -375,7 +375,8 @@
           series: [{
             type: 'gauge',
             radius: '50%',
-            endAngle: 45,
+            // 控制弧度
+            endAngle: 10,
             min: 0,
             max: 100,
             data: [{value: 60}],
@@ -526,6 +527,9 @@
     computed: {
       ulength: function () {
         return this.list.length * 11 + 'rem';
+      },
+      curDateStr() {
+        return new Date().toLocaleDateString().replace(/\//g, '.');
       }
     },
     methods: {
